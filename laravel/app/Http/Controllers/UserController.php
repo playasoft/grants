@@ -36,8 +36,8 @@ class UserController extends Controller
         $user->save();
         $this->auth->loginUsingID($user->id);
 
-        // Send notification emails
-        Event::fire(new UserRegistered($user));
+        // TODO: Send notification emails
+        //Event::fire(new UserRegistered($user));
 
         $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
         return redirect('/');
