@@ -16,14 +16,14 @@
  - [x] Role (Admin, Applicant, Judge, Observer)
 
 - Questions
- - [ ] Question
- - [ ] Type (Input, Text, Dropdown, Boolean)
- - [ ] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
- - [ ] Status (This question will only appear when an application is within a specific status)
- - [ ] Role (User role this question should be shown to: Applicant or Judge)
- - [ ] Required
- - [ ] Parent
- - [ ] Order
+ - [x] Question
+ - [x] Type (Input, Text, Dropdown, Boolean)
+ - [x] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
+ - [x] Status (This question will only appear when an application is within a specific status)
+ - [x] Role (User role this question should be shown to: Applicant or Judge)
+ - [x] Required
+ - [x] Parent
+ - [x] Order
 
 - Applications
  - [ ] Name

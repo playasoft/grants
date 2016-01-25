@@ -15,7 +15,7 @@
                 @if(Auth::check() && Auth::user()->role == 'admin')
                     <li><a href="/questions">Questions</a></li>
                     <li><a href="/users">Users</a></li>
-                    <li><a href="/applications">Uploads</a></li>
+                    <li><a href="/applications">Applications</a></li>
                 @endif
             </ul>
             
