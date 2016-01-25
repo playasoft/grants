@@ -1,5 +1,12 @@
+# Laravel defaults
 /vendor
 /node_modules
 Homestead.yaml
 Homestead.json
 .env
+
+# Custom ignores
+/public/files
+bundle.js
+config.js
+main.css

@@ -63,7 +63,7 @@
 
 
 ## Pages
-- [ ] Home page
+- [x] Home page
 - [ ] User dashboard
 - [ ] Admin dashboard
 - [ ] Judge dashboard
