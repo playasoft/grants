@@ -1,7 +1,7 @@
 # Basic project setup
 
 ## Auth
-- [ ] Create user controller
+- [x] Create user controller
 - [ ] Set up auth provider
 - [ ] Registration
 - [ ] Login

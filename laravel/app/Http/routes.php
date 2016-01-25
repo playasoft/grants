@@ -25,10 +25,15 @@
 
 Route::group(['middleware' => ['web']], function ()
 {
-    Route::get('/', function ()
-    {
-        return view('pages/home');
-    });
+    // Basic pages
+    Route::get('/', 'PageController@home');
+    Route::get('/about', 'PageController@view');
 
+    // User authentication routes
+    Route::get('/register', 'PageController@view');
+    Route::get('/login', 'PageController@view');
+    Route::get('/logout', 'UserController@logout');
 
+    Route::post('/register', 'UserController@create');
+    Route::post('/login', 'UserController@login');
 });
