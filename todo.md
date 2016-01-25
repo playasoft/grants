@@ -10,10 +10,10 @@
 
 ## Models
 - Users
- - [ ] Name
- - [ ] Email
- - [ ] Password
- - [ ] Role (Admin, Applicant, Judge, Observer)
+ - [x] Name
+ - [x] Email
+ - [x] Password
+ - [x] Role (Admin, Applicant, Judge, Observer)
 
 - Questions
  - [ ] Question
