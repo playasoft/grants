@@ -20,22 +20,23 @@
  - [ ] Type (Input, Text, Dropdown, Boolean)
  - [ ] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
  - [ ] Status (This question will only appear when an application is within a specific status)
+ - [ ] Role (User role this question should be shown to: Applicant or Judge)
  - [ ] Required
  - [ ] Parent
  - [ ] Order
-
-- Criteria
- - [ ] Criteria
- - [ ] Type (Dropdown, Boolean)
- - [ ] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
 
 - Applications
  - [ ] Name
  - [ ] Description
  - [ ] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [ ] Objective Score
- - [ ] Subjective Score
+ - [ ] Applicant Score
+ - [ ] Judge Score
  - [ ] User ID
+
+- Answers
+ - [ ] Application ID
+ - [ ] Question ID
+ - [ ] Answer
 
 - Documents
  - [ ] Name
@@ -43,11 +44,6 @@
  - [ ] File
  - [ ] Application ID
  - [ ] Admin ID (Useful for tracking if admins have attached a file to an application)
-
-- Answers
- - [ ] Application ID
- - [ ] Question ID
- - [ ] Answer
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
@@ -63,8 +59,7 @@
  - [ ] Score
  - [ ] Application ID
  - [ ] Admin ID
- - [ ] Source ID
- - [ ] Source Type
+ - [ ] Question ID
 
 
 ## Pages
@@ -73,7 +68,6 @@
 - [ ] Admin dashboard
 - [ ] Judge dashboard
 - [ ] Create question
-- [ ] Create criteria
 - [ ] Create application
 - [ ] Answering questions
 - [ ] Judging applications
@@ -81,9 +75,18 @@
 
 
 ## Relationships
-- [ ] Relationship between users and applications
-- [ ] Relationship between applications and questions ???
-- [ ] Relationship between applications and criteria ???
+- [ ] One to many + One to one between users <-> applications
+- [ ] One to one + One to many between answers <-> applications
+- [ ] One to one between answers -> questions
+- [ ] One to many + One to one between questions <-> question children
+- [ ] One to many + One to one between applications <-> documents
+- [ ] One to one between documents -> admins (users) 
+- [ ] One to one + One to many between feedback <-> applications
+- [ ] One to one between feedback -> admins (users)
+- [ ] One to one polymorphic between feedback -> answers and documents
+- [ ] One to one + One to many between scores <-> applications
+- [ ] One to one between scores -> admins (users)
+- [ ] One to one btween scores -> questions
 
 
 ## Defined Events

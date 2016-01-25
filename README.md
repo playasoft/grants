@@ -5,7 +5,7 @@ A laravel app to create weighted questionaire systems
 
 1. Setup
     - Administrator sets up project
-    - Administrator adds questions and judgement criteria
+    - Administrator adds user questions and judgement criteria
     - Administrator assigns users to judge
 2. Application submission
     - User registers
