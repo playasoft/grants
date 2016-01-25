@@ -22,6 +22,7 @@
  - [ ] Status (This question will only appear when an application is within a specific status)
  - [ ] Required
  - [ ] Parent
+ - [ ] Order
 
 - Criteria
  - [ ] Criteria
@@ -29,14 +30,41 @@
  - [ ] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
 
 - Applications
+ - [ ] Name
+ - [ ] Description
  - [ ] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [ ] ???
+ - [ ] Objective Score
+ - [ ] Subjective Score
+ - [ ] User ID
 
-- Files
+- Documents
  - [ ] Name
  - [ ] Description
  - [ ] File
  - [ ] Application ID
+ - [ ] Admin ID (Useful for tracking if admins have attached a file to an application)
+
+- Answers
+ - [ ] Application ID
+ - [ ] Question ID
+ - [ ] Answer
+
+- Feedback
+ - [ ] Feedback (So judges can ask questions or give criticism)
+ - [ ] Type (Input, Text, Dropdown, Boolean)
+ - [ ] Options (JSON, Optional, only for dropdowns at the moment)
+ - [ ] Response (Response from the user)
+ - [ ] Application ID
+ - [ ] Admin ID (Which admin sent the feedback)
+ - [ ] Regarding ID (The ID of the data this feedback is related to, if any)
+ - [ ] Regarding Type (Can be a question or a document)
+
+- Scores
+ - [ ] Score
+ - [ ] Application ID
+ - [ ] Admin ID
+ - [ ] Source ID
+ - [ ] Source Type
 
 
 ## Pages
