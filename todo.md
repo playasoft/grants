@@ -26,17 +26,17 @@
  - [x] Order
 
 - Applications
- - [ ] Name
- - [ ] Description
- - [ ] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [ ] Applicant Score
- - [ ] Judge Score
- - [ ] User ID
+ - [x] Name
+ - [x] Description
+ - [x] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
+ - [x] Applicant Score
+ - [x] Judge Score
+ - [x] User ID
 
 - Answers
- - [ ] Application ID
- - [ ] Question ID
- - [ ] Answer
+ - [x] Application ID
+ - [x] Question ID
+ - [x] Answer
 
 - Documents
  - [ ] Name
