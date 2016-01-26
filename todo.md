@@ -2,7 +2,7 @@
 
 ## Auth
 - [x] Create user controller
-- [ ] Set up auth provider
+- [x] Set up auth provider
 - [x] Registration
 - [x] Login
 - [ ] Permissions per page
