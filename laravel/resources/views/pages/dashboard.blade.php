@@ -8,11 +8,11 @@
     <hr>
 
     @can('create-question')
-        <a href="/question/create" class="btn btn-primary">Create a Question</a>
+        <a href="/questions/create" class="btn btn-primary">Create a Question</a>
     @endcan
 
     @can('create-application')
-        <a href="/application/create" class="btn btn-primary">Apply for a Grant</a>
+        <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
     @endcan
 
 @endsection
