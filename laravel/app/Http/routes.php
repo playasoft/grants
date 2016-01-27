@@ -38,7 +38,6 @@ Route::group(['middleware' => ['web']], function()
     Route::post('/login', 'UserController@login');
 });
 
-
 Route::group(['middleware' => ['admin']], function()
 {
     // Question routes
