@@ -23,9 +23,7 @@
 |
 */
 
-// TODO: Create admin middleware
-
-Route::group(['middleware' => ['web']], function ()
+Route::group(['middleware' => ['web']], function()
 {
     // Basic pages
     Route::get('/', 'PageController@home');
@@ -38,7 +36,11 @@ Route::group(['middleware' => ['web']], function ()
 
     Route::post('/register', 'UserController@create');
     Route::post('/login', 'UserController@login');
+});
 
+
+Route::group(['middleware' => ['admin']], function()
+{
     // Question routes
     Route::get('/questions', 'QuestionController@listQuestions');
     Route::post('/questions', 'QuestionController@postQuestion');

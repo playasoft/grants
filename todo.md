@@ -5,7 +5,7 @@
 - [x] Set up auth provider
 - [x] Registration
 - [x] Login
-- [ ] Permissions per page
+- [x] Permissions per page
 
 
 ## Models

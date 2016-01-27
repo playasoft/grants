@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate
+class IsJudge
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(Auth::guard($guard)->guest())
+        if(Auth::guard($guard)->guest() || !in_array(Auth::user()->role, ['judge', 'observer']))
         {
             if($request->ajax())
             {
