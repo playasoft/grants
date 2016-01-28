@@ -54,6 +54,8 @@
             <span class="help-block">A user will only see this question if they have a matching user role.</span>
         </div>
 
+        @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
+
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}
 @endsection
