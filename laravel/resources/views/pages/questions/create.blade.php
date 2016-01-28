@@ -10,7 +10,7 @@
         <div class="form-group">
             <label class="control-label" for="date-field">Type of Answer</label>
     
-            <select class="form-control shift-type" id="date-field">
+            <select class="form-control answer-type" id="date-field">
                 <option value="input">Short Sentence</option>
                 <option value="text">Paragraph</option>
                 <option value="dropdown">Multiple Choice</option>
@@ -31,7 +31,7 @@
         <div class="form-group">
             <label class="control-label" for="date-field">Application Status</label>
     
-            <select class="form-control shift-type" id="date-field">
+            <select class="form-control app-status" id="date-field">
                 <option value="new">New</option>
                 <option value="submitted">Submitted</option>
                 <option value="review">Review</option>
@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="control-label" for="date-field">User Role</label>
 
-            <select class="form-control shift-type" id="date-field">
+            <select class="form-control user-role" id="date-field">
                 <option value="applicant">Applicant</option>
                 <option value="judge">Judge</option>
             </select>
