@@ -7,16 +7,19 @@
     {!! Form::open(['url' => 'questions']) !!}
         @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?"])
 
-        <div class="form-group">
-            <label class="control-label" for="date-field">Type of Answer</label>
-    
-            <select class="form-control answer-type" id="date-field">
-                <option value="input">Short Sentence</option>
-                <option value="text">Paragraph</option>
-                <option value="dropdown">Multiple Choice</option>
-                <option value="boolean">Yes / No</option>
-            </select>
-        </div>
+        @include('partials/form/select',
+        [
+            'name' => 'type',
+            'label' => 'Type of Answer',
+            'class' => 'answer-type',
+            'options' =>
+            [
+                'input' => "Short Sentence",
+                'text' => "Paragraph",
+                'dropdown' => "Multiple Choice",
+                'boolean' => "Yes / No"
+            ]
+        ])
         
         <div class="question-options hidden">
             @include('partials/form/textarea',
@@ -28,31 +31,33 @@
             ])
         </div>
 
-        <div class="form-group">
-            <label class="control-label" for="date-field">Application Status</label>
-    
-            <select class="form-control app-status" id="date-field">
-                <option value="new">New</option>
-                <option value="submitted">Submitted</option>
-                <option value="review">Review</option>
-                <option value="follow-up">Follow Up</option>
-                <option value="accepted">Accepted</option>
-                <option value="rejected">Rejected</option>
-            </select>
+        @include('partials/form/select',
+        [
+            'name' => 'status',
+            'label' => 'Application Status',
+            'help' => "A user will only see this question when their application has this status.",
+            'options' =>
+            [
+                'new' => "New",
+                'submitted' => "Submitted",
+                'review' => "Review",
+                'follow-up' => "Follow Up",
+                'accepted' => "Accepted",
+                'rejected' => "Rejected",
+            ]
+        ])
 
-            <span class="help-block">A user will only see this question when their application has this status.</span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label" for="date-field">User Role</label>
-
-            <select class="form-control user-role" id="date-field">
-                <option value="applicant">Applicant</option>
-                <option value="judge">Judge</option>
-            </select>
-
-            <span class="help-block">A user will only see this question if they have a matching user role.</span>
-        </div>
+        @include('partials/form/select',
+        [
+            'name' => 'role',
+            'label' => 'User Role',
+            'help' => "A user will only see this question if they have a matching user role.",
+            'options' =>
+            [
+                'applicant' => "Applicant",
+                'judge' => "Judge",
+            ]
+        ])
 
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
 
