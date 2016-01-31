@@ -15,7 +15,8 @@ class QuestionController extends Controller
 {
     function listQuestions()
     {
-        return "[Insert list here]";
+        $questions = Question::latest()->get();
+        return view('pages/questions/list', compact('questions'));
     }
 
     function postQuestion(QuestionRequest $request)
