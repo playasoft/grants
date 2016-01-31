@@ -67,4 +67,9 @@ class UserController extends Controller
         $request->session()->flash('success', 'You are now logged out!');
         return redirect('/');
     }
+
+    public function listUsers()
+    {
+        return view('pages/users/list');
+    }
 }

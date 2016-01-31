@@ -52,4 +52,8 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/questions/create', 'QuestionController@createQuestionForm');
     Route::get('/questions/{question}', 'QuestionController@editQuestionForm');
     Route::post('/questions/{question}', 'QuestionController@editQuestion');
+
+    // User administration routes
+    Route::get('/users', 'UserController@listUsers');
+    Route::get('/users/{user}', 'UserController@viewUser');
 });
