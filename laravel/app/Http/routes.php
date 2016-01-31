@@ -36,12 +36,20 @@ Route::group(['middleware' => ['web']], function()
 
     Route::post('/register', 'UserController@create');
     Route::post('/login', 'UserController@login');
+
+    // Grant application routes
+    Route::get('/applications', 'ApplicationController@listApplications');
+    Route::post('/applications', 'ApplicationController@createApplication');
+    Route::get('/applications/create', 'ApplicationController@createApplicationForm');
+    Route::get('/applications/{application}', 'ApplicationController@viewApplication');
 });
 
 Route::group(['middleware' => ['admin']], function()
 {
     // Question routes
     Route::get('/questions', 'QuestionController@listQuestions');
-    Route::post('/questions', 'QuestionController@postQuestion');
+    Route::post('/questions', 'QuestionController@createQuestion');
     Route::get('/questions/create', 'QuestionController@createQuestionForm');
+    Route::get('/questions/{question}', 'QuestionController@editQuestionForm');
+    Route::post('/questions/{question}', 'QuestionController@editQuestion');
 });

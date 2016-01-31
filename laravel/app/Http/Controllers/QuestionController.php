@@ -19,7 +19,7 @@ class QuestionController extends Controller
         return view('pages/questions/list', compact('questions'));
     }
 
-    function postQuestion(QuestionRequest $request)
+    function createQuestion(QuestionRequest $request)
     {
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-question');
@@ -34,5 +34,15 @@ class QuestionController extends Controller
     function createQuestionForm()
     {
         return view('pages/questions/create');
+    }
+
+    function editQuestion(QuestionRequest $request)
+    {
+        return "// todo";
+    }
+
+    function editQuestionForm()
+    {
+        return view('pages/questions/edit');
     }
 }
