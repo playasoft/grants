@@ -61,6 +61,6 @@
 
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit New Question</button>
     {!! Form::close() !!}
 @endsection

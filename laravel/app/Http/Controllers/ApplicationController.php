@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Application;
+use App\Http\Requests\ApplicationRequest;
+
 class ApplicationController extends Controller
 {
     public function listApplications()
@@ -18,7 +21,7 @@ class ApplicationController extends Controller
         return view('pages/applications/list');
     }
 
-    public function createApplication()
+    public function createApplication(ApplicationRequest $request)
     {
         return "// todo";
     }

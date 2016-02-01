@@ -68,7 +68,7 @@
 - [ ] Admin dashboard
 - [ ] Judge dashboard
 - [x] Create question
-- [ ] Create application
+- [x] Create application
 - [ ] Answering questions
 - [ ] Judging applications
 - [ ] Follow up questions
