@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Http\Requests\ApplicationRequest;
 
+use Illuminate\Support\Facades\Auth;
+
 class ApplicationController extends Controller
 {
     public function listApplications()
@@ -23,11 +25,30 @@ class ApplicationController extends Controller
 
     public function createApplication(ApplicationRequest $request)
     {
-        return "// todo";
+        // Double check to make sure the current user is authorized to do this...
+        $this->authorize('create-application');
+
+        // Generate a new application, assign required information
+        $application = new Application;
+        $application->status = "new";
+        $application->user_id = Auth::user()->id;
+        $application->save();
+
+        // Assign user input
+        $input = $request->all();
+        $application->update($input);
+
+        $request->session()->flash('success', 'Your question has been created.');
+        return redirect('/applications/' . $application->id);
     }
 
     public function createApplicationForm()
     {
         return view('pages/applications/create');
+    }
+
+    public function viewApplication()
+    {
+        return "// view a single application";
     }
 }
