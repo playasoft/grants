@@ -39,6 +39,12 @@ class Kernel extends HttpKernel
             'throttle:60,1',
         ],
 
+        'auth' =>
+        [
+            'web',
+            \App\Http\Middleware\Authenticate::class
+        ],
+
         'admin' =>
         [
             'web',
@@ -61,7 +67,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware =
     [
-        'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
