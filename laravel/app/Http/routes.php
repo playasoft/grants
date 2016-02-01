@@ -36,7 +36,10 @@ Route::group(['middleware' => ['web']], function()
 
     Route::post('/register', 'UserController@create');
     Route::post('/login', 'UserController@login');
+});
 
+Route::group(['middleware' => ['auth']], function()
+{
     // Grant application routes
     Route::get('/applications', 'ApplicationController@listApplications');
     Route::post('/applications', 'ApplicationController@createApplication');
