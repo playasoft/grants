@@ -13,4 +13,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
     protected $fillable = ['name', 'email', 'password'];
+
+    // Users can have applications
+    public function applications()
+    {
+        return $this->hasMany('App\Models\Application');
+    }
 }

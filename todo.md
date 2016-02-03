@@ -75,7 +75,7 @@
 
 
 ## Relationships
-- [ ] One to many + One to one between users <-> applications
+- [x] One to many + One to one between users <-> applications
 - [ ] One to one + One to many between answers <-> applications
 - [ ] One to one between answers -> questions
 - [ ] One to many + One to one between questions <-> question children
