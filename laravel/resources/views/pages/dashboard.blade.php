@@ -8,14 +8,14 @@
     <hr>
 
     @can('create-question')
-        <a href="/applications/create" class="btn btn-primary">Create a Question</a>
+        <a href="/questions/create" class="btn btn-primary">Create a Question</a>
     @endcan
 
     @can('create-application')
         <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
     @endcan
 
-    @if($applications)
+    @if($applications->count())
         <h2>Your Applications</h2>
 
         <table class="table table-hover">
@@ -39,7 +39,5 @@
                 @endforeach
             </tbody>
         </table>
-
-
     @endif
 @endsection
