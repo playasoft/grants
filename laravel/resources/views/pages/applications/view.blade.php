@@ -46,9 +46,13 @@
                         </label>
                     </div>
                 @elseif($question->type == 'dropdown')
-                    <div>
-                        // todo
-                    </div>
+                    <select class="form-control" name="answer" id="{{ $question->id }}-answer">
+                        <option value="">----</option>
+
+                        @foreach($question->dropdown() as $value => $option)
+                            <option value="{{ $value }}">{{ $option }}</option>
+                        @endforeach
+                    </select>
                 @endif
             </div>
 
