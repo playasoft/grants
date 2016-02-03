@@ -15,7 +15,8 @@ class PageController extends Controller
     {
         if($this->auth->check())
         {
-            return view('pages/dashboard');
+            $applications = $this->auth->user()->applications;
+            return view('pages/dashboard', compact('applications'));
         }
         else
         {
