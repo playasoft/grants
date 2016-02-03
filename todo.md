@@ -69,7 +69,7 @@
 - [ ] Judge dashboard
 - [x] Create question
 - [x] Create application
-- [ ] Answering questions
+- [x] Answering questions
 - [ ] Judging applications
 - [ ] Follow up questions
 
@@ -103,3 +103,21 @@
 - [ ] Send user email when application needs review
 - [ ] Send user email when application is accepted
 - [ ] Send user email when application is rejected
+
+
+## User Workflow
+- [x] Create application
+- [ ] Answer questions
+- [ ] Submitting applications
+- [ ] Server-side checking for required answers
+- [ ] Client-side checking for required answers
+- [ ] AJAX autosave for answers
+- [ ] Pop-up notification warning user when submitting application
+
+
+## Judge Workflow
+- [ ] View submitted applications
+- [ ] Rate user answers
+- [ ] Rate judge questions
+- [ ] Provide feedback
+- [ ] Approve / deny applications
