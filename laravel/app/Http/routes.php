@@ -46,6 +46,10 @@ Route::group(['middleware' => ['auth']], function()
     Route::get('/applications/create', 'ApplicationController@createApplicationForm');
     Route::get('/applications/{application}', 'ApplicationController@viewApplication');
     Route::post('/applications/{application}', 'ApplicationController@updateApplication');
+
+    // Answering questions
+    Route::post('/answers', 'AnswerController@createAnswer');
+    Route::post('/answers/{answer}', 'AnswerController@updateAnswer');
 });
 
 Route::group(['middleware' => ['admin']], function()
