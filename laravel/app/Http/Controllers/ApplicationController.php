@@ -40,7 +40,7 @@ class ApplicationController extends Controller
         $input = $request->all();
         $application->update($input);
 
-        $request->session()->flash('success', 'Your question has been created.');
+        $request->session()->flash('success', 'Your application has been created.');
         return redirect('/applications/' . $application->id);
     }
 
@@ -62,5 +62,21 @@ class ApplicationController extends Controller
         $questions = Question::where('status', $application->status)->get();
 
         return view('pages/applications/view', compact('application', 'questions'));
+    }
+
+    public function updateApplication(Application $application, ApplicationRequest $request)
+    {
+        // Did the current user create this application?
+        if($application->user->id != Auth::user()->id)
+        {
+            $request->session()->flash('error', 'Only the person who created an application may change it.');
+            return redirect('/login');
+        }
+
+        $input = $request->all();
+        $application->update($input);
+
+        $request->session()->flash('success', 'Your application has been updated.');
+        return redirect('/applications/' . $application->id);
     }
 }

@@ -107,6 +107,7 @@
 
 ## User Workflow
 - [x] Create application
+- [x] Update application
 - [ ] Answer questions
 - [ ] Submitting applications
 - [ ] Server-side checking for required answers
