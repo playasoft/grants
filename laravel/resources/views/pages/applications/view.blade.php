@@ -28,7 +28,22 @@
     <h2>Questions About Your Project</h2>
 
     @foreach($questions as $question)
-        {!! Form::open(['url' => 'answers']) !!}
+        <?php
+
+        // Default to the 'answers' route
+        $action = 'answers';
+        $answer = false;
+
+        // If this question has already been answered, use the update route instead of creating a new answer
+        if(isset($answers[$question->id]))
+        {
+            $action = 'answers/' . $answers[$question->id]->id;
+            $answer = $answers[$question->id]->answer;
+        }
+
+        ?>
+    
+        {!! Form::open(['url' => $action]) !!}
             <input type="hidden" name="application_id" value="{{ $application->id }}">
             <input type="hidden" name="question_id" value="{{ $question->id }}">
 
@@ -36,21 +51,21 @@
                 <label class="control-label" for="{{ $question->id }}-answer">{{ $question->question }}</label>
 
                 @if($question->type == 'input')
-                    <input type="text" name="answer" class="form-control" id="{{ $question->id }}-answer">
+                    <input type="text" name="answer" class="form-control" id="{{ $question->id }}-answer" value="{{ $answer }}">
                 @elseif($question->type == 'text')
-                    <textarea name="answer" class="form-control" id="{{ $question->id }}-answer"></textarea>
+                    <textarea name="answer" class="form-control" id="{{ $question->id }}-answer">{{ $answer }}</textarea>
                 @elseif($question->type == 'boolean')
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="answer" value="1" id="{{ $question->id }}-answer"> Yes
+                            <input type="checkbox" name="answer" value="1" id="{{ $question->id }}-answer" {{ ($answer) ? 'checked' : '' }}> Yes
                         </label>
                     </div>
                 @elseif($question->type == 'dropdown')
                     <select class="form-control" name="answer" id="{{ $question->id }}-answer">
                         <option value="">----</option>
-
+                        
                         @foreach($question->dropdown() as $value => $option)
-                            <option value="{{ $value }}">{{ $option }}</option>
+                            <option value="{{ $value }}" {{ ($answer == $value) ? 'selected' : '' }}>{{ $option }}</option>
                         @endforeach
                     </select>
                 @endif

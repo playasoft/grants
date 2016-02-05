@@ -61,7 +61,15 @@ class ApplicationController extends Controller
         // Select questions based on the status of the application
         $questions = Question::where('status', $application->status)->get();
 
-        return view('pages/applications/view', compact('application', 'questions'));
+        // Generate an array of answers based on their associated question ID
+        $answers = [];
+
+        foreach($application->answers as $answer)
+        {
+            $answers[$answer->question_id] = $answer;
+        }
+
+        return view('pages/applications/view', compact('application', 'questions', 'answers'));
     }
 
     public function updateApplication(Application $application, ApplicationRequest $request)
