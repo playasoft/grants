@@ -13,4 +13,10 @@ class Application extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    // Applications can have multiple answers
+    public function answers()
+    {
+        return $this->hasMany('App\Models\Answer');
+    }
 }

@@ -76,8 +76,8 @@
 
 ## Relationships
 - [x] One to many + One to one between users <-> applications
-- [ ] One to one + One to many between answers <-> applications
-- [ ] One to one between answers -> questions
+- [x] One to one + One to many between answers <-> applications
+- [x] One to one between answers -> questions
 - [ ] One to many + One to one between questions <-> question children
 - [ ] One to many + One to one between applications <-> documents
 - [ ] One to one between documents -> admins (users) 
@@ -108,7 +108,8 @@
 ## User Workflow
 - [x] Create application
 - [x] Update application
-- [ ] Answer questions
+- [x] Answer questions
+- [ ] Uploading files
 - [ ] Submitting applications
 - [ ] Server-side checking for required answers
 - [ ] Client-side checking for required answers
