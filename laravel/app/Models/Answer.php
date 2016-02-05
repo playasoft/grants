@@ -19,4 +19,11 @@ class Answer extends Model
     {
         return $this->belongsTo('App\Models\Question');
     }
+
+    // Convenience for getting the user that created an answer
+    public function getUserAttribute()
+    {
+        return $this->application->user;
+    }
+
 }

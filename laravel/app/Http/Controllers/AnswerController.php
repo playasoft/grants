@@ -42,6 +42,16 @@ class AnswerController extends Controller
 
     public function updateAnswer(AnswerRequest $request, Answer $answer)
     {
-        return "// todo";
+        if($answer->user->id != Auth::user()->id)
+        {
+            $request->session()->flash('error', 'Only the person who created an application may answer questions for it.');
+            return redirect('/login');
+        }
+
+        $input = $request->all();
+        $answer->update($input);
+
+        $request->session()->flash('success', 'Your answer has been saved.');
+        return redirect('/applications/' . $answer->application->id);
     }
 }

@@ -55,9 +55,13 @@
                 @elseif($question->type == 'text')
                     <textarea name="answer" class="form-control" id="{{ $question->id }}-answer">{{ $answer }}</textarea>
                 @elseif($question->type == 'boolean')
-                    <div class="checkbox">
+                    <div class="radio">
                         <label>
-                            <input type="checkbox" name="answer" value="1" id="{{ $question->id }}-answer" {{ ($answer) ? 'checked' : '' }}> Yes
+                            <input type="radio" name="answer" value="1" id="{{ $question->id }}-answer" {{ ($answer) ? 'checked' : '' }}> Yes
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="answer" value="0" id="{{ $question->id }}-answer" {{ (!$answer) ? 'checked' : '' }}> No
                         </label>
                     </div>
                 @elseif($question->type == 'dropdown')
