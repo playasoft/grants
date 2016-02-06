@@ -17,7 +17,7 @@
 
 - Questions
  - [x] Question
- - [x] Type (Input, Text, Dropdown, Boolean)
+ - [x] Type (Input, Text, Dropdown, Boolean, File)
  - [x] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
  - [x] Status (This question will only appear when an application is within a specific status)
  - [x] Role (User role this question should be shown to: Applicant or Judge)
@@ -43,6 +43,7 @@
  - [ ] Description
  - [ ] File
  - [ ] Application ID
+ - [ ] Question ID (Nullable, cascade on delete set null)
  - [ ] Admin ID (Useful for tracking if admins have attached a file to an application)
 
 - Feedback
@@ -80,6 +81,7 @@
 - [x] One to one between answers -> questions
 - [ ] One to many + One to one between questions <-> question children
 - [ ] One to many + One to one between applications <-> documents
+- [ ] One to many + One to one between questions <-> documents
 - [ ] One to one between documents -> admins (users) 
 - [ ] One to one + One to many between feedback <-> applications
 - [ ] One to one between feedback -> admins (users)

@@ -26,7 +26,7 @@ class QuestionRequest extends Request
         return
         [
             'question' => 'required|min:3',
-            'type' => 'required|in:input,text,dropdown,boolean',
+            'type' => 'required|in:input,text,dropdown,boolean,file',
             'status' => 'required|in:new,submitted,review,follow-up,accepted,rejected',
             'role' => 'required|in:applicant,judge'
         ];

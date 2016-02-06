@@ -17,7 +17,8 @@
                 'input' => "Short Sentence",
                 'text' => "Paragraph",
                 'dropdown' => "Multiple Choice",
-                'boolean' => "Yes / No"
+                'boolean' => "Yes / No",
+                'file' => "File Upload",
             ]
         ])
         
