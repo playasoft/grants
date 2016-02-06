@@ -72,6 +72,14 @@
                             <option value="{{ $value }}" {{ ($answer == $value) ? 'selected' : '' }}>{{ $option }}</option>
                         @endforeach
                     </select>
+                @elseif($question->type == 'file')
+                    <input type="hidden" name="answer" value="1">
+                
+                    <div>
+                        <span class="btn btn-primary btn-file">
+                            <input type="file" name="document" id="{{ $question->id }}-answer">
+                        </span>
+                    </div>
                 @endif
             </div>
 

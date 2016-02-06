@@ -16,6 +16,32 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
+    // Private function to manage file uploads
+    private function handleUpload($request)
+    {
+        $fileName = false;
+        
+        // Save event image with a unique name
+        if($request->hasFile('image'))
+        {
+            // Create upload folder if it doesn't exist
+            if(!file_exists(public_path() . '/files/user'))
+            {
+                mkdir(public_path() . '/files/user', 0755, true);
+            }
+
+            // Make sure the original filename is sanitized
+            $file = pathinfo($request->file('document')->getClientOriginalName());
+            $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+
+            // Move file to uploads directory
+            $fileName = time() . '-' . $fileName;
+            $request->file('document')->move(public_path() . '/files/user', $fileName);
+        }
+
+        return $fileName;
+    }
+
     public function createAnswer(AnswerRequest $request)
     {
         // Check if current user created this application
@@ -35,6 +61,13 @@ class AnswerController extends Controller
         $answer->question_id = $question->id;
         $answer->answer = $input['answer'];
         $answer->save();
+
+        // Check if a file needs to be uploaded
+        if($question->type == 'file')
+        {
+            // Handle upload
+            // Save new row in the documents table
+        }
 
         $request->session()->flash('success', 'Your answer has been saved.');
         return redirect('/applications/' . $application->id);
