@@ -40,14 +40,19 @@ class AnswerController extends Controller
             $request->file('document')->move(public_path() . '/files/user', $fileName);
         }
 
-        return $fileName;
+        return
+        [
+            'name' => $file['filename'],
+            'file' => $fileName
+        ];
     }
 
     // Helper function to attach a document to an answer
-    private function createDocument($answer, $fileName)
+    private function createDocument($answer, $upload)
     {
         $document = new Document;
-        $document->file = $fileName;
+        $document->name = $upload['name'];
+        $document->file = $upload['file'];
         $document->application_id = $answer->application_id;
         $document->answer_id = $answer->id;
         $document->user_id = Auth::user()->id;
@@ -80,7 +85,7 @@ class AnswerController extends Controller
         if($question->type == 'file')
         {
             // Save uploaded file
-            $fileName = $this->handleUpload($request);
+            $file = $this->handleUpload($request);
 
             // Save new document
             $document = $this->createDocument($answer, $fileName);
@@ -105,10 +110,10 @@ class AnswerController extends Controller
         if($answer->question->type == 'file')
         {
             // Save uploaded file
-            $fileName = $this->handleUpload($request);
+            $upload = $this->handleUpload($request);
 
             // Save new document
-            $document = $this->createDocument($answer, $fileName);
+            $document = $this->createDocument($answer, $upload);
         }
 
         $request->session()->flash('success', 'Your answer has been saved.');
