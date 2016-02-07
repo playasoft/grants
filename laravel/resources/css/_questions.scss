@@ -2,3 +2,12 @@
     height: 100px;
     min-height: auto;
 }
+
+.documents li {
+    margin-bottom: 0.4em;
+}
+
+.document {
+    display: inline-block;
+    min-width: 200px;
+}

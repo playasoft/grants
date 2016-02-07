@@ -74,7 +74,24 @@
                     </select>
                 @elseif($question->type == 'file')
                     <input type="hidden" name="answer" value="1">
-                
+
+                    @if($answers[$question->id]->documents->count())
+                        <div>
+                            <b>Uploaded Files</b>
+
+                            <ul class="documents">
+                                @foreach($answers[$question->id]->documents as $document)
+                                    <li>
+                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
+                                        <a href="/documents/{{ $document->id }}/delete" class="btn btn-danger">Delete</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <b>Upload Another File</b>
+                    @endif
+
                     <div>
                         <span class="btn btn-primary btn-file">
                             <input type="file" name="document" id="{{ $question->id }}-answer">

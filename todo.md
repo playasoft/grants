@@ -65,7 +65,7 @@
 
 ## Pages
 - [x] Home page
-- [ ] User dashboard
+- [x] User dashboard
 - [ ] Admin dashboard
 - [ ] Judge dashboard
 - [x] Create question
@@ -111,7 +111,8 @@
 - [x] Create application
 - [x] Update application
 - [x] Answer questions
-- [ ] Uploading files
+- [x] Uploading files
+- [ ] Review page
 - [ ] Submitting applications
 - [ ] Server-side checking for required answers
 - [ ] Client-side checking for required answers
