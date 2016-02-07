@@ -14,10 +14,10 @@ class Document extends Model
         return $this->belongsTo('App\Models\Application');
     }
 
-    // Documents can belong to a question
-    public function question()
+    // Documents can belong to the answer of a question
+    public function answer()
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo('App\Models\Answer');
     }
 
     // Documents belong to users

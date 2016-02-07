@@ -20,8 +20,8 @@ class CreateDocumentsTable extends Migration
             $table->string('file');
             $table->integer('application_id')->unsigned();
             $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
-            $table->integer('question_id')->unsigned()->nullable();
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('set null');
+            $table->integer('answer_id')->unsigned()->nullable();
+            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('set null');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

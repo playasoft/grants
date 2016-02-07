@@ -43,7 +43,7 @@
  - [x] Description
  - [x] File
  - [x] Application ID
- - [x] Question ID (Nullable, cascade on delete set null)
+ - [x] Answer ID (Nullable, cascade on delete set null)
  - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
 - Feedback

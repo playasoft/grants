@@ -49,7 +49,7 @@ class AnswerController extends Controller
         $document = new Document;
         $document->file = $fileName;
         $document->application_id = $answer->application_id;
-        $document->question_id = $answer->question_id;
+        $document->answer_id = $answer->id;
         $document->user_id = Auth::user()->id;
         $document->save();
 
