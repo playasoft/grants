@@ -39,12 +39,12 @@
  - [x] Answer
 
 - Documents
- - [ ] Name
- - [ ] Description
- - [ ] File
- - [ ] Application ID
- - [ ] Question ID (Nullable, cascade on delete set null)
- - [ ] Admin ID (Useful for tracking if admins have attached a file to an application)
+ - [x] Name
+ - [x] Description
+ - [x] File
+ - [x] Application ID
+ - [x] Question ID (Nullable, cascade on delete set null)
+ - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
@@ -52,7 +52,7 @@
  - [ ] Options (JSON, Optional, only for dropdowns at the moment)
  - [ ] Response (Response from the user)
  - [ ] Application ID
- - [ ] Admin ID (Which admin sent the feedback)
+ - [ ] User ID (Which admin sent the feedback)
  - [ ] Regarding ID (The ID of the data this feedback is related to, if any)
  - [ ] Regarding Type (Can be a question or a document)
 
@@ -80,9 +80,9 @@
 - [x] One to one + One to many between answers <-> applications
 - [x] One to one between answers -> questions
 - [ ] One to many + One to one between questions <-> question children
-- [ ] One to many + One to one between applications <-> documents
-- [ ] One to many + One to one between questions <-> documents
-- [ ] One to one between documents -> admins (users) 
+- [x] One to many + One to one between applications <-> documents
+- [x] One to many + One to one between questions <-> documents
+- [x] One to one between documents -> admins (users) 
 - [ ] One to one + One to many between feedback <-> applications
 - [ ] One to one between feedback -> admins (users)
 - [ ] One to one polymorphic between feedback -> answers and documents

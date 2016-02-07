@@ -19,4 +19,10 @@ class Application extends Model
     {
         return $this->hasMany('App\Models\Answer');
     }
+
+    // Applications can have uploaded documents
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document');
+    }
 }

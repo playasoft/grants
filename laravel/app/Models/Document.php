@@ -4,25 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class Document extends Model
 {
-    protected $fillable = ['answer'];
+    protected $fillable = ['name', 'description'];
 
-    // Answers belong to an application
+    // Documents belong to an application
     public function application()
     {
         return $this->belongsTo('App\Models\Application');
     }
 
-    // Answers belong to a question
+    // Documents can belong to a question
     public function question()
     {
         return $this->belongsTo('App\Models\Question');
     }
 
-    // Convenience for getting the user that created an answer
-    public function getUserAttribute()
+    // Documents belong to users
+    public function user()
     {
-        return $this->application->user;
+        return $this->belongsTo('App\Models\User');
     }
 }

@@ -22,4 +22,10 @@ class Question extends Model
 
         return $output;
     }
+
+    // Questions can have uploaded documents
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document');
+    }
 }
