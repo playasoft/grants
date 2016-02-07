@@ -43,7 +43,7 @@
 
         ?>
     
-        {!! Form::open(['url' => $action]) !!}
+        {!! Form::open(['url' => $action, 'files' => true]) !!}
             <input type="hidden" name="application_id" value="{{ $application->id }}">
             <input type="hidden" name="question_id" value="{{ $question->id }}">
 

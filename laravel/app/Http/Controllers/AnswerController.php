@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Models\Document;
 
 use App\Http\Requests\AnswerRequest;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class AnswerController extends Controller
         $fileName = false;
         
         // Save event image with a unique name
-        if($request->hasFile('image'))
+        if($request->hasFile('document'))
         {
             // Create upload folder if it doesn't exist
             if(!file_exists(public_path() . '/files/user'))
@@ -40,6 +41,19 @@ class AnswerController extends Controller
         }
 
         return $fileName;
+    }
+
+    // Helper function to attach a document to an answer
+    private function createDocument($answer, $fileName)
+    {
+        $document = new Document;
+        $document->file = $fileName;
+        $document->application_id = $answer->application_id;
+        $document->question_id = $answer->question_id;
+        $document->user_id = Auth::user()->id;
+        $document->save();
+
+        return $document;
     }
 
     public function createAnswer(AnswerRequest $request)
@@ -65,8 +79,11 @@ class AnswerController extends Controller
         // Check if a file needs to be uploaded
         if($question->type == 'file')
         {
-            // Handle upload
-            // Save new row in the documents table
+            // Save uploaded file
+            $fileName = $this->handleUpload($request);
+
+            // Save new document
+            $document = $this->createDocument($answer, $fileName);
         }
 
         $request->session()->flash('success', 'Your answer has been saved.');
@@ -83,6 +100,16 @@ class AnswerController extends Controller
 
         $input = $request->all();
         $answer->update($input);
+
+        // Check if a file needs to be uploaded
+        if($answer->question->type == 'file')
+        {
+            // Save uploaded file
+            $fileName = $this->handleUpload($request);
+
+            // Save new document
+            $document = $this->createDocument($answer, $fileName);
+        }
 
         $request->session()->flash('success', 'Your answer has been saved.');
         return redirect('/applications/' . $answer->application->id);
