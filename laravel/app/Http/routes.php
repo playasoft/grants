@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth']], function()
     // Answering questions
     Route::post('/answers', 'AnswerController@createAnswer');
     Route::post('/answers/{answer}', 'AnswerController@updateAnswer');
+
+    // Handling documents
+    Route::get('/documents/{document}/delete', 'DocumentController@deleteDocument');
 });
 
 Route::group(['middleware' => ['admin']], function()
