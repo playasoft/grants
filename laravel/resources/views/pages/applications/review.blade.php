@@ -53,17 +53,17 @@
                     if(isset($answers[$question->id]))
                     {
                         $answer = $answers[$question->id]->answer;
+                    }
 
-                        // If this question is required
-                        if($question->required)
+                    // If this question is required
+                    if($question->required)
+                    {
+                        // If the answer is empty, or the type is file and there are no uploaded documents
+                        if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
                         {
-                            // If the answer is empty, or the type is file and there are no uploaded documents
-                            if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
-                            {
-                                $missing = true;
-                                $answer = "Your answer is missing.";
-                            }
-                        }
+                            $missing = true;
+                            $answer = "Your answer is missing.";
+                       }
                     }
 
                     ?>
@@ -72,7 +72,7 @@
                         <td><b>{{ $question->question }}</b></td>
                         <td>
                             @if($question->type == 'file')
-                                @if($answers[$question->id]->documents->count())
+                                @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
                                     @foreach($answers[$question->id]->documents as $document)
                                         <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
                                     @endforeach

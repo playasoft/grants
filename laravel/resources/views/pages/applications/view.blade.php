@@ -75,7 +75,7 @@
                 @elseif($question->type == 'file')
                     <input type="hidden" name="answer" value="1">
 
-                    @if($answers[$question->id]->documents->count())
+                    @if($answer && $answers[$question->id]->documents->count())
                         <div>
                             <b>Uploaded Files</b>
 
