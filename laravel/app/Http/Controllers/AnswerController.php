@@ -85,10 +85,10 @@ class AnswerController extends Controller
         if($question->type == 'file')
         {
             // Save uploaded file
-            $file = $this->handleUpload($request);
+            $upload = $this->handleUpload($request);
 
             // Save new document
-            $document = $this->createDocument($answer, $fileName);
+            $document = $this->createDocument($answer, $upload);
         }
 
         $request->session()->flash('success', 'Your answer has been saved.');
