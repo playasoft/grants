@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth']], function()
     Route::get('/applications/create', 'ApplicationController@createApplicationForm');
     Route::get('/applications/{application}', 'ApplicationController@viewApplication');
     Route::post('/applications/{application}', 'ApplicationController@updateApplication');
+    Route::get('/applications/{application}/review', 'ApplicationController@reviewApplication');
+    Route::post('/applications/{application}/submit', 'ApplicationController@submitApplication');
 
     // Answering questions
     Route::post('/answers', 'AnswerController@createAnswer');

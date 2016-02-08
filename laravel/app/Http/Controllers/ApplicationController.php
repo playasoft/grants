@@ -87,4 +87,39 @@ class ApplicationController extends Controller
         $request->session()->flash('success', 'Your application has been updated.');
         return redirect('/applications/' . $application->id);
     }
+
+    public function reviewApplication(Application $application)
+    {
+        // Did the current user create this application?
+        if($application->user->id != Auth::user()->id)
+        {
+            // If not, are they authorized to view applications?
+            $this->authorize('view-application');
+        }
+
+        // Select questions based on the status of the application
+        $questions = Question::where('status', $application->status)->get();
+
+        // Generate an array of answers based on their associated question ID
+        $answers = [];
+
+        foreach($application->answers as $answer)
+        {
+            $answers[$answer->question_id] = $answer;
+        }
+
+        return view('pages/applications/review', compact('application', 'questions', 'answers'));
+    }
+
+    public function submitApplication(Application $application)
+    {
+        // Did the current user create this application?
+        if($application->user->id != Auth::user()->id)
+        {
+            $request->session()->flash('error', 'Only the person who created an application may change it.');
+            return redirect('/login');
+        }
+
+        return "// todo";
+    }
 }

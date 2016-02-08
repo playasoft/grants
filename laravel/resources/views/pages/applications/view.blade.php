@@ -106,5 +106,5 @@
         <hr>
     @endforeach
 
-    <button type="submit" class="btn btn-success">Submit Application</button>
+    <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Submit Application</a>
 @endsection

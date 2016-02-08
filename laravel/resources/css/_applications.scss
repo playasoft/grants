@@ -1,0 +1,27 @@
+.documents li {
+    margin-bottom: 0.4em;
+}
+
+.document {
+    display: inline-block;
+    min-width: 200px;
+}
+
+tr.danger {
+    color: #a94442;
+}
+
+th.button,
+td.button {
+    text-align: center;
+}
+
+.glyphicon {
+    &.success {
+        color: #5cb85c;
+    }
+
+    &.error {
+        color: #d9534f;
+    }
+}

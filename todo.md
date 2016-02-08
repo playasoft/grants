@@ -112,7 +112,7 @@
 - [x] Update application
 - [x] Answer questions
 - [x] Uploading files
-- [ ] Review page
+- [x] Review page
 - [ ] Submitting applications
 - [ ] Server-side checking for required answers
 - [ ] Client-side checking for required answers
