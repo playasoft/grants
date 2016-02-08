@@ -25,7 +25,7 @@
 
                 <tr>
                     <td><b>Basic Description</b></td>
-                    <td>{{ $application->description }}</td>
+                    <td>{!! nl2br(e($application->description)) !!}</td>
                     <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
                 </tr>
             </tbody>
@@ -65,7 +65,7 @@
 
                     <tr class="{{ ($missing) ? 'danger' : '' }}">
                         <td><b>{{ $question->question }}</b></td>
-                        <td>{{ $answer }}</td>
+                        <td>{!! nl2br(e($answer)) !!}</td>
                         <td class="button">
                             @if($question->required)
                                 <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
