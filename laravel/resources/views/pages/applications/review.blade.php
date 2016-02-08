@@ -54,10 +54,15 @@
                     {
                         $answer = $answers[$question->id]->answer;
 
-                        if($question->required && empty($answer))
+                        // If this question is required
+                        if($question->required)
                         {
-                            $missing = true;
-                            $answer = "Your answer is missing.";
+                            // If the answer is empty, or the type is file and there are no uploaded documents
+                            if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
+                            {
+                                $missing = true;
+                                $answer = "Your answer is missing.";
+                            }
                         }
                     }
 
@@ -65,7 +70,19 @@
 
                     <tr class="{{ ($missing) ? 'danger' : '' }}">
                         <td><b>{{ $question->question }}</b></td>
-                        <td>{!! nl2br(e($answer)) !!}</td>
+                        <td>
+                            @if($question->type == 'file')
+                                @if($answers[$question->id]->documents->count())
+                                    @foreach($answers[$question->id]->documents as $document)
+                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
+                                    @endforeach
+                                @else
+                                    No files uploaded.
+                                @endif
+                            @else
+                                {!! nl2br(e($answer)) !!}
+                            @endif
+                        </td>
                         <td class="button">
                             @if($question->required)
                                 <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
