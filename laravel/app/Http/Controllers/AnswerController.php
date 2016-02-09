@@ -75,6 +75,12 @@ class AnswerController extends Controller
             return redirect('/login');
         }
 
+        if($application->status != 'new')
+        {
+            $request->session()->flash('error', 'Your application has been submitted, you may no longer make changes.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
         $answer = new Answer;
         $answer->application_id = $application->id;
         $answer->question_id = $question->id;
@@ -101,6 +107,12 @@ class AnswerController extends Controller
         {
             $request->session()->flash('error', 'Only the person who created an application may answer questions for it.');
             return redirect('/login');
+        }
+
+        if($answer->application->status != 'new')
+        {
+            $request->session()->flash('error', 'Your application has been submitted, you may no longer make changes.');
+            return redirect('/applications/' . $application->id . '/review');
         }
 
         $input = $request->all();

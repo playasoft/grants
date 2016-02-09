@@ -162,7 +162,13 @@ class ApplicationController extends Controller
             $request->session()->flash('error', 'Your application is missing required information.');
             return redirect('/applications/' . $application->id . '/review');
         }
-        
+
+        if($application->status != 'new')
+        {
+            $request->session()->flash('error', 'Your application has been submitted, you may no longer make changes.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
         $application->status = 'submitted';
         $application->save();
 
