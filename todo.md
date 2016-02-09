@@ -115,9 +115,7 @@
 - [x] Review page
 - [ ] Submitting applications
 - [ ] Server-side checking for required answers
-- [ ] Client-side checking for required answers
 - [ ] AJAX autosave for answers
-- [ ] Pop-up notification warning user when submitting application
 
 
 ## Judge Workflow
