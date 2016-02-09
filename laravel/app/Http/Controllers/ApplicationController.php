@@ -49,13 +49,19 @@ class ApplicationController extends Controller
         return view('pages/applications/create');
     }
 
-    public function viewApplication(Application $application)
+    public function viewApplication(Application $application, Request $request)
     {
         // Did the current user create this application?
         if($application->user->id != Auth::user()->id)
         {
             // If not, are they authorized to view applications?
             $this->authorize('view-application');
+        }
+
+        if($application->status != 'new')
+        {
+            $request->session()->flash('error', 'Your application has been submitted, you may no longer make changes.');
+            return redirect('/applications/' . $application->id . '/review');
         }
 
         // Select questions based on the status of the application
@@ -81,6 +87,12 @@ class ApplicationController extends Controller
             return redirect('/login');
         }
 
+        if($application->status != 'new')
+        {
+            $request->session()->flash('error', 'Your application has been submitted, you may no longer make changes.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
         $input = $request->all();
         $application->update($input);
 
@@ -98,7 +110,7 @@ class ApplicationController extends Controller
         }
 
         // Select questions based on the status of the application
-        $questions = Question::where('status', $application->status)->get();
+        $questions = Question::get();
 
         // Generate an array of answers based on their associated question ID
         $answers = [];
@@ -111,15 +123,19 @@ class ApplicationController extends Controller
         return view('pages/applications/review', compact('application', 'questions', 'answers'));
     }
 
-    public function submitApplication(Application $application)
+    public function submitApplication(Application $application, Request $request)
     {
         // Did the current user create this application?
         if($application->user->id != Auth::user()->id)
         {
-            $request->session()->flash('error', 'Only the person who created an application may change it.');
+            $request->session()->flash('error', 'Only the person who created an application may submit it.');
             return redirect('/login');
         }
 
-        return "// todo";
+        $application->status = 'submitted';
+        $application->save();
+
+        $request->session()->flash('success', 'Thank you, your application has been submitted and will be reviewed by our judges.');
+        return redirect('/');
     }
 }

@@ -1,99 +1,119 @@
 @extends('app')
 
 @section('content')
-    <h1>Revew Application</h1>
+    <h1>
+        @if($application->status == 'new')
+            Review Before Submitting
+        @else
+            Review Submitted Application
+        @endif
+    </h1>
+    
     <hr>
 
     <h2>Basic Information</h2>
 
-    {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th class="button">Required</th>
-                </tr>
-            </thead>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+                <th class="button">Required</th>
+            </tr>
+        </thead>
 
-            <tbody>
-                <tr>
-                    <td><b>Name of Your Project</b></td>
-                    <td>{{ $application->name }}</td>
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                </tr>
+        <tbody>
+            <tr>
+                <td><b>Name of Your Project</b></td>
+                <td>{{ $application->name }}</td>
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+            </tr>
 
-                <tr>
-                    <td><b>Basic Description</b></td>
-                    <td>{!! nl2br(e($application->description)) !!}</td>
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                </tr>
-            </tbody>
-        </table>
+            <tr>
+                <td><b>Basic Description</b></td>
+                <td>{!! nl2br(e($application->description)) !!}</td>
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+            </tr>
+        </tbody>
+    </table>
 
-        <h2>Questions About Your Project</h2>
+    <h2>Questions About Your Project</h2>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th class="button">Required</th>
-                </tr>
-            </thead>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+                <th class="button">Required</th>
+            </tr>
+        </thead>
 
-            <tbody>
-                @foreach($questions as $question)
-                    <?php
+        <tbody>
+            @foreach($questions as $question)
+                <?php
 
-                    $answer = false;
-                    $missing = false;
+                $answer = false;
+                $missing = false;
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($answers[$question->id]))
+                // If this question has already been answered, use the update route instead of creating a new answer
+                if(isset($answers[$question->id]))
+                {
+                    $answer = $answers[$question->id]->answer;
+                }
+
+                // If this question is required
+                if($question->required)
+                {
+                    // If the answer is empty, or the type is file and there are no uploaded documents
+                    if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
                     {
-                        $answer = $answers[$question->id]->answer;
-                    }
+                        $missing = true;
+                        $answer = "Your answer is missing.";
+                   }
+                }
 
-                    // If this question is required
-                    if($question->required)
-                    {
-                        // If the answer is empty, or the type is file and there are no uploaded documents
-                        if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
-                        {
-                            $missing = true;
-                            $answer = "Your answer is missing.";
-                       }
-                    }
+                ?>
 
-                    ?>
-
-                    <tr class="{{ ($missing) ? 'danger' : '' }}">
-                        <td><b>{{ $question->question }}</b></td>
-                        <td>
-                            @if($question->type == 'file')
-                                @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
-                                    @foreach($answers[$question->id]->documents as $document)
-                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
-                                    @endforeach
-                                @else
-                                    No files uploaded.
-                                @endif
+                <tr class="{{ ($missing) ? 'danger' : '' }}">
+                    <td><b>{{ $question->question }}</b></td>
+                    <td>
+                        @if($question->type == 'file')
+                            @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
+                                @foreach($answers[$question->id]->documents as $document)
+                                    <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
+                                @endforeach
                             @else
-                                {!! nl2br(e($answer)) !!}
+                                No files uploaded.
                             @endif
-                        </td>
-                        <td class="button">
-                            @if($question->required)
-                                <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        @else
+                            {!! nl2br(e($answer)) !!}
+                        @endif
+                    </td>
+                    <td class="button">
+                        @if($question->required)
+                            <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    
+    @if($application->status == 'new')
+        {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
+            <p>
+                <b>
+                    Warning! After submitting your application, you will not be able to make changes to your answers.
+                    Please make sure everything is accurate before submitting.
+                </b>
+            </p>
 
-        <a href="/applications/{{ $application->id }}" class="btn btn-primary">Make Changes</a>
-        <button type="submit" class="btn btn-success">Submit Application</button>
-    {!! Form::close() !!}
+            <p>
+                When your application is reviewed, you may be contacted with follow-up questions.
+            </p>
+
+            <a href="/applications/{{ $application->id }}" class="btn btn-primary">Make Changes</a>
+            <button type="submit" class="btn btn-success">Submit Application</button>
+        {!! Form::close() !!}
+    @endif
 @endsection

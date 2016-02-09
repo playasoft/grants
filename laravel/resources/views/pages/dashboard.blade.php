@@ -31,7 +31,13 @@
             <tbody>
                 @foreach($applications as $application)
                     <tr>
-                        <td><a href="/applications/{{ $application->id }}">{{ $application->name }}</a></td>
+                        <td>
+                            @if($application->status == 'new')
+                                <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
+                            @else
+                                <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
+                            @endif
+                        </td>
                         <td>{{ $application->status }}</td>
                         <td>{{ $application->created_at->format('Y-m-d') }}</td>
                         <td>{{ $application->updated_at->format('Y-m-d') }}</td>

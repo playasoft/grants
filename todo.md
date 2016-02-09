@@ -113,7 +113,7 @@
 - [x] Answer questions
 - [x] Uploading files
 - [x] Review page
-- [ ] Submitting applications
+- [x] Submitting applications
 - [ ] Server-side checking for required answers
 - [ ] AJAX autosave for answers
 

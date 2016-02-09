@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>Viewing Application</h1>
+    <h1>Edit Your Application</h1>
     <hr>
 
     <h2>Basic Information</h2>
