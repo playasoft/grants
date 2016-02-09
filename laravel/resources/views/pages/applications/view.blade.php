@@ -57,11 +57,11 @@
                 @elseif($question->type == 'boolean')
                     <div class="radio">
                         <label>
-                            <input type="radio" name="answer" value="1" id="{{ $question->id }}-answer" {{ ($answer) ? 'checked' : '' }}> Yes
+                            <input type="radio" name="answer" value="yes" id="{{ $question->id }}-answer" {{ ($answer == 'yes') ? 'checked' : '' }}> Yes
                         </label>
                         <br>
                         <label>
-                            <input type="radio" name="answer" value="0" id="{{ $question->id }}-answer" {{ (!$answer) ? 'checked' : '' }}> No
+                            <input type="radio" name="answer" value="no" id="{{ $question->id }}-answer" {{ ($answer == 'no') ? 'checked' : '' }}> No
                         </label>
                     </div>
                 @elseif($question->type == 'dropdown')
