@@ -8,7 +8,8 @@
                         name="{{ $name }}"
                         id="{{ $name }}-field"
                         placeholder="{{ $placeholder or '' }}"
-                        value="1">
+                        value="1"
+                        {{ (isset($value) && $value) ? 'checked' : '' }}>
 
                 {{ $option }}
             </label>

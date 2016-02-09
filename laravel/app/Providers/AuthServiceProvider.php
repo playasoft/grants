@@ -34,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-user',
             'edit-user',
             'create-question',
+            'edit-question',
             'view-application',
         ],
 
