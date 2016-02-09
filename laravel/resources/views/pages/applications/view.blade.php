@@ -5,7 +5,7 @@
     <hr>
 
     <h2>Basic Information</h2>
-    {!! Form::open() !!}
+    {!! Form::open(['class' => 'ajax']) !!}
         @include('partials/form/text',
         [
             'name' => 'name',
@@ -21,9 +21,9 @@
             'placeholder' => "We are creating an interactive life size anamatronic pony you can climb inside of and really learn what it's like to be equine. Also the whole thing is covered in blinky lights. You've probably never seen this many LEDs in your life!",
             'value' => $application->description
         ])
-
-        <button type="submit" class="btn btn-primary">Save Basic Info</button>
     {!! Form::close() !!}
+
+    <hr>
 
     <h2>Questions About Your Project</h2>
 
@@ -43,12 +43,13 @@
 
         ?>
     
-        {!! Form::open(['url' => $action, 'files' => true]) !!}
+        {!! Form::open(['url' => $action, 'files' => true, 'class' => 'ajax']) !!}
             <input type="hidden" name="application_id" value="{{ $application->id }}">
             <input type="hidden" name="question_id" value="{{ $question->id }}">
 
             <div class="form-group">
                 <label class="control-label" for="{{ $question->id }}-answer">{{ $question->question }}</label>
+                <span class="pull-right"><span class="status"></span></span>
 
                 @if($question->type == 'input')
                     <input type="text" name="answer" class="form-control" id="{{ $question->id }}-answer" value="{{ $answer }}">
@@ -99,8 +100,6 @@
                     </div>
                 @endif
             </div>
-
-            <button type="submit" class="btn btn-primary">Save Answer</button>
         {!! Form::close() !!}
 
         <hr>

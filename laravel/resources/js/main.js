@@ -1,1 +1,2 @@
 require('./questions');
+require('./ajax');
