@@ -114,7 +114,7 @@
 - [x] Uploading files
 - [x] Review page
 - [x] Submitting applications
-- [ ] Server-side checking for required answers
+- [x] Server-side checking for required answers
 - [ ] AJAX autosave for answers
 
 

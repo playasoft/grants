@@ -109,7 +109,6 @@ class ApplicationController extends Controller
             $this->authorize('view-application');
         }
 
-        // Select questions based on the status of the application
         $questions = Question::get();
 
         // Generate an array of answers based on their associated question ID
@@ -123,6 +122,32 @@ class ApplicationController extends Controller
         return view('pages/applications/review', compact('application', 'questions', 'answers'));
     }
 
+    // Helper function for checking if all required answers are filled in
+    private function missingRequiredAnswers($application)
+    {
+        // Generate an array of answers based on their associated question ID
+        $answers = [];
+
+        foreach($application->answers as $answer)
+        {
+            $answers[$answer->question_id] = $answer;
+        }
+
+        // Loop through all required questions
+        $questions = Question::where('required', 1)->get();
+
+        foreach($questions as $question)
+        {
+            if(!isset($answers[$question->id]))
+                return true;
+
+            if(empty($answers[$question->id]->answer))
+                return true;
+        }
+
+        return false;
+    }
+
     public function submitApplication(Application $application, Request $request)
     {
         // Did the current user create this application?
@@ -132,6 +157,12 @@ class ApplicationController extends Controller
             return redirect('/login');
         }
 
+        if($this->missingRequiredAnswers($application))
+        {
+            $request->session()->flash('error', 'Your application is missing required information.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+        
         $application->status = 'submitted';
         $application->save();
 
