@@ -67,7 +67,7 @@
 - [x] Home page
 - [x] User dashboard
 - [ ] Admin dashboard
-- [ ] Judge dashboard
+- [x] Judge dashboard
 - [x] Create question
 - [x] Create application
 - [x] Answering questions

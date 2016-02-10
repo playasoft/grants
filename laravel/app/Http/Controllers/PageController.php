@@ -6,7 +6,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Event;
+
+use App\Models\Application;
 
 class PageController extends Controller
 {
@@ -15,7 +16,15 @@ class PageController extends Controller
     {
         if($this->auth->check())
         {
-            $applications = $this->auth->user()->applications;
+            if(in_array($this->auth->user()->role, ['judge', 'observer']))
+            {
+                $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+            }
+            else
+            {
+                $applications = $this->auth->user()->applications;
+            }
+            
             return view('pages/dashboard', compact('applications'));
         }
         else

@@ -23,7 +23,6 @@ $(document).ready(function()
             value = "checked";
         }
 
-        
         if(timeout)
         {
             clearTimeout(timeout);
