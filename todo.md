@@ -115,7 +115,7 @@
 - [x] Review page
 - [x] Submitting applications
 - [x] Server-side checking for required answers
-- [ ] AJAX autosave for answers
+- [x] AJAX autosave for answers
 
 
 ## Judge Workflow

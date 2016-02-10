@@ -16,6 +16,13 @@ $(document).ready(function()
         var status = $(this).parents('.form-group').find('.status');
         var value = $(this).value();
         var input = $(this);
+
+        // Check if this is a radio button and is selected
+        if(input.attr('type') == 'radio' && input.prop('checked'))
+        {
+            value = "checked";
+        }
+
         
         if(timeout)
         {
@@ -52,7 +59,11 @@ $(document).ready(function()
                 status.text('Saved!');
                 status.attr('class', 'status success');
 
-                input.data('saved', value);
+                // Don't save value for radio inputs
+                if(input.attr('type') != 'radio')
+                {
+                    input.data('saved', value);
+                }
 
                 // Fade the saved text out after 1 second
                 setTimeout(function()
