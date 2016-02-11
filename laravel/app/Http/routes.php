@@ -70,3 +70,13 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/users', 'UserController@listUsers');
     Route::get('/users/{user}', 'UserController@viewUser');
 });
+
+Route::group(['middleware' => ['judge']], function()
+{
+    // Question routes
+    Route::get('/questions', 'QuestionController@listQuestions');
+
+    // User routes
+    Route::get('/users', 'UserController@listUsers');
+    Route::get('/users/{user}', 'UserController@viewUser');
+});

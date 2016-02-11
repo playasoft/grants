@@ -20,7 +20,12 @@
             @foreach($questions as $question)
                 <tr>
                     <td><b>{{ $question->id }}</b></td>
-                    <td><a href="/questions/{{ $question->id }}">{{ $question->question }}</a></td>
+                    <td>
+                        @can('edit-question')
+                            <a href="/questions/{{ $question->id }}">{{ $question->question }}</a></td>
+                        @else
+                            {{ $question->question }}
+                        @endcan
                     <td>{{ $question->type }}</td>
                     <td>{{ $question->role }}</td>
                     <td>{{ $question->status }}</td>
