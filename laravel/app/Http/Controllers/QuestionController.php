@@ -36,13 +36,20 @@ class QuestionController extends Controller
         return view('pages/questions/create');
     }
 
-    function editQuestion(QuestionRequest $request)
+    function editQuestion(QuestionRequest $request, Question $question)
     {
-        return "// todo";
+        // Double check to make sure the current user is authorized to do this...
+        $this->authorize('edit-question');
+
+        $input = $request->all();
+        $question->update($input);
+
+        $request->session()->flash('success', 'The question has been updated.');
+        return redirect('/questions');
     }
 
-    function editQuestionForm()
+    function editQuestionForm(Question $question)
     {
-        return view('pages/questions/edit');
+        return view('pages/questions/edit', compact('question'));
     }
 }

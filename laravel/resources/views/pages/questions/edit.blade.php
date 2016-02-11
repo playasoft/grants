@@ -4,8 +4,8 @@
     <h1>Create a Question</h1>
     <hr>
     
-    {!! Form::open(['url' => 'questions']) !!}
-        @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?"])
+    {!! Form::open() !!}
+        @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?", 'value' => $question->question])
 
         @include('partials/form/select',
         [
@@ -19,7 +19,8 @@
                 'dropdown' => "Multiple Choice",
                 'boolean' => "Yes / No",
                 'file' => "File Upload",
-            ]
+            ],
+            'value' => $question->type
         ])
         
         <div class="question-options hidden">
@@ -28,7 +29,8 @@
                 'name' => 'options',
                 'label' => 'Options',
                 'placeholder' => 'value : Text Displayed',
-                'help' => "When creating a dropdown, you'll need to provide what values will appear."
+                'help' => "When creating a dropdown, you'll need to provide what values will appear.",
+                'value' => $question->options
             ])
         </div>
 
@@ -45,7 +47,8 @@
                 'follow-up' => "Follow Up",
                 'accepted' => "Accepted",
                 'rejected' => "Rejected",
-            ]
+            ],
+            'value' => $question->status
         ])
  
         @include('partials/form/select',
@@ -57,10 +60,11 @@
             [
                 'applicant' => "Applicant",
                 'judge' => "Judge",
-            ]
+            ],
+            'value' => $question->role
         ])
 
-        @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
+        @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes'], 'value' => $question->required])
 
         <button type="submit" class="btn btn-primary">Submit New Question</button>
     {!! Form::close() !!}

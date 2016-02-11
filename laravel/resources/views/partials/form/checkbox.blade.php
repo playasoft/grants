@@ -1,12 +1,3 @@
-<?php
-
-if(old($name))
-{
-    $value = old($name);
-}
-
-?>
-
 @extends('partials/form/_bootstrap')
 
 @section('html')
@@ -17,7 +8,8 @@ if(old($name))
                         name="{{ $name }}"
                         id="{{ $name }}-field"
                         placeholder="{{ $placeholder or '' }}"
-                        value="{{ $value or '' }}">
+                        value="1"
+                        {{ (isset($value) && $value) ? 'checked' : '' }}>
 
                 {{ $option }}
             </label>

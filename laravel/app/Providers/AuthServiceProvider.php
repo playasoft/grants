@@ -31,9 +31,11 @@ class AuthServiceProvider extends ServiceProvider
 
         'admin' =>
         [
-            'view-user',
+            'view-users',
             'edit-user',
+            'view-questions',
             'create-question',
+            'edit-question',
             'view-application',
         ],
 
@@ -45,11 +47,15 @@ class AuthServiceProvider extends ServiceProvider
         'judge' =>
         [
             'view-submitted-application',
+            'view-users',
+            'view-questions',
         ],
 
         'observer' =>
         [
             'view-submitted-application',
+            'view-users',
+            'view-questions',
         ],
     ];
 

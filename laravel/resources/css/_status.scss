@@ -1,0 +1,16 @@
+.status {
+    transition: opacity 1s;
+    opacity: 1;
+
+    &.waiting {
+        color: #ccc;
+    }
+
+    &.success {
+        color: #5cb85c;
+    }
+
+    &.complete {
+        opacity: 0;
+    }
+}

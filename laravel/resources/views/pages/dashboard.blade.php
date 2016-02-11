@@ -7,16 +7,12 @@
     </h1>
     <hr>
 
-    @can('create-question')
-        <a href="/questions/create" class="btn btn-primary">Create a Question</a>
-    @endcan
-
-    @can('create-application')
-        <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
-    @endcan
-
     @if($applications->count())
-        <h2>Your Applications</h2>
+        @if(in_array(Auth::user()->role, ['judge', 'observer']))
+            <h2>Applications Requiring Review</h2>
+        @else
+            <h2>Your Applications</h2>
+        @endif
 
         <table class="table table-hover">
             <thead>
@@ -31,7 +27,13 @@
             <tbody>
                 @foreach($applications as $application)
                     <tr>
-                        <td><a href="/applications/{{ $application->id }}">{{ $application->name }}</a></td>
+                        <td>
+                            @if($application->status == 'new')
+                                <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
+                            @else
+                                <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
+                            @endif
+                        </td>
                         <td>{{ $application->status }}</td>
                         <td>{{ $application->created_at->format('Y-m-d') }}</td>
                         <td>{{ $application->updated_at->format('Y-m-d') }}</td>
@@ -39,5 +41,27 @@
                 @endforeach
             </tbody>
         </table>
+    @else
+        @if(in_array(Auth::user()->role, ['judge', 'observer']))
+            <div class="general-alert alert alert-info" role="alert">
+                <b>Nothing Found</b> There are no applications which require review. Either none have been finalized yet, or all applications have already been judged.
+            </div>
+        @else
+            <div class="general-alert alert alert-info" role="alert">
+                <b>Hey!</b> You haven't created any applications yet. When you do, they will be listed here.
+            </div>
+        @endif
     @endif
+
+    @can('create-question')
+        <a href="/questions/create" class="btn btn-primary">Create a Question</a>
+    @endcan
+
+    @can('create-application')
+        <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+    @endcan
+
+    @can('view-submitted-application')
+        <a href="/applications" class="btn btn-primary">View All Submitted Applications</a>
+    @endcan
 @endsection

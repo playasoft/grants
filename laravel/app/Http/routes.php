@@ -46,10 +46,15 @@ Route::group(['middleware' => ['auth']], function()
     Route::get('/applications/create', 'ApplicationController@createApplicationForm');
     Route::get('/applications/{application}', 'ApplicationController@viewApplication');
     Route::post('/applications/{application}', 'ApplicationController@updateApplication');
+    Route::get('/applications/{application}/review', 'ApplicationController@reviewApplication');
+    Route::post('/applications/{application}/submit', 'ApplicationController@submitApplication');
 
     // Answering questions
     Route::post('/answers', 'AnswerController@createAnswer');
     Route::post('/answers/{answer}', 'AnswerController@updateAnswer');
+
+    // Handling documents
+    Route::get('/documents/{document}/delete', 'DocumentController@deleteDocument');
 });
 
 Route::group(['middleware' => ['admin']], function()

@@ -17,7 +17,7 @@
 
 - Questions
  - [x] Question
- - [x] Type (Input, Text, Dropdown, Boolean)
+ - [x] Type (Input, Text, Dropdown, Boolean, File)
  - [x] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
  - [x] Status (This question will only appear when an application is within a specific status)
  - [x] Role (User role this question should be shown to: Applicant or Judge)
@@ -39,11 +39,12 @@
  - [x] Answer
 
 - Documents
- - [ ] Name
- - [ ] Description
- - [ ] File
- - [ ] Application ID
- - [ ] Admin ID (Useful for tracking if admins have attached a file to an application)
+ - [x] Name
+ - [x] Description
+ - [x] File
+ - [x] Application ID
+ - [x] Answer ID (Nullable, cascade on delete set null)
+ - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
@@ -51,7 +52,7 @@
  - [ ] Options (JSON, Optional, only for dropdowns at the moment)
  - [ ] Response (Response from the user)
  - [ ] Application ID
- - [ ] Admin ID (Which admin sent the feedback)
+ - [ ] User ID (Which admin sent the feedback)
  - [ ] Regarding ID (The ID of the data this feedback is related to, if any)
  - [ ] Regarding Type (Can be a question or a document)
 
@@ -64,9 +65,9 @@
 
 ## Pages
 - [x] Home page
-- [ ] User dashboard
+- [x] User dashboard
 - [ ] Admin dashboard
-- [ ] Judge dashboard
+- [x] Judge dashboard
 - [x] Create question
 - [x] Create application
 - [x] Answering questions
@@ -79,8 +80,9 @@
 - [x] One to one + One to many between answers <-> applications
 - [x] One to one between answers -> questions
 - [ ] One to many + One to one between questions <-> question children
-- [ ] One to many + One to one between applications <-> documents
-- [ ] One to one between documents -> admins (users) 
+- [x] One to many + One to one between applications <-> documents
+- [x] One to many + One to one between questions <-> documents
+- [x] One to one between documents -> admins (users) 
 - [ ] One to one + One to many between feedback <-> applications
 - [ ] One to one between feedback -> admins (users)
 - [ ] One to one polymorphic between feedback -> answers and documents
@@ -109,12 +111,11 @@
 - [x] Create application
 - [x] Update application
 - [x] Answer questions
-- [ ] Uploading files
-- [ ] Submitting applications
-- [ ] Server-side checking for required answers
-- [ ] Client-side checking for required answers
-- [ ] AJAX autosave for answers
-- [ ] Pop-up notification warning user when submitting application
+- [x] Uploading files
+- [x] Review page
+- [x] Submitting applications
+- [x] Server-side checking for required answers
+- [x] AJAX autosave for answers
 
 
 ## Judge Workflow

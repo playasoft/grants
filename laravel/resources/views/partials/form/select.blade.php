@@ -11,8 +11,8 @@ if(old($name))
 
 @section('html')
     <select class="form-control {{ $class or '' }}" name="{{ $name }}" id="{{ $name }}-field">
-        @foreach($options as $value => $option)
-            <option value="{{ $value }}">{{ $option }}</option>
+        @foreach($options as $key => $option)
+            <option value="{{ $key }}" {{ (isset($value) && $key == $value) ? 'selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
 @overwrite

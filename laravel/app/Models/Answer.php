@@ -20,10 +20,15 @@ class Answer extends Model
         return $this->belongsTo('App\Models\Question');
     }
 
+    // Answers can have associated documents
+    public function documents()
+    {
+        return $this->hasMany('App\Models\Document');
+    }
+
     // Convenience for getting the user that created an answer
     public function getUserAttribute()
     {
         return $this->application->user;
     }
-
 }

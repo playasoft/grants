@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('content')
-    <h1>Viewing Application</h1>
+    <h1>Edit Your Application</h1>
     <hr>
 
     <h2>Basic Information</h2>
-    {!! Form::open() !!}
+    {!! Form::open(['class' => 'ajax']) !!}
         @include('partials/form/text',
         [
             'name' => 'name',
@@ -21,9 +21,9 @@
             'placeholder' => "We are creating an interactive life size anamatronic pony you can climb inside of and really learn what it's like to be equine. Also the whole thing is covered in blinky lights. You've probably never seen this many LEDs in your life!",
             'value' => $application->description
         ])
-
-        <button type="submit" class="btn btn-primary">Save Basic Info</button>
     {!! Form::close() !!}
+
+    <hr>
 
     <h2>Questions About Your Project</h2>
 
@@ -43,12 +43,13 @@
 
         ?>
     
-        {!! Form::open(['url' => $action]) !!}
+        {!! Form::open(['url' => $action, 'files' => true, 'class' => 'ajax']) !!}
             <input type="hidden" name="application_id" value="{{ $application->id }}">
             <input type="hidden" name="question_id" value="{{ $question->id }}">
 
             <div class="form-group">
                 <label class="control-label" for="{{ $question->id }}-answer">{{ $question->question }}</label>
+                <span class="pull-right"><span class="status"></span></span>
 
                 @if($question->type == 'input')
                     <input type="text" name="answer" class="form-control" id="{{ $question->id }}-answer" value="{{ $answer }}">
@@ -57,11 +58,11 @@
                 @elseif($question->type == 'boolean')
                     <div class="radio">
                         <label>
-                            <input type="radio" name="answer" value="1" id="{{ $question->id }}-answer" {{ ($answer) ? 'checked' : '' }}> Yes
+                            <input type="radio" name="answer" value="yes" id="{{ $question->id }}-answer" {{ ($answer == 'yes') ? 'checked' : '' }}> Yes
                         </label>
                         <br>
                         <label>
-                            <input type="radio" name="answer" value="0" id="{{ $question->id }}-answer" {{ (!$answer) ? 'checked' : '' }}> No
+                            <input type="radio" name="answer" value="no" id="{{ $question->id }}-answer" {{ ($answer == 'no') ? 'checked' : '' }}> No
                         </label>
                     </div>
                 @elseif($question->type == 'dropdown')
@@ -72,14 +73,37 @@
                             <option value="{{ $value }}" {{ ($answer == $value) ? 'selected' : '' }}>{{ $option }}</option>
                         @endforeach
                     </select>
+                @elseif($question->type == 'file')
+                    <input type="hidden" name="answer" value="1">
+
+                    @if($answer && $answers[$question->id]->documents->count())
+                        <div>
+                            <b>Uploaded Files</b>
+
+                            <ul class="documents">
+                                @foreach($answers[$question->id]->documents as $document)
+                                    <li>
+                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
+                                        <a href="/documents/{{ $document->id }}/delete" class="btn btn-danger">Delete</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <b>Upload Another File</b>
+                    @endif
+
+                    <div>
+                        <span class="btn btn-primary btn-file">
+                            <input type="file" name="document" id="{{ $question->id }}-answer">
+                        </span>
+                    </div>
                 @endif
             </div>
-
-            <button type="submit" class="btn btn-primary">Save Answer</button>
         {!! Form::close() !!}
 
         <hr>
     @endforeach
 
-    <button type="submit" class="btn btn-success">Submit Application</button>
+    <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Submit Application</a>
 @endsection
