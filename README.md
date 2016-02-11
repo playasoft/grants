@@ -18,6 +18,7 @@ A laravel app to create weighted questionaire systems
 3. Run ```composer install``` within the **laravel** folder
 4. Run ```npm install``` within the **laravel** folder
 5. Run ```php artisan migrate``` within the **laravel** folder
+6. Run ```php artisan key:generate``` within the **laravel** folder
 
 
 ## Setup / Configuration
