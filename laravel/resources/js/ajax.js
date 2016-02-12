@@ -10,7 +10,7 @@ $(document).ready(function()
         $(this).data('saved', value);
     });
 
-    $('form.ajax').find('input, select, option, textarea').on('keydown click change', function(event)
+    $('form.ajax').find('input, select, option, textarea').on('keydown keyup click change', function(event)
     {
         var form = $(this).parents('form.ajax');
         var status = $(this).parents('.form-group').find('.status');
@@ -33,8 +33,6 @@ $(document).ready(function()
         
         timeout = setTimeout(function()
         {
-            console.log(value, input.data('saved-value'));
-
             // If no changes have been made, abort
             if(input.data('saved') == value)
             {

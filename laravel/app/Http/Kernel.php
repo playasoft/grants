@@ -43,19 +43,7 @@ class Kernel extends HttpKernel
         [
             'web',
             \App\Http\Middleware\Authenticate::class
-        ],
-
-        'admin' =>
-        [
-            'web',
-            \App\Http\Middleware\IsAdmin::class,
-        ],
-
-        'judge' =>
-        [
-            'web',
-            \App\Http\Middleware\IsJudge::class,
-        ],
+        ]
     ];
 
     /**
@@ -70,5 +58,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'role' => \App\Http\Middleware\CheckRole::class,
     ];
 }
