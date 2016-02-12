@@ -23,6 +23,7 @@
 |
 */
 
+// Routes available to all users
 Route::group(['middleware' => ['web']], function()
 {
     // Basic pages
@@ -38,9 +39,10 @@ Route::group(['middleware' => ['web']], function()
     Route::post('/login', 'UserController@login');
 });
 
+// Routes available to logged in users
 Route::group(['middleware' => ['auth']], function()
 {
-    // Grant application routes
+    // Creating and viewing grant applications
     Route::get('/applications', 'ApplicationController@listApplications');
     Route::post('/applications', 'ApplicationController@createApplication');
     Route::get('/applications/create', 'ApplicationController@createApplicationForm');
@@ -57,16 +59,23 @@ Route::group(['middleware' => ['auth']], function()
     Route::get('/documents/{document}/delete', 'DocumentController@deleteDocument');
 });
 
-Route::group(['middleware' => ['admin']], function()
+// Routes available to both admins and judges
+Route::group(['middleware' => ['auth', 'role:admin|judge|observer']], function()
 {
-    // Question routes
+    // Viewing questions
     Route::get('/questions', 'QuestionController@listQuestions');
+
+    // Viewing users
+    Route::get('/users', 'UserController@listUsers');
+    Route::get('/users/{user}', 'UserController@viewUser');
+});
+
+// Routes only available to admins
+Route::group(['middleware' => ['auth', 'role:admin']], function()
+{
+    // Creating and modifying questions
     Route::post('/questions', 'QuestionController@createQuestion');
     Route::get('/questions/create', 'QuestionController@createQuestionForm');
     Route::get('/questions/{question}', 'QuestionController@editQuestionForm');
     Route::post('/questions/{question}', 'QuestionController@editQuestion');
-
-    // User administration routes
-    Route::get('/users', 'UserController@listUsers');
-    Route::get('/users/{user}', 'UserController@viewUser');
 });

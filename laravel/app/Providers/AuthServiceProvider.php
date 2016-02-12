@@ -49,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-submitted-application',
             'view-users',
             'view-questions',
+            'rate-answer',
         ],
 
         'observer' =>

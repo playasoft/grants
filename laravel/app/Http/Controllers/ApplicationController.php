@@ -100,13 +100,17 @@ class ApplicationController extends Controller
         return redirect('/applications/' . $application->id);
     }
 
-    public function reviewApplication(Application $application)
+    public function reviewApplication(Application $application, Request $request)
     {
         // Did the current user create this application?
         if($application->user->id != Auth::user()->id)
         {
             // If not, are they authorized to view applications?
-            $this->authorize('view-application');
+            if(!(Auth::user()->can('view-application') || (Auth::user()->can('view-submitted-application') && $application->status != 'new')))
+            {
+                $request->session()->flash('error', 'You are not authorized to view this application.');
+                return redirect('/login');
+            }
         }
 
         $questions = Question::get();

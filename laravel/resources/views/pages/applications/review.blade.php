@@ -11,14 +11,35 @@
     
     <hr>
 
-    <h2>Basic Information</h2>
+    @can('view-submitted-application')
+        <h2>User Information</h2>
+
+        <div class="profile">
+            <div class="row">
+                <div class="col-sm-2 title">Username</div>
+                <div class="col-sm-10 value">{{ $application->user->name }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2 title">Email</div>
+                <div class="col-sm-10 value">{{ $application->user->email }}</div>
+            </div>
+        </div>
+        
+        <hr>
+    @endcan
+
+    <h2>Project Information</h2>
 
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
-                <th class="button">Required</th>
+
+                @cannot('rate-answer')
+                    <th class="button">Required</th>
+                @endcannot
             </tr>
         </thead>
 
@@ -26,25 +47,43 @@
             <tr>
                 <td><b>Name of Your Project</b></td>
                 <td>{{ $application->name }}</td>
-                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+
+                @cannot('rate-answer')
+                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+                @endcannot
             </tr>
 
             <tr>
                 <td><b>Basic Description</b></td>
                 <td>{!! nl2br(e($application->description)) !!}</td>
-                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+
+                @cannot('rate-answer')
+                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
+                @endcannot
             </tr>
         </tbody>
     </table>
 
-    <h2>Questions About Your Project</h2>
+    <hr>
 
+    @can('rate-answer')
+        <h2>Questions About This Project</h2>
+    @else
+        <h2>Questions About Your Project</h2>
+    @endcan
+    
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
-                <th class="button">Required</th>
+
+                @can('rate-answer')
+                    <th>Rating</th>
+                    <th>&nbsp;</th>
+                @else
+                    <th class="button">Required</th>
+                @endcan
             </tr>
         </thead>
 
@@ -89,15 +128,38 @@
                             {!! nl2br(e($answer)) !!}
                         @endif
                     </td>
-                    <td class="button">
-                        @if($question->required)
-                            <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
-                        @endif
-                    </td>
+
+                    @can('rate-answer')
+                        <td>
+                            Not Yet Rated
+                        </td>
+                    
+                        <td>
+                            @if(!$missing)
+                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
+                            @else
+                                Not Answered
+                            @endif
+                        </td>
+                    @else
+                        <td class="button">
+                            @if($question->required)
+                                <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
+                            @endif
+                        </td>
+                    @endcan
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    @can('view-submitted-application')
+        <hr>
+        
+        <h2>Questions for Judges</h2>
+
+        [insert list of questions here]
+    @endcan
     
     @if($application->status == 'new')
         {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
