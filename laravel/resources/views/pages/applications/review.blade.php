@@ -91,12 +91,14 @@
             @foreach($questions as $question)
                 <?php
 
-                $answer = false;
+                $answered = false;
                 $missing = false;
+                $answer = false;
 
                 // If this question has already been answered, use the update route instead of creating a new answer
                 if(isset($answers[$question->id]))
                 {
+                    $answered = true;
                     $answer = $answers[$question->id]->answer;
                 }
 
@@ -135,7 +137,7 @@
                         </td>
                     
                         <td>
-                            @if(!$missing)
+                            @if($answered && !$missing)
                                 <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
                             @else
                                 Not Answered
