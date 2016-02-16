@@ -64,8 +64,7 @@ class ApplicationController extends Controller
             return redirect('/applications/' . $application->id . '/review');
         }
 
-        // Select questions based on the status of the application
-        $questions = Question::where('status', $application->status)->get();
+        $questions = Question::get();
 
         // Generate an array of answers based on their associated question ID
         $answers = [];
