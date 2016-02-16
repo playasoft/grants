@@ -31,22 +31,6 @@
                 'help' => "When creating a dropdown, you'll need to provide what values will appear."
             ])
         </div>
-
-        @include('partials/form/select',
-        [
-            'name' => 'status',
-            'label' => 'Application Status',
-            'help' => "A user will only see this question when their application has this status.",
-            'options' =>
-            [
-                'new' => "New",
-                'submitted' => "Submitted",
-                'review' => "Review",
-                'follow-up' => "Follow Up",
-                'accepted' => "Accepted",
-                'rejected' => "Rejected",
-            ]
-        ])
  
         @include('partials/form/select',
         [

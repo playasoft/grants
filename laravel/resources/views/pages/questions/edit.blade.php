@@ -33,23 +33,6 @@
                 'value' => $question->options
             ])
         </div>
-
-        @include('partials/form/select',
-        [
-            'name' => 'status',
-            'label' => 'Application Status',
-            'help' => "A user will only see this question when their application has this status.",
-            'options' =>
-            [
-                'new' => "New",
-                'submitted' => "Submitted",
-                'review' => "Review",
-                'follow-up' => "Follow Up",
-                'accepted' => "Accepted",
-                'rejected' => "Rejected",
-            ],
-            'value' => $question->status
-        ])
  
         @include('partials/form/select',
         [

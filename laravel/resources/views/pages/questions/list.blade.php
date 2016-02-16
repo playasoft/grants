@@ -11,7 +11,6 @@
                 <th>Question</th>
                 <th>Type</th>
                 <th>Role</th>
-                <th>Status</th>
                 <th>Required</th>
             </tr>
         </thead>
@@ -28,7 +27,6 @@
                         @endcan
                     <td>{{ $question->type }}</td>
                     <td>{{ $question->role }}</td>
-                    <td>{{ $question->status }}</td>
                     <td>{{ $question->required }}</td>
                 </tr>
             @endforeach
