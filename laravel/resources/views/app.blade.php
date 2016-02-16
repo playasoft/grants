@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Weightlifter</title>
+        <title>Apogaea Art Grant Application (Weightlifter)</title>
 
         <!-- Bootstrap styles -->
         <link rel="stylesheet" href="/css/bootstrap.min.css">
