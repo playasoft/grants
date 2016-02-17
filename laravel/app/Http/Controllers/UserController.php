@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // Laravel
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Event;
@@ -79,5 +80,15 @@ class UserController extends Controller
             }
         }
     return redirect('');
+    }
+
+    public function viewUser(User $user, Request $request)
+    {
+        //  Allow the user to view their own profile. TODO - doesn't work
+        if($user->id == Auth::user()->id)
+        {
+            $this->authorize('view-users');
+        }
+        return view('pages/users/view', compact('user'));
     }
 }
