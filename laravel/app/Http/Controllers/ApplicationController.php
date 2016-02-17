@@ -18,11 +18,29 @@ class ApplicationController extends Controller
 {
     public function listApplications()
     {
-        // check user role
-        // display all applicaitons if admin
-        // otherwise redirect to home page? (normal users see a list in their dashboard)
+        if($this->auth->check())
+        {
+            if(in_array($this->auth->user()->role, ['admin']))
+            {
+                $applications = Application::get();
+            }
+            elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
+            {
+                $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+            }
+            else
+            {
+                // otherwise redirect to home page? (normal users see a list in their dashboard)
+                return redirect('');
+            }
 
-        return view('pages/applications/list');
+            return view('pages/applications/list', compact('applications'));
+        }
+        else
+        {
+            return redirect('');
+        }
+
     }
 
     public function createApplication(ApplicationRequest $request)
