@@ -70,6 +70,14 @@ class UserController extends Controller
 
     public function listUsers()
     {
-        return view('pages/users/list');
+        if($this->auth->check())
+        {
+            if(in_array($this->auth->user()->role, ['admin', 'judge', 'observer']))
+            {
+                $users = User::get();
+                return view('pages/users/list', compact('users'));
+            }
+        }
+    return redirect('');
     }
 }
