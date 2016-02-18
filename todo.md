@@ -119,7 +119,7 @@
 
 
 ## Judge Workflow
-- [ ] View submitted applications
+- [x] View submitted applications
 - [ ] Rate user answers
 - [ ] Rate judge questions
 - [ ] Provide feedback
