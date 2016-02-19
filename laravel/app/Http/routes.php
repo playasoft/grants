@@ -78,4 +78,5 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     Route::get('/questions/create', 'QuestionController@createQuestionForm');
     Route::get('/questions/{question}', 'QuestionController@editQuestionForm');
     Route::post('/questions/{question}', 'QuestionController@editQuestion');
+    Route::get('/questions/{question}/delete', 'QuestionController@deleteQuestion');
 });

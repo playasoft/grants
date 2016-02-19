@@ -52,4 +52,14 @@ class QuestionController extends Controller
     {
         return view('pages/questions/edit', compact('question'));
     }
+
+    function deleteQuestion(Request $request, Question $question)
+    {
+        // Double check to make sure the current user is authorized to do this...
+        $this->authorize('delete-question');
+        $question->delete();
+
+        $request->session()->flash('success', 'The question has been deleted.');
+        return redirect('/questions');
+    }
 }
