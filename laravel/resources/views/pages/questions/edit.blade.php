@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>Create a Question</h1>
+    <h1>Edit Question</h1>
     <hr>
     
     {!! Form::open() !!}
@@ -49,6 +49,7 @@
 
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes'], 'value' => $question->required])
 
-        <button type="submit" class="btn btn-primary">Submit New Question</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="/questions/{{ $question->id }}/delete" class="btn btn-danger delete-question">Delete Question</a>
     {!! Form::close() !!}
 @endsection

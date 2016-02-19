@@ -88,7 +88,7 @@
         </thead>
 
         <tbody>
-            @foreach($questions as $question)
+            @foreach($questions['user'] as $question)
                 <?php
 
                 $answered = false;
@@ -133,7 +133,7 @@
 
                     @can('rate-answer')
                         <td>
-                            Not Yet Rated
+                            Not Rated
                         </td>
                     
                         <td>
@@ -160,7 +160,79 @@
         
         <h2>Questions for Judges</h2>
 
-        [insert list of questions here]
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Rating</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($questions['judge'] as $question)
+                    <?php
+
+                    $answered = false;
+                    $missing = false;
+                    $answer = false;
+
+                    // If this question has already been answered, use the update route instead of creating a new answer
+                    if(isset($answers[$question->id]))
+                    {
+                        $answered = true;
+                        $answer = $answers[$question->id]->answer;
+                    }
+
+                    // If this question is required
+                    if($question->required)
+                    {
+                        // If the answer is empty, or the type is file and there are no uploaded documents
+                        if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
+                        {
+                            $missing = true;
+                            $answer = "Your answer is missing.";
+                       }
+                    }
+
+                    ?>
+
+                    <tr class="{{ ($missing) ? 'danger' : '' }}">
+                        <td><b>{{ $question->question }}</b></td>
+                        <td>
+                            @if($question->type == 'file')
+                                @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
+                                    @foreach($answers[$question->id]->documents as $document)
+                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
+                                    @endforeach
+                                @endif
+                            @else
+                                @if($answer)
+                                    {!! nl2br(e($answer)) !!}
+                                @else
+                                    <a href="/applications/{{ $application->id }}" class="btn btn-success">Answer Question</a>
+                                @endif
+                            @endif
+                        </td>
+
+                        <td>
+                            @if($answer)
+                                Not Rated
+                            @else
+                                Not Answered
+                            @endif
+                        </td>
+
+                        <td>
+                            @if($answered && !$missing)
+                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endcan
     
     @if($application->status == 'new')
