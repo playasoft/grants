@@ -18,9 +18,7 @@
 - Questions
  - [x] Question
  - [x] Type (Input, Text, Dropdown, Boolean, File)
- - [x] Options (JSON, Optional, used for dropdowns, and for weighted booleans)
- - [x] Status (This question will only appear when an application is within a specific status)
- - [x] Role (User role this question should be shown to: Applicant or Judge)
+ - [x] Options (Text, only used for dropdowns for now)
  - [x] Required
  - [x] Parent
  - [x] Order
@@ -29,8 +27,10 @@
  - [x] Name
  - [x] Description
  - [x] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [x] Applicant Score
- - [x] Judge Score
+ - [-] Objective Score
+ - [-] Subjective Score
+ - [ ] Total Score
+ - [ ] Scored (Boolean)
  - [x] User ID
 
 - Answers
@@ -46,21 +46,29 @@
  - [x] Answer ID (Nullable, cascade on delete set null)
  - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
+- Criteria
+ - [ ] Question
+ - [ ] Type (Objective, Subjective)
+ - [ ] Required
+ - [ ] Parent
+ - [ ] Order
+
+- Scores
+ - [ ] Application ID
+ - [ ] Criteria ID
+ - [ ] Admin ID
+ - [ ] Answer
+ - [ ] Score
+
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
- - [ ] Type (Input, Text, Dropdown, Boolean)
- - [ ] Options (JSON, Optional, only for dropdowns at the moment)
+ - [ ] Type (Input, Text, Dropdown, Boolean, File)
+ - [ ] Options (Text, only used for dropdowns now)
  - [ ] Response (Response from the user)
  - [ ] Application ID
  - [ ] User ID (Which admin sent the feedback)
  - [ ] Regarding ID (The ID of the data this feedback is related to, if any)
  - [ ] Regarding Type (Can be a question or a document)
-
-- Scores
- - [ ] Score
- - [ ] Application ID
- - [ ] Admin ID
- - [ ] Question ID
 
 
 ## Pages
@@ -88,7 +96,7 @@
 - [ ] One to one polymorphic between feedback -> answers and documents
 - [ ] One to one + One to many between scores <-> applications
 - [ ] One to one between scores -> admins (users)
-- [ ] One to one btween scores -> questions
+- [ ] One to one btween scores -> critera
 
 
 ## Defined Events
@@ -120,7 +128,9 @@
 
 ## Judge Workflow
 - [x] View submitted applications
-- [ ] Rate user answers
-- [ ] Rate judge questions
+- [ ] Remove per-question rating options
+- [ ] Display judge criteria on review page
+- [ ] AJAX autosave for judge answers / ratings
+- [ ] Automated score aggregation on a cron
 - [ ] Provide feedback
 - [ ] Approve / deny applications
