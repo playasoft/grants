@@ -88,7 +88,7 @@
         </thead>
 
         <tbody>
-            @foreach($questions['user'] as $question)
+            @foreach($questions as $question)
                 <?php
 
                 $answered = false;
@@ -171,7 +171,7 @@
             </thead>
 
             <tbody>
-                @foreach($questions['judge'] as $question)
+                @foreach($questions as $question)
                     <?php
 
                     $answered = false;

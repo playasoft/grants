@@ -27,7 +27,6 @@ class QuestionRequest extends Request
         [
             'question' => 'required|min:3',
             'type' => 'required|in:input,text,dropdown,boolean,file',
-            'role' => 'required|in:applicant,judge'
         ];
     }
 }

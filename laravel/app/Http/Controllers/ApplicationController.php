@@ -130,15 +130,11 @@ class ApplicationController extends Controller
             }
         }
 
-        $questions =
-        [
-            'user' => Question::where('role', 'applicant')->get(),
-            'judge' => Question::where('role', 'judge')->get(),
-        ];
+        $questions = Question::get();
 
         // Generate an array of answers based on their associated question ID
         $answers = [];
-
+        
         foreach($application->answers as $answer)
         {
             $answers[$answer->question_id] = $answer;
