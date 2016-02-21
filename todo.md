@@ -27,10 +27,10 @@
  - [x] Name
  - [x] Description
  - [x] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [-] Objective Score
- - [-] Subjective Score
- - [ ] Total Score
- - [ ] Scored (Boolean)
+ - [x] Objective Score
+ - [x] Subjective Score
+ - [x] Total Score
+ - [x] Scored (Boolean)
  - [x] User ID
 
 - Answers
