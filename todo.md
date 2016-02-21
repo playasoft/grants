@@ -47,11 +47,11 @@
  - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
 - Criteria
- - [ ] Question
- - [ ] Type (Objective, Subjective)
- - [ ] Required
- - [ ] Parent
- - [ ] Order
+ - [x] Question
+ - [x] Type (Objective, Subjective)
+ - [x] Required
+ - [x] Parent
+ - [x] Order
 
 - Scores
  - [ ] Application ID
