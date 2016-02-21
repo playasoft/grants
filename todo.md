@@ -54,11 +54,11 @@
  - [x] Order
 
 - Scores
- - [ ] Application ID
- - [ ] Criteria ID
- - [ ] Admin ID
- - [ ] Answer
- - [ ] Score
+ - [x] Score
+ - [x] Answer
+ - [x] Application ID
+ - [x] Criteria ID
+ - [x] User ID (Judge user)
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
