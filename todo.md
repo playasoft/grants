@@ -128,7 +128,7 @@
 
 ## Judge Workflow
 - [x] View submitted applications
-- [ ] Remove per-question rating options
+- [x] Remove per-question rating options
 - [ ] Display judge criteria on review page
 - [ ] AJAX autosave for judge answers / ratings
 - [ ] Automated score aggregation on a cron

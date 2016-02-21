@@ -77,13 +77,7 @@
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
-
-                @can('rate-answer')
-                    <th>Rating</th>
-                    <th>&nbsp;</th>
-                @else
-                    <th class="button">Required</th>
-                @endcan
+                <th class="button">Required</th>
             </tr>
         </thead>
 
@@ -131,25 +125,11 @@
                         @endif
                     </td>
 
-                    @can('rate-answer')
-                        <td>
-                            Not Rated
-                        </td>
-                    
-                        <td>
-                            @if($answered && !$missing)
-                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
-                            @else
-                                Not Answered
-                            @endif
-                        </td>
-                    @else
-                        <td class="button">
-                            @if($question->required)
-                                <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
-                            @endif
-                        </td>
-                    @endcan
+                    <td class="button">
+                        @if($question->required)
+                            <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -165,74 +145,14 @@
                 <tr>
                     <th>Question</th>
                     <th>Answer</th>
-                    <th>Rating</th>
-                    <th>&nbsp;</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach($questions as $question)
-                    <?php
-
-                    $answered = false;
-                    $missing = false;
-                    $answer = false;
-
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($answers[$question->id]))
-                    {
-                        $answered = true;
-                        $answer = $answers[$question->id]->answer;
-                    }
-
-                    // If this question is required
-                    if($question->required)
-                    {
-                        // If the answer is empty, or the type is file and there are no uploaded documents
-                        if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
-                        {
-                            $missing = true;
-                            $answer = "Your answer is missing.";
-                       }
-                    }
-
-                    ?>
-
-                    <tr class="{{ ($missing) ? 'danger' : '' }}">
-                        <td><b>{{ $question->question }}</b></td>
-                        <td>
-                            @if($question->type == 'file')
-                                @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
-                                    @foreach($answers[$question->id]->documents as $document)
-                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
-                                    @endforeach
-                                @endif
-                            @else
-                                @if($answer)
-                                    {!! nl2br(e($answer)) !!}
-                                @else
-                                    <a href="/applications/{{ $application->id }}" class="btn btn-success">Answer Question</a>
-                                @endif
-                            @endif
-                        </td>
-
-                        <td>
-                            @if($answer)
-                                Not Rated
-                            @else
-                                Not Answered
-                            @endif
-                        </td>
-
-                        <td>
-                            @if($answered && !$missing)
-                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
             </tbody>
         </table>
+
+        [display critera]
     @endcan
     
     @if($application->status == 'new')
