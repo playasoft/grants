@@ -143,16 +143,66 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Question</th>
+                    <th>Objective Question</th>
                     <th>Answer</th>
+                    <th>Score</th>
+                    <th class="button">Required</th>
                 </tr>
             </thead>
 
             <tbody>
+                @foreach($criteria['objective'] as $objective)
+                    <tr>
+                        <td><b>{{ $objective->question }}</b></td>
+                        <td>
+                            // Text input?
+                        </td>
+
+                        <td>
+                            // Scoring options?
+                        </td>
+
+                        <td class="button">
+                            @if($objective->required)
+                                <span class="glyphicon glyphicon-ok"></span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
-        [display critera]
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Subjective Question</th>
+                    <th>Answer</th>
+                    <th>Score</th>
+                    <th class="button">Required</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($criteria['subjective'] as $subjective)
+                    <tr>
+                        <td><b>{{ $subjective->question }}</b></td>
+                        <td>
+                            // Text input?
+                        </td>
+
+                        <td>
+                            // Scoring options?
+                        </td>
+
+                        <td class="button">
+                            @if($subjective->required)
+                                <span class="glyphicon glyphicon-ok"></span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endcan
     
     @if($application->status == 'new')
