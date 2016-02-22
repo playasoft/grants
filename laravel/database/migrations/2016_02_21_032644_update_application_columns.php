@@ -26,10 +26,11 @@ class UpdateApplicationColumns extends Migration
             $table->renameColumn('judge_score', 'subjective_score');
         });
 
-        // Add new
+        // Add new columns
         Schema::table('applications', function (Blueprint $table)
         {
             $table->integer('total_score')->after('subjective_score');
+            $table->enum('judge_status', ['new', 'ready', 'pending-approval', 'pending-denial', 'finalized'])->after('status');
         });
     }
 
@@ -44,7 +45,7 @@ class UpdateApplicationColumns extends Migration
         {
             $table->renameColumn('objective_score', 'applicant_score');
             $table->renameColumn('subjective_score', 'judge_score');
-            $table->dropColumn('total_score');
+            $table->dropColumn(['total_score', 'judge_status']);
         });
     }
 }
