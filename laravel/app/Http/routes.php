@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth', 'role:admin|judge|observer']], function()
     // Viewing questions
     Route::get('/questions', 'QuestionController@listQuestions');
 
+    // Viewing criteria
+    Route::get('/criteria', 'CriteriaController@listCriteria');
+
     // Viewing users
     Route::get('/users', 'UserController@listUsers');
     Route::get('/users/{user}', 'UserController@viewUser');
@@ -79,4 +82,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     Route::get('/questions/{question}', 'QuestionController@editQuestionForm');
     Route::post('/questions/{question}', 'QuestionController@editQuestion');
     Route::get('/questions/{question}/delete', 'QuestionController@deleteQuestion');
+
+    // Creating and modifying criteria
+    Route::post('/criteria', 'CriteriaController@createCriteria');
+    Route::get('/criteria/create', 'CriteriaController@createCriteriaForm');
+    Route::get('/criteria/{question}', 'CriteriaController@editCriteriaForm');
+    Route::post('/criteria/{question}', 'CriteriaController@editCriteria');
+    Route::get('/criteria/{question}/delete', 'CriteriaController@deleteCriteria');
 });
