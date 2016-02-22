@@ -17,6 +17,7 @@ class CreateScoresTable extends Migration
             $table->increments('id');
             $table->integer('score');
             $table->text('answer');
+            $table->enum('status', ['new', 'submitted']);
             $table->integer('application_id')->unsigned();
             $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
             $table->integer('criteria_id')->unsigned();
