@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>All Questions</h1>
+    <h1>Questions for Applicants</h1>
     <hr>
 
     <table class="table table-hover">

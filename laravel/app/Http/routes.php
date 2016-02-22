@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     // Creating and modifying criteria
     Route::post('/criteria', 'CriteriaController@createCriteria');
     Route::get('/criteria/create', 'CriteriaController@createCriteriaForm');
-    Route::get('/criteria/{question}', 'CriteriaController@editCriteriaForm');
-    Route::post('/criteria/{question}', 'CriteriaController@editCriteria');
-    Route::get('/criteria/{question}/delete', 'CriteriaController@deleteCriteria');
+    Route::get('/criteria/{criteria}', 'CriteriaController@editCriteriaForm');
+    Route::post('/criteria/{criteria}', 'CriteriaController@editCriteria');
+    Route::get('/criteria/{criteria}/delete', 'CriteriaController@deleteCriteria');
 });

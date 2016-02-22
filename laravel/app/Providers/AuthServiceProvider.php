@@ -37,6 +37,10 @@ class AuthServiceProvider extends ServiceProvider
             'create-question',
             'edit-question',
             'delete-question',
+            'view-criteria',
+            'create-criteria',
+            'edit-criteria',
+            'delete-criteria',
             'view-application',
         ],
 
@@ -50,6 +54,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-submitted-application',
             'view-users',
             'view-questions',
+            'view-criteria',
             'rate-answer',
         ],
 
@@ -58,6 +63,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-submitted-application',
             'view-users',
             'view-questions',
+            'view-critieria',
         ],
     ];
 

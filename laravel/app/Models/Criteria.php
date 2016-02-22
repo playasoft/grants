@@ -8,4 +8,6 @@ class Criteria extends Model
 {
     // Table has to be manually defined because laravel thinks "criterias" is the plural...
     protected $table = 'criteria';
+
+    protected $fillable = ['question', 'type', 'required'];
 }
