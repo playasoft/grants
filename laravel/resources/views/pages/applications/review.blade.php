@@ -36,10 +36,7 @@
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
-
-                @cannot('rate-answer')
-                    <th class="button">Required</th>
-                @endcannot
+                <th class="button">Required</th>
             </tr>
         </thead>
 
@@ -47,26 +44,20 @@
             <tr>
                 <td><b>Name of Your Project</b></td>
                 <td>{{ $application->name }}</td>
-
-                @cannot('rate-answer')
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                @endcannot
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
             </tr>
 
             <tr>
                 <td><b>Basic Description</b></td>
                 <td>{!! nl2br(e($application->description)) !!}</td>
-
-                @cannot('rate-answer')
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                @endcannot
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
             </tr>
         </tbody>
     </table>
 
     <hr>
 
-    @can('rate-answer')
+    @can('view-submitted-application')
         <h2>Questions About This Project</h2>
     @else
         <h2>Questions About Your Project</h2>
@@ -78,6 +69,10 @@
                 <th>Question</th>
                 <th>Answer</th>
                 <th class="button">Required</th>
+
+                @can('create-feedback')
+                    <th>&nbsp;</th>
+                @endcan
             </tr>
         </thead>
 
@@ -130,10 +125,20 @@
                             <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
                         @endif
                     </td>
+
+                    @can('create-feedback')
+                        <td>
+                            <a href="/application/{{ $application->id }}/feedback/{{ $question->id }}" class="btn btn-primary">Request Feedback</a>
+                        </td>
+                    @endcan
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    @can('create-feedback')
+        <a href="/application/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
+    @endcan
 
     @can('view-submitted-application')
         <hr>
@@ -222,4 +227,17 @@
             <button type="submit" class="btn btn-success">Submit Application</button>
         {!! Form::close() !!}
     @endif
+
+    @can('judge-application')
+        {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+            <p>
+                <b>
+                    Warning! After submitting your ratings, you will not be able to make changes to your answers.
+                    Please make sure everything is accurate before submitting.
+                </b>
+            </p>
+
+            <button type="submit" class="btn btn-success">Submit Ratings</button>
+        {!! Form::close() !!}
+    @endcan
 @endsection

@@ -42,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
             'edit-criteria',
             'delete-criteria',
             'view-application',
+            'create-feedback',
         ],
 
         'applicant' =>
@@ -51,11 +52,12 @@ class AuthServiceProvider extends ServiceProvider
 
         'judge' =>
         [
-            'view-submitted-application',
             'view-users',
             'view-questions',
             'view-criteria',
-            'rate-answer',
+            'view-submitted-application',
+            'judge-application',
+            'create-feedback',
         ],
 
         'observer' =>
