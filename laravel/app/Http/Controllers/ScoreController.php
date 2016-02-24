@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Application;
+use App\Models\Criteria;
 use App\Models\Score;
 
 use App\Http\Requests\ScoreRequest;
@@ -23,7 +25,7 @@ class ScoreController extends Controller
         $input = $request->all();
         
         $application = Application::find($input['application_id']);
-        $criteria = Question::find($input['criteria_id']);
+        $criteria = Criteria::find($input['criteria_id']);
 
         // Check if a score already exists for this criteria
         $score = Score::firstOrNew(['application_id' => $application->id, 'criteria_id' => $criteria->id]);
@@ -31,11 +33,12 @@ class ScoreController extends Controller
         // Add submitted information
         $score->application_id = $application->id;
         $score->criteria_id = $criteria->id;
+        $score->user_id = Auth::user()->id;
         $score->score = $input['score'];
         $score->answer = $input['answer'];
         $score->save();
 
         $request->session()->flash('success', 'Your score has been saved.');
-        return redirect('/applications/' . $application->id);
+        return redirect('/applications/' . $application->id . '/review');
     }
 }
