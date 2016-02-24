@@ -81,7 +81,10 @@ class AnswerController extends Controller
             return redirect('/applications/' . $application->id . '/review');
         }
 
-        $answer = new Answer;
+        // Check if an answer already exists for this question
+        $answer = Answer::firstOrNew(['application_id' => $application->id, 'question_id' => $question->id]);
+
+        // Add submitted information
         $answer->application_id = $application->id;
         $answer->question_id = $question->id;
         $answer->answer = $input['answer'];
