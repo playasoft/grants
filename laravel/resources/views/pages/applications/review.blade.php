@@ -228,7 +228,7 @@
         {!! Form::close() !!}
     @endif
 
-    @can('judge-application')
+    @can('score-application')
         {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
             <p>
                 <b>

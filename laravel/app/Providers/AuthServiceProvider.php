@@ -56,7 +56,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-questions',
             'view-criteria',
             'view-submitted-application',
-            'judge-application',
+            'score-application',
             'create-feedback',
         ],
 

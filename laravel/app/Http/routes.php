@@ -90,3 +90,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     Route::post('/criteria/{criteria}', 'CriteriaController@editCriteria');
     Route::get('/criteria/{criteria}/delete', 'CriteriaController@deleteCriteria');
 });
+
+// Routes only available to judges
+Route::group(['middleware' => ['auth', 'role:judge']], function()
+{
+    // Scoring criteria
+    Route::post('/score', 'ScoreController@scoreCriteria');
+});
