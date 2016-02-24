@@ -150,29 +150,51 @@
                 <tr>
                     <th>Objective Question</th>
                     <th>Answer</th>
-                    <th>Score</th>
+                    <th>Explination</th>
                     <th class="button">Required</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach($criteria['objective'] as $objective)
-                    <tr>
-                        <td><b>{{ $objective->question }}</b></td>
-                        <td>
-                            // Text input?
-                        </td>
+                    {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
+                        <input type="hidden" name="application_id" value="{{ $application->id }}">
+                        <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
 
-                        <td>
-                            // Scoring options?
-                        </td>
+                        <tr>
+                            <td><b>{{ $objective->question }}</b></td>
 
-                        <td class="button">
-                            @if($objective->required)
-                                <span class="glyphicon glyphicon-ok"></span>
-                            @endif
-                        </td>
-                    </tr>
+                            <td>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="1"> Yes
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-1"> No
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="0"> N/A
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)">
+                            </td>
+
+                            <td class="button">
+                                @if($objective->required)
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                @endif
+                            </td>
+                        </tr>
+                    {!! Form::close() !!}
                 @endforeach
             </tbody>
         </table>
@@ -182,29 +204,63 @@
                 <tr>
                     <th>Subjective Question</th>
                     <th>Answer</th>
-                    <th>Score</th>
+                    <th>Explination</th>
                     <th class="button">Required</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach($criteria['subjective'] as $subjective)
-                    <tr>
-                        <td><b>{{ $subjective->question }}</b></td>
-                        <td>
-                            // Text input?
-                        </td>
+                    {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
+                        <input type="hidden" name="application_id" value="{{ $application->id }}">
+                        <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
 
-                        <td>
-                            // Scoring options?
-                        </td>
+                        <tr>
+                            <td><b>{{ $subjective->question }}</b></td>
 
-                        <td class="button">
-                            @if($subjective->required)
-                                <span class="glyphicon glyphicon-ok"></span>
-                            @endif
-                        </td>
-                    </tr>
+                            <td>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="2"> Very
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="1"> A bit
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="0"> Meh
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-1"> Not really
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-2"> No
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)">
+                            </td>
+
+                            <td class="button">
+                                @if($subjective->required)
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                @endif
+                            </td>
+                        </tr>
+                    {!! Form::close() !!}
                 @endforeach
             </tbody>
         </table>
