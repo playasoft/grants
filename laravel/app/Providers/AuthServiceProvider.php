@@ -42,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
             'edit-criteria',
             'delete-criteria',
             'view-application',
+            'view-submitted-application',
             'create-feedback',
         ],
 
