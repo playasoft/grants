@@ -130,7 +130,7 @@
 - [x] View submitted applications
 - [x] Remove per-question rating options
 - [x] Display judge criteria on review page
-- [ ] AJAX autosave for judge answers / ratings
+- [x] AJAX autosave for judge answers / ratings
 - [ ] Judge submitting final answers / ratings
 - [ ] Server-side checking for required answers
 - [ ] Score aggregation when ratings are submitted

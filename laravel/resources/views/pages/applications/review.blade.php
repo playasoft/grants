@@ -145,39 +145,33 @@
         
         <h2>Questions for Judges</h2>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Objective Question</th>
-                    <th>Answer</th>
-                    <th>Explination</th>
-                    <th class="button">Required</th>
-                </tr>
-            </thead>
+        <h3>Objective Criteria</h3>
 
-            <tbody>
-                @foreach($criteria['objective'] as $objective)
-                    <?php
+        @foreach($criteria['objective'] as $objective)
+            <?php
 
-                    $score = false;
-                    $answer = false;
+            $score = false;
+            $answer = false;
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($scores[$objective->id]))
-                    {
-                        $score = $scores[$objective->id]->score;
-                        $answer = $scores[$objective->id]->answer;
-                    }
+            // If this question has already been answered, use the update route instead of creating a new answer
+            if(isset($scores[$objective->id]))
+            {
+                $score = $scores[$objective->id]->score;
+                $answer = $scores[$objective->id]->answer;
+            }
 
-                    ?>
-                
-                    {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
-                        <input type="hidden" name="application_id" value="{{ $application->id }}">
-                        <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
+            ?>
+        
+            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+                <input type="hidden" name="application_id" value="{{ $application->id }}">
+                <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
 
+                <div class="form-group">
+                    <label class="control-label">{{ $objective->question }}</label>
+                    <span class="pull-right"><span class="status"></span></span>
+
+                    <table class="table">
                         <tr>
-                            <td><b>{{ $objective->question }}</b></td>
-
                             <td>
                                 <div class="radio-inline">
                                     <label>
@@ -202,50 +196,48 @@
                                 <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
                             </td>
 
-                            <td class="button">
+                            <td class="button" style="width:10%; line-height: 2.5em">
                                 @if($objective->required)
-                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span class="information error">Required</span>
+                                @else
+                                    <span class="information success">Optional</span>
                                 @endif
                             </td>
                         </tr>
-                    {!! Form::close() !!}
-                @endforeach
-            </tbody>
-        </table>
+                    </table>
+                </div>
+            {!! Form::close() !!}
+        @endforeach
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Subjective Question</th>
-                    <th>Answer</th>
-                    <th>Explination</th>
-                    <th class="button">Required</th>
-                </tr>
-            </thead>
+        <hr>
 
-            <tbody>
-                @foreach($criteria['subjective'] as $subjective)
-                    <?php
+        <h3>Subjective Criteria</h3>
 
-                    $score = false;
-                    $answer = false;
+        @foreach($criteria['subjective'] as $subjective)
+            <?php
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($scores[$subjective->id]))
-                    {
-                        $score = $scores[$subjective->id]->score;
-                        $answer = $scores[$subjective->id]->answer;
-                    }
+            $score = false;
+            $answer = false;
 
-                    ?>
+            // If this question has already been answered, use the update route instead of creating a new answer
+            if(isset($scores[$subjective->id]))
+            {
+                $score = $scores[$subjective->id]->score;
+                $answer = $scores[$subjective->id]->answer;
+            }
 
-                    {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
-                        <input type="hidden" name="application_id" value="{{ $application->id }}">
-                        <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
+            ?>
+        
+            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+                <input type="hidden" name="application_id" value="{{ $application->id }}">
+                <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
 
+                <div class="form-group">
+                    <label class="control-label">{{ $subjective->question }}</label>
+                    <span class="pull-right"><span class="status"></span></span>
+
+                    <table class="table">
                         <tr>
-                            <td><b>{{ $subjective->question }}</b></td>
-
                             <td>
                                 <div class="radio-inline">
                                     <label>
@@ -282,16 +274,18 @@
                                 <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
                             </td>
 
-                            <td class="button">
+                            <td class="button" style="width:10%; line-height: 2.5em">
                                 @if($subjective->required)
-                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span class="information error">Required</span>
+                                @else
+                                    <span class="information success">Optional</span>
                                 @endif
                             </td>
                         </tr>
-                    {!! Form::close() !!}
-                @endforeach
-            </tbody>
-        </table>
+                    </table>
+                </div>
+            {!! Form::close() !!}
+        @endforeach
     @endcan
     
     @if($application->status == 'new')
