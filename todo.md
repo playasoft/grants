@@ -79,7 +79,7 @@
 - [x] Create question
 - [x] Create application
 - [x] Answering questions
-- [ ] Judging applications
+- [x] Judging applications
 - [ ] Follow up questions
 
 
@@ -90,13 +90,13 @@
 - [ ] One to many + One to one between questions <-> question children
 - [x] One to many + One to one between applications <-> documents
 - [x] One to many + One to one between questions <-> documents
-- [x] One to one between documents -> admins (users) 
+- [x] One to one between documents -> judges (users) 
 - [ ] One to one + One to many between feedback <-> applications
-- [ ] One to one between feedback -> admins (users)
-- [ ] One to one polymorphic between feedback -> answers and documents
-- [ ] One to one + One to many between scores <-> applications
-- [ ] One to one between scores -> admins (users)
-- [ ] One to one btween scores -> critera
+- [ ] One to one between feedback -> judges (users)
+- [x] One to one polymorphic between feedback -> answers and documents
+- [x] One to one + One to many between scores <-> applications
+- [x] One to one between scores -> critera
+- [x] One to one between scores -> judges (users)
 
 
 ## Defined Events
