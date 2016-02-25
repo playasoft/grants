@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>All Questions</h1>
+    <h1>Questions for Applicants</h1>
     <hr>
 
     <table class="table table-hover">
@@ -10,7 +10,6 @@
                 <th>ID</th>
                 <th>Question</th>
                 <th>Type</th>
-                <th>Role</th>
                 <th>Required</th>
             </tr>
         </thead>
@@ -26,7 +25,6 @@
                             {{ $question->question }}
                         @endcan
                     <td>{{ $question->type }}</td>
-                    <td>{{ $question->role }}</td>
                     <td>{{ $question->required }}</td>
                 </tr>
             @endforeach

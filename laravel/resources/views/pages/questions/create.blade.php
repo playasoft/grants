@@ -31,18 +31,6 @@
                 'help' => "When creating a dropdown, you'll need to provide what values will appear."
             ])
         </div>
- 
-        @include('partials/form/select',
-        [
-            'name' => 'role',
-            'label' => 'User Role',
-            'help' => "A user will only see this question if they have a matching user role.",
-            'options' =>
-            [
-                'applicant' => "Applicant",
-                'judge' => "Judge",
-            ]
-        ])
 
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
 

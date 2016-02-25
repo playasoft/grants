@@ -25,4 +25,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany('App\Models\Application');
     }
+
+    // Users can judge applications
+    public function judged()
+    {
+        return $this->hasMany('App\Models\Judged');
+    }
 }

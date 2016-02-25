@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class QuestionRequest extends Request
+class ScoreRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class QuestionRequest extends Request
     {
         return
         [
-            'question' => 'required|min:3',
-            'type' => 'required|in:input,text,dropdown,boolean,file',
+            'application_id' => "required|integer|exists:applications,id",
+            'criteria_id' => "required|integer|exists:criteria,id",
         ];
     }
 }

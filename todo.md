@@ -27,10 +27,10 @@
  - [x] Name
  - [x] Description
  - [x] Status (New, Submitted, Review, Follow Up, Accepted, Rejected)
- - [-] Objective Score
- - [-] Subjective Score
- - [ ] Total Score
- - [ ] Scored (Boolean)
+ - [x] Objective Score
+ - [x] Subjective Score
+ - [x] Total Score
+ - [x] Scored (Boolean)
  - [x] User ID
 
 - Answers
@@ -47,18 +47,22 @@
  - [x] User ID (Useful for tracking if admins have attached a file to an application)
 
 - Criteria
- - [ ] Question
- - [ ] Type (Objective, Subjective)
- - [ ] Required
- - [ ] Parent
- - [ ] Order
+ - [x] Question
+ - [x] Type (Objective, Subjective)
+ - [x] Required
+ - [x] Parent
+ - [x] Order
 
 - Scores
- - [ ] Application ID
- - [ ] Criteria ID
- - [ ] Admin ID
- - [ ] Answer
- - [ ] Score
+ - [x] Score
+ - [x] Answer
+ - [x] Application ID
+ - [x] Criteria ID
+ - [x] User ID (Judge)
+
+- Judged
+ - [x] Application ID
+ - [x] User ID (Judge)
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
@@ -79,7 +83,7 @@
 - [x] Create question
 - [x] Create application
 - [x] Answering questions
-- [ ] Judging applications
+- [x] Judging applications
 - [ ] Follow up questions
 
 
@@ -90,13 +94,13 @@
 - [ ] One to many + One to one between questions <-> question children
 - [x] One to many + One to one between applications <-> documents
 - [x] One to many + One to one between questions <-> documents
-- [x] One to one between documents -> admins (users) 
+- [x] One to one between documents -> judges (users) 
 - [ ] One to one + One to many between feedback <-> applications
-- [ ] One to one between feedback -> admins (users)
-- [ ] One to one polymorphic between feedback -> answers and documents
-- [ ] One to one + One to many between scores <-> applications
-- [ ] One to one between scores -> admins (users)
-- [ ] One to one btween scores -> critera
+- [ ] One to one between feedback -> judges (users)
+- [x] One to one polymorphic between feedback -> answers and documents
+- [x] One to one + One to many between scores <-> applications
+- [x] One to one between scores -> critera
+- [x] One to one between scores -> judges (users)
 
 
 ## Defined Events
@@ -128,9 +132,11 @@
 
 ## Judge Workflow
 - [x] View submitted applications
-- [ ] Remove per-question rating options
-- [ ] Display judge criteria on review page
-- [ ] AJAX autosave for judge answers / ratings
-- [ ] Automated score aggregation on a cron
+- [x] Remove per-question rating options
+- [x] Display judge criteria on review page
+- [x] AJAX autosave for judge answers / ratings
+- [ ] Judge submitting final answers / ratings
+- [ ] Server-side checking for required answers
+- [ ] Score aggregation when ratings are submitted
 - [ ] Provide feedback
 - [ ] Approve / deny applications

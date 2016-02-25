@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RemoveQuestionStatus extends Migration
+class RemoveQuestionColumns extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class RemoveQuestionStatus extends Migration
         Schema::table('questions', function (Blueprint $table)
         {
             $table->dropColumn('status');
+            $table->dropColumn('role');
         });
     }
 
@@ -28,6 +29,7 @@ class RemoveQuestionStatus extends Migration
         Schema::table('questions', function (Blueprint $table)
         {
             $table->enum('status', ['new', 'submitted', 'review', 'follow-up', 'accepted', 'rejected']);
+            $table->enum('role', ['applicant', 'judge']);
         });
     }
 }

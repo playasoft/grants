@@ -34,19 +34,6 @@
             ])
         </div>
  
-        @include('partials/form/select',
-        [
-            'name' => 'role',
-            'label' => 'User Role',
-            'help' => "A user will only see this question if they have a matching user role.",
-            'options' =>
-            [
-                'applicant' => "Applicant",
-                'judge' => "Judge",
-            ],
-            'value' => $question->role
-        ])
-
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes'], 'value' => $question->required])
 
         <button type="submit" class="btn btn-primary">Save Changes</button>

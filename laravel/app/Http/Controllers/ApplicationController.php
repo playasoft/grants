@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Application;
 use App\Models\Question;
+use App\Models\Criteria;
 
 use App\Http\Requests\ApplicationRequest;
 
@@ -83,7 +84,7 @@ class ApplicationController extends Controller
         }
 
         $questions = Question::get();
-
+        
         // Generate an array of answers based on their associated question ID
         $answers = [];
 
@@ -130,21 +131,30 @@ class ApplicationController extends Controller
             }
         }
 
-        $questions =
+        $questions = Question::get();
+        $criteria =
         [
-            'user' => Question::where('role', 'applicant')->get(),
-            'judge' => Question::where('role', 'judge')->get(),
+            'objective' => Criteria::where('type', 'objective')->get(),
+            'subjective' => Criteria::where('type', 'subjective')->get(),
         ];
-
+        
         // Generate an array of answers based on their associated question ID
         $answers = [];
-
+        
         foreach($application->answers as $answer)
         {
             $answers[$answer->question_id] = $answer;
         }
 
-        return view('pages/applications/review', compact('application', 'questions', 'answers'));
+        $scores = [];
+
+        // Select all scores made by the current user
+        foreach($application->scores()->where('user_id', Auth::user()->id)->get() as $score)
+        {
+            $scores[$score->criteria_id] = $score;
+        }
+
+        return view('pages/applications/review', compact('application', 'questions', 'answers', 'criteria', 'scores'));
     }
 
     // Helper function for checking if all required answers are filled in

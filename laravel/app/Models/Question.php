@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['question', 'type', 'role', 'options', 'required'];
+    protected $fillable = ['question', 'type', 'options', 'required'];
 
     // Helper function to generate arrays for dropdowns from saved options 
     public function dropdown()

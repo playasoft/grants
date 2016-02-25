@@ -36,10 +36,7 @@
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
-
-                @cannot('rate-answer')
-                    <th class="button">Required</th>
-                @endcannot
+                <th class="button">Required</th>
             </tr>
         </thead>
 
@@ -47,26 +44,20 @@
             <tr>
                 <td><b>Name of Your Project</b></td>
                 <td>{{ $application->name }}</td>
-
-                @cannot('rate-answer')
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                @endcannot
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
             </tr>
 
             <tr>
                 <td><b>Basic Description</b></td>
                 <td>{!! nl2br(e($application->description)) !!}</td>
-
-                @cannot('rate-answer')
-                    <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
-                @endcannot
+                <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
             </tr>
         </tbody>
     </table>
 
     <hr>
 
-    @can('rate-answer')
+    @can('view-submitted-application')
         <h2>Questions About This Project</h2>
     @else
         <h2>Questions About Your Project</h2>
@@ -77,18 +68,16 @@
             <tr>
                 <th>Question</th>
                 <th>Answer</th>
+                <th class="button">Required</th>
 
-                @can('rate-answer')
-                    <th>Rating</th>
+                @can('create-feedback')
                     <th>&nbsp;</th>
-                @else
-                    <th class="button">Required</th>
                 @endcan
             </tr>
         </thead>
 
         <tbody>
-            @foreach($questions['user'] as $question)
+            @foreach($questions as $question)
                 <?php
 
                 $answered = false;
@@ -131,23 +120,15 @@
                         @endif
                     </td>
 
-                    @can('rate-answer')
+                    <td class="button">
+                        @if($question->required)
+                            <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
+                        @endif
+                    </td>
+
+                    @can('create-feedback')
                         <td>
-                            Not Rated
-                        </td>
-                    
-                        <td>
-                            @if($answered && !$missing)
-                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
-                            @else
-                                Not Answered
-                            @endif
-                        </td>
-                    @else
-                        <td class="button">
-                            @if($question->required)
-                                <span class="{{ ($missing) ? 'error' : 'success' }} glyphicon glyphicon-ok"></span>
-                            @endif
+                            <a href="/application/{{ $application->id }}/feedback/{{ $question->id }}" class="btn btn-primary">Request Feedback</a>
                         </td>
                     @endcan
                 </tr>
@@ -155,84 +136,156 @@
         </tbody>
     </table>
 
+    @can('create-feedback')
+        <a href="/application/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
+    @endcan
+
     @can('view-submitted-application')
         <hr>
         
         <h2>Questions for Judges</h2>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th>Rating</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
+        <h3>Objective Criteria</h3>
 
-            <tbody>
-                @foreach($questions['judge'] as $question)
-                    <?php
+        @foreach($criteria['objective'] as $objective)
+            <?php
 
-                    $answered = false;
-                    $missing = false;
-                    $answer = false;
+            $score = false;
+            $answer = false;
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($answers[$question->id]))
-                    {
-                        $answered = true;
-                        $answer = $answers[$question->id]->answer;
-                    }
+            // If this question has already been answered, use the update route instead of creating a new answer
+            if(isset($scores[$objective->id]))
+            {
+                $score = $scores[$objective->id]->score;
+                $answer = $scores[$objective->id]->answer;
+            }
 
-                    // If this question is required
-                    if($question->required)
-                    {
-                        // If the answer is empty, or the type is file and there are no uploaded documents
-                        if(empty($answer) || $question->type == 'file' && !$answers[$question->id]->documents->count())
-                        {
-                            $missing = true;
-                            $answer = "Your answer is missing.";
-                       }
-                    }
+            ?>
+        
+            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+                <input type="hidden" name="application_id" value="{{ $application->id }}">
+                <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
 
-                    ?>
+                <div class="form-group">
+                    <label class="control-label">{{ $objective->question }}</label>
+                    <span class="pull-right"><span class="status"></span></span>
 
-                    <tr class="{{ ($missing) ? 'danger' : '' }}">
-                        <td><b>{{ $question->question }}</b></td>
-                        <td>
-                            @if($question->type == 'file')
-                                @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
-                                    @foreach($answers[$question->id]->documents as $document)
-                                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
-                                    @endforeach
-                                @endif
-                            @else
-                                @if($answer)
-                                    {!! nl2br(e($answer)) !!}
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> Yes
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> No
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> N/A
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
+                            </td>
+
+                            <td class="button" style="width:10%; line-height: 2.5em">
+                                @if($objective->required)
+                                    <span class="information error">Required</span>
                                 @else
-                                    <a href="/applications/{{ $application->id }}" class="btn btn-success">Answer Question</a>
+                                    <span class="information success">Optional</span>
                                 @endif
-                            @endif
-                        </td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {!! Form::close() !!}
+        @endforeach
 
-                        <td>
-                            @if($answer)
-                                Not Rated
-                            @else
-                                Not Answered
-                            @endif
-                        </td>
+        <hr>
 
-                        <td>
-                            @if($answered && !$missing)
-                                <a href="/answer/{{ $answers[$question->id]->id }}/rate" class="btn btn-primary">Rate Answer</a>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <h3>Subjective Criteria</h3>
+
+        @foreach($criteria['subjective'] as $subjective)
+            <?php
+
+            $score = false;
+            $answer = false;
+
+            // If this question has already been answered, use the update route instead of creating a new answer
+            if(isset($scores[$subjective->id]))
+            {
+                $score = $scores[$subjective->id]->score;
+                $answer = $scores[$subjective->id]->answer;
+            }
+
+            ?>
+        
+            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+                <input type="hidden" name="application_id" value="{{ $application->id }}">
+                <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
+
+                <div class="form-group">
+                    <label class="control-label">{{ $subjective->question }}</label>
+                    <span class="pull-right"><span class="status"></span></span>
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="2" {{ ($score === '2') ? 'checked' : '' }}> Very
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> A bit
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> Meh
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> Not really
+                                    </label>
+                                </div>
+
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="score" value="-2" {{ ($score === '-2') ? 'checked' : '' }}> No
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
+                            </td>
+
+                            <td class="button" style="width:10%; line-height: 2.5em">
+                                @if($subjective->required)
+                                    <span class="information error">Required</span>
+                                @else
+                                    <span class="information success">Optional</span>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {!! Form::close() !!}
+        @endforeach
     @endcan
     
     @if($application->status == 'new')
@@ -252,4 +305,17 @@
             <button type="submit" class="btn btn-success">Submit Application</button>
         {!! Form::close() !!}
     @endif
+
+    @can('score-application')
+        {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+            <p>
+                <b>
+                    Warning! After submitting your ratings, you will not be able to make changes to your answers.
+                    Please make sure everything is accurate before submitting.
+                </b>
+            </p>
+
+            <button type="submit" class="btn btn-success">Submit Ratings</button>
+        {!! Form::close() !!}
+    @endcan
 @endsection

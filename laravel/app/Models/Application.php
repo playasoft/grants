@@ -25,4 +25,10 @@ class Application extends Model
     {
         return $this->hasMany('App\Models\Document');
     }
+
+    // Applications can have multiple scores
+    public function scores()
+    {
+        return $this->hasMany('App\Models\Score');
+    }
 }
