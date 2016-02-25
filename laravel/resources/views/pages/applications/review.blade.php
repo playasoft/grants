@@ -157,6 +157,20 @@
 
             <tbody>
                 @foreach($criteria['objective'] as $objective)
+                    <?php
+
+                    $score = false;
+                    $answer = false;
+
+                    // If this question has already been answered, use the update route instead of creating a new answer
+                    if(isset($scores[$objective->id]))
+                    {
+                        $score = $scores[$objective->id]->score;
+                        $answer = $scores[$objective->id]->answer;
+                    }
+
+                    ?>
+                
                     {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                         <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
@@ -167,25 +181,25 @@
                             <td>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="1"> Yes
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> Yes
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-1"> No
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> No
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="0"> N/A
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> N/A
                                     </label>
                                 </div>
                             </td>
 
                             <td>
-                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)">
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
                             </td>
 
                             <td class="button">
@@ -211,6 +225,20 @@
 
             <tbody>
                 @foreach($criteria['subjective'] as $subjective)
+                    <?php
+
+                    $score = false;
+                    $answer = false;
+
+                    // If this question has already been answered, use the update route instead of creating a new answer
+                    if(isset($scores[$subjective->id]))
+                    {
+                        $score = $scores[$subjective->id]->score;
+                        $answer = $scores[$subjective->id]->answer;
+                    }
+
+                    ?>
+
                     {!! Form::open(['url' => '/score', 'class' => 'form-inline']) !!}
                         <input type="hidden" name="application_id" value="{{ $application->id }}">
                         <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
@@ -221,37 +249,37 @@
                             <td>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="2"> Very
+                                        <input type="radio" name="score" value="2" {{ ($score === '2') ? 'checked' : '' }}> Very
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="1"> A bit
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> A bit
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="0"> Meh
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> Meh
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-1"> Not really
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> Not really
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-2"> No
+                                        <input type="radio" name="score" value="-2" {{ ($score === '-2') ? 'checked' : '' }}> No
                                     </label>
                                 </div>
                             </td>
 
                             <td>
-                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)">
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
                             </td>
 
                             <td class="button">

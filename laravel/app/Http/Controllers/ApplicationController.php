@@ -146,7 +146,15 @@ class ApplicationController extends Controller
             $answers[$answer->question_id] = $answer;
         }
 
-        return view('pages/applications/review', compact('application', 'questions', 'answers', 'criteria'));
+        $scores = [];
+
+        // Select all scores made by the current user
+        foreach($application->scores()->where('user_id', Auth::user()->id)->get() as $score)
+        {
+            $scores[$score->criteria_id] = $score;
+        }
+
+        return view('pages/applications/review', compact('application', 'questions', 'answers', 'criteria', 'scores'));
     }
 
     // Helper function for checking if all required answers are filled in
