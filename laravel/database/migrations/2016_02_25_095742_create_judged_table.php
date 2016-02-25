@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScoresTable extends Migration
+class CreateJudgedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateScoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('scores', function (Blueprint $table)
+        Schema::create('judged', function (Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('score');
-            $table->text('answer');
             $table->integer('application_id')->unsigned();
             $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
-            $table->integer('criteria_id')->unsigned();
-            $table->foreign('criteria_id')->references('id')->on('criteria')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -34,6 +30,6 @@ class CreateScoresTable extends Migration
      */
     public function down()
     {
-        Schema::drop('scores');
+        Schema::drop('judged');
     }
 }

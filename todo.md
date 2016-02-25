@@ -58,7 +58,11 @@
  - [x] Answer
  - [x] Application ID
  - [x] Criteria ID
- - [x] User ID (Judge user)
+ - [x] User ID (Judge)
+
+- Judged
+ - [x] Application ID
+ - [x] User ID (Judge)
 
 - Feedback
  - [ ] Feedback (So judges can ask questions or give criticism)
