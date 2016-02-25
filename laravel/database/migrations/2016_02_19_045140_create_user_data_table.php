@@ -18,8 +18,8 @@ class CreateUserDataTable extends Migration
             $table->increments('id');
             $table->string('burner_name')->nullable();
             $table->string('real_name')->nullable();
-            $table->string('address')->unique();
-            $table->string('phone')->unique();
+            $table->string('address');
+            $table->string('phone');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
