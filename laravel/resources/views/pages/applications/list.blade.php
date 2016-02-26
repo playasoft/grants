@@ -8,7 +8,8 @@
             <tr>
                 <th>Name</th>
                 <th>Applicant</th>
-                <th>Status</th>
+                <th>Application Status</th>
+                <th>Judge Status</th>
                 <th>Date Created</th>
                 <th>Date Modified</th>
             </tr>
@@ -26,6 +27,7 @@
                     </td>
                     <td>{{ $application->user->name }}</td>
                     <td>{{ $application->status }}</td>
+                    <td>{{ $application->judge_status }}</td>
                     <td>{{ $application->created_at->format('Y-m-d') }}</td>
                     <td>{{ $application->updated_at->format('Y-m-d') }}</td>
                 </tr>

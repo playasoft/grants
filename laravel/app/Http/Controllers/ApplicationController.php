@@ -11,6 +11,7 @@ use App\Models\Application;
 use App\Models\Question;
 use App\Models\Criteria;
 use App\Models\Judged;
+use App\Models\User;
 
 use App\Http\Requests\ApplicationRequest;
 
@@ -219,7 +220,7 @@ class ApplicationController extends Controller
         // Check if current user is allowed to score things
         $this->authorize('score-application');
 
-        if(in_array($application->status, ['accepted', 'rejected']))
+        if(!in_array($application->judge_status, ['new', 'ready']))
         {
             $request->session()->flash('error', 'This application has already been finalized.');
             return redirect('/applications/' . $application->id . '/review');
@@ -239,6 +240,17 @@ class ApplicationController extends Controller
             $judged->application_id = $application->id;
             $judged->user_id = Auth::user()->id;
             $judged->save();
+
+            // Compare the total number of judges vs number of judges who have scored this application
+            $totalJudges = User::where(['role' => 'judge'])->get();
+            $totalJudged = Judged::where(['application_id' => $application->id])->get();
+
+            // If at least half of the judges have rated this application, set it to ready
+            if(ceil($totalJudged->count() / $totalJudges->count()) >= 0.5)
+            {
+                $application->judge_status = 'ready';
+                $application->save();
+            }
 
             $request->session()->flash('success', 'Your final scores have been submitted.');
             return redirect('/applications');
