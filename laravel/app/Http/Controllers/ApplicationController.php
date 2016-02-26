@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Question;
 use App\Models\Criteria;
+use App\Models\Judged;
 
 use App\Http\Requests\ApplicationRequest;
 
@@ -183,6 +184,7 @@ class ApplicationController extends Controller
         return false;
     }
 
+    // This function is called when a user submits their application
     public function submitApplication(Application $application, Request $request)
     {
         // Did the current user create this application?
@@ -209,5 +211,37 @@ class ApplicationController extends Controller
 
         $request->session()->flash('success', 'Thank you, your application has been submitted and will be reviewed by our judges.');
         return redirect('/');
+    }
+
+    // This function is called when a judge submits their scores for an application
+    public function judgeApplication(Application $application, Request $request)
+    {
+        // Check if current user is allowed to score things
+        $this->authorize('score-application');
+
+        if(in_array($application->status, ['accepted', 'rejected']))
+        {
+            $request->session()->flash('error', 'This application has already been finalized.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
+        // Check if the current user has already judged this application
+        $judged = Judged::where(['application_id' => $application->id, 'user_id' => Auth::user()->id])->get()->first();
+
+        if(!empty($judged))
+        {
+            $request->session()->flash('error', 'You have already judged this application!');
+            return redirect('/applications');
+        }
+        else
+        {
+            $judged = new Judged;
+            $judged->application_id = $application->id;
+            $judged->user_id = Auth::user()->id;
+            $judged->save();
+
+            $request->session()->flash('success', 'Your final scores have been submitted.');
+            return redirect('/applications');
+        }
     }
 }

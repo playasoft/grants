@@ -96,4 +96,7 @@ Route::group(['middleware' => ['auth', 'role:judge']], function()
 {
     // Scoring criteria
     Route::post('/score', 'ScoreController@scoreCriteria');
+
+    // Submitting finalized scores
+    Route::post('/applications/{application}/judge', 'ApplicationController@judgeApplication');
 });

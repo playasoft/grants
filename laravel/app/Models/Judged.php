@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Judged extends Model
 {
+    protected $table = 'judged';
+
     // Applications can be judged
     public function application()
     {
