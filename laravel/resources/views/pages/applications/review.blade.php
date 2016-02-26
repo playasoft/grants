@@ -52,6 +52,28 @@
                 <td>{!! nl2br(e($application->description)) !!}</td>
                 <td class="button"><span class="success glyphicon glyphicon-ok"></span></td>
             </tr>
+
+            @can('view-submitted-application')
+                @if($judged)
+                    <tr>
+                        <td><b>Objective Score</b></td>
+                        <td>{{ $application->objective_score }}</td>
+                        <td class="button"></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Subjective Score</b></td>
+                        <td>{{ $application->subjective_score }}</td>
+                        <td class="button"></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Total Score</b></td>
+                        <td>{{ $application->total_score }}</td>
+                        <td class="button"></td>
+                    </tr>
+                @endif
+            @endcan
         </tbody>
     </table>
 
