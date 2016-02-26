@@ -27,6 +27,22 @@ class ScoreController extends Controller
         $application = Application::find($input['application_id']);
         $criteria = Criteria::find($input['criteria_id']);
 
+        // Make sure the application hasn't been finalized
+        if(!in_array($application->judge_status, ['new', 'ready']))
+        {
+            $request->session()->flash('error', 'This application has already been finalized.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
+        // Make sure this user hasn't already submitted their scores
+        $judged = Judged::where(['application_id' => $application->id, 'user_id' => Auth::user()->id])->get()->first();
+
+        if(!empty($judged))
+        {
+            $request->session()->flash('error', 'You have already judged this application!');
+            return redirect('/applications');
+        }
+
         // Check if a score already exists for this criteria
         $score = Score::firstOrNew(['application_id' => $application->id, 'criteria_id' => $criteria->id]);
 

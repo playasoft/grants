@@ -175,25 +175,25 @@
                             <td>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> Yes
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Yes
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> No
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> N/A
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> N/A
                                     </label>
                                 </div>
                             </td>
 
                             <td>
-                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
                             </td>
 
                             <td class="button" style="width:10%; line-height: 2.5em">
@@ -241,37 +241,37 @@
                             <td>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="2" {{ ($score === '2') ? 'checked' : '' }}> Very
+                                        <input type="radio" name="score" value="2" {{ ($score === '2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Very
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }}> A bit
+                                        <input type="radio" name="score" value="1" {{ ($score === '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> A bit
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }}> Meh
+                                        <input type="radio" name="score" value="0" {{ ($score === '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Meh
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }}> Not really
+                                        <input type="radio" name="score" value="-1" {{ ($score === '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Not really
                                     </label>
                                 </div>
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="-2" {{ ($score === '-2') ? 'checked' : '' }}> No
+                                        <input type="radio" name="score" value="-2" {{ ($score === '-2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
                                     </label>
                                 </div>
                             </td>
 
                             <td>
-                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}">
+                                <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
                             </td>
 
                             <td class="button" style="width:10%; line-height: 2.5em">
