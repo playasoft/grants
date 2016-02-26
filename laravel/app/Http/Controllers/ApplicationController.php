@@ -156,7 +156,9 @@ class ApplicationController extends Controller
             $scores[$score->criteria_id] = $score;
         }
 
-        return view('pages/applications/review', compact('application', 'questions', 'answers', 'criteria', 'scores'));
+        $judged = Judged::where(['application_id' => $application->id, 'user_id' => Auth::user()->id])->get()->first();
+
+        return view('pages/applications/review', compact('application', 'questions', 'answers', 'criteria', 'scores', 'judged'));
     }
 
     // Helper function for checking if all required answers are filled in

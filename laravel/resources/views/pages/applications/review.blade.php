@@ -307,15 +307,34 @@
     @endif
 
     @can('score-application')
-        {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+        @unless($judged)
+            {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+                <p>
+                    <b>
+                        Warning! After submitting your ratings, you will not be able to make changes to your answers.<br>
+                        Please make sure everything is accurate before submitting.
+                    </b>
+                </p>
+
+                <button type="submit" class="btn btn-success">Submit Ratings</button>
+            {!! Form::close() !!}
+        @endunless
+
+        @if($application->judge_status == 'ready')
             <p>
                 <b>
-                    Warning! After submitting your ratings, you will not be able to make changes to your answers.
-                    Please make sure everything is accurate before submitting.
+                    Warning! Approving or denying an application will notify the user who submitted it.<br>
+                    After the application is approved or denied, nobody will be able to submit new scores.
                 </b>
             </p>
 
-            <button type="submit" class="btn btn-success">Submit Ratings</button>
-        {!! Form::close() !!}
+            {!! Form::open(['url' => "applications/{$application->id}/approve", 'style' => "display: inline-block"]) !!}
+                <button type="submit" class="btn btn-success">Approve Application</button>
+            {!! Form::close() !!}
+
+            {!! Form::open(['url' => "applications/{$application->id}/deny", 'style' => "display: inline-block"]) !!}
+                <button type="submit" class="btn btn-danger">Deny Application</button>
+            {!! Form::close() !!}
+        @endif
     @endcan
 @endsection
