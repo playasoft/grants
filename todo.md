@@ -135,8 +135,8 @@
 - [x] Remove per-question rating options
 - [x] Display judge criteria on review page
 - [x] AJAX autosave for judge answers / ratings
-- [ ] Judge submitting final answers / ratings
-- [ ] Server-side checking for required answers
-- [ ] Score aggregation when ratings are submitted
+- [x] Judge submitting final answers / ratings
+- [x] Server-side checking for required answers
+- [x] Score aggregation when ratings are submitted
 - [ ] Provide feedback
 - [ ] Approve / deny applications

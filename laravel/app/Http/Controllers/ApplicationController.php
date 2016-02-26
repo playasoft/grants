@@ -12,6 +12,7 @@ use App\Models\Question;
 use App\Models\Criteria;
 use App\Models\Judged;
 use App\Models\User;
+use App\Models\Score;
 
 use App\Http\Requests\ApplicationRequest;
 
@@ -253,6 +254,9 @@ class ApplicationController extends Controller
                 $application->judge_status = 'ready';
                 $application->save();
             }
+
+            // Calculate new scores
+            Score::calculateTotals($application);
 
             $request->session()->flash('success', 'Your final scores have been submitted.');
             return redirect('/applications');

@@ -321,6 +321,8 @@
         @endunless
 
         @if($application->judge_status == 'ready')
+            <hr>
+
             <p>
                 <b>
                     Warning! Approving or denying an application will notify the user who submitted it.<br>

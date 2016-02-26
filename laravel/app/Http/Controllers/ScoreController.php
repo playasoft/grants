@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Criteria;
 use App\Models\Score;
+use App\Models\Judged;
 
 use App\Http\Requests\ScoreRequest;
 use Illuminate\Support\Facades\Auth;
