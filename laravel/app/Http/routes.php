@@ -57,6 +57,10 @@ Route::group(['middleware' => ['auth']], function()
 
     // Handling documents
     Route::get('/documents/{document}/delete', 'DocumentController@deleteDocument');
+
+    // Profile (UserData)
+    Route::get('/users/profile', 'UserController@editSelf');
+    Route::post('/users/profile', 'UserController@updateSelf');
 });
 
 // Routes available to both admins and judges
@@ -89,6 +93,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     Route::get('/criteria/{criteria}', 'CriteriaController@editCriteriaForm');
     Route::post('/criteria/{criteria}', 'CriteriaController@editCriteria');
     Route::get('/criteria/{criteria}/delete', 'CriteriaController@deleteCriteria');
+
+    //Modifying Users
+    Route::get('/users/{user}/edit', 'UserController@editUser');
+    Route::post('/users/{user}/edit', 'UserController@updateUser');
+
 });
 
 // Routes only available to judges

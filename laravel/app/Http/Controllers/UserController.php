@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // Laravel
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Event;
@@ -11,6 +12,7 @@ use Event;
 // Custom
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\UserData;
 
 class UserController extends Controller
 {
@@ -40,7 +42,7 @@ class UserController extends Controller
         //Event::fire(new UserRegistered($user));
 
         $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
-        return redirect('/');
+        return redirect('/users/profile');
     }
 
     // Handle a user logging in
@@ -79,5 +81,85 @@ class UserController extends Controller
             }
         }
     return redirect('');
+    }
+
+    public function viewUser(User $user, Request $request)
+    {
+        return view('pages/users/view', compact('user'));
+    }
+
+    public function editUser(User $user, Request $request)
+    {
+        return view('pages/users/edit', compact('user'));
+    }
+
+    public function updateUser(User $user, UserRequest $request)
+    {
+        $input = $request->all();
+
+        // Remove empty inputs
+        $input = array_filter($input);
+
+        if($input['type'] == 'user')
+        {
+            $user->update($input);
+        }
+        else if($input['type'] == 'data')
+        {
+            // Remove empty inputs
+            $input = array_filter($input);
+
+            // Create new row in user data if none exists
+            if(is_null($user->data))
+            {
+                $data = new UserData();
+                $data->user_id = $user->id;
+                $data->save();
+
+                $data->update($input);
+            }
+            else
+            {
+                $user->data->update($input);
+            }
+        }
+
+        $request->session()->flash('success', 'The user was updated.');
+        return redirect('/');
+    }
+
+    public function editSelf()
+    {
+        $user = Auth::user();
+        return view('pages/users/profile', compact('user'));
+    }
+
+    public function updateSelf(UserRequest $request)
+    {
+        $user = Auth::user();
+        $input = $request->all();
+
+        if($input['type'] == 'data')
+        {
+            // Remove empty inputs
+            $input = array_filter($input);
+
+            // Create new row in user data if none exists
+            if(is_null($user->data))
+            {
+
+                $data = new UserData();
+                $data->user_id = $user->id;
+                $data->save();
+                $data->update($input);
+            }
+            else
+            {
+                $user->data->update($input);
+            }
+        }
+
+        $request->session()->flash('success', 'Your profile was updated.');
+        return redirect('/');
     }
 }
