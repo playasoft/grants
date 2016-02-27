@@ -65,14 +65,14 @@
  - [x] User ID (Judge)
 
 - Feedback
- - [ ] Feedback (So judges can ask questions or give criticism)
- - [ ] Type (Input, Text, Dropdown, Boolean, File)
- - [ ] Options (Text, only used for dropdowns now)
- - [ ] Response (Response from the user)
- - [ ] Application ID
- - [ ] User ID (Which admin sent the feedback)
- - [ ] Regarding ID (The ID of the data this feedback is related to, if any)
- - [ ] Regarding Type (Can be a question or a document)
+ - [x] Message (So judges can ask questions or give criticism)
+ - [x] Type (Input, Text, Dropdown, Boolean, File)
+ - [x] Options (Text, only used for dropdowns now)
+ - [x] Response (Response from the user)
+ - [x] Application ID
+ - [x] User ID (Which admin requested the feedback)
+ - [x] Regarding ID (The ID of the data this feedback is related to, if any)
+ - [x] Regarding Type (Can be a question or a document)
 
 
 ## Pages
