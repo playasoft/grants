@@ -70,7 +70,7 @@
  - [x] Options (Text, only used for dropdowns now)
  - [x] Response (Response from the user)
  - [x] Application ID
- - [x] User ID (Which admin requested the feedback)
+ - [x] User ID (Which judge requested the feedback)
  - [x] Regarding ID (The ID of the data this feedback is related to, if any)
  - [x] Regarding Type (Can be a question or a document)
 
@@ -95,8 +95,8 @@
 - [x] One to many + One to one between applications <-> documents
 - [x] One to many + One to one between questions <-> documents
 - [x] One to one between documents -> judges (users) 
-- [ ] One to one + One to many between feedback <-> applications
-- [ ] One to one between feedback -> judges (users)
+- [x] One to one + One to many between feedback <-> applications
+- [x] One to one between feedback -> judges (users)
 - [x] One to one polymorphic between feedback -> answers and documents
 - [x] One to one + One to many between scores <-> applications
 - [x] One to one between scores -> critera

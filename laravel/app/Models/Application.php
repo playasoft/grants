@@ -31,4 +31,10 @@ class Application extends Model
     {
         return $this->hasMany('App\Models\Score');
     }
+
+    // Applications can have feedback
+    public function feedback()
+    {
+        return $this->hasMany('App\Models\Feedback');
+    }
 }
