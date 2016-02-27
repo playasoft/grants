@@ -150,7 +150,7 @@
 
                     @can('create-feedback')
                         <td>
-                            <a href="/application/{{ $application->id }}/feedback/{{ $question->id }}" class="btn btn-primary">Request Feedback</a>
+                            <a href="/applications/{{ $application->id }}/feedback/{{ $question->id }}" class="btn btn-primary">Request Feedback</a>
                         </td>
                     @endcan
                 </tr>
@@ -159,7 +159,7 @@
     </table>
 
     @can('create-feedback')
-        <a href="/application/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
+        <a href="/applications/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
     @endcan
 
     @can('view-submitted-application')

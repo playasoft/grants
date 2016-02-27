@@ -108,4 +108,8 @@ Route::group(['middleware' => ['auth', 'role:judge']], function()
 
     // Submitting finalized scores
     Route::post('/applications/{application}/judge', 'ApplicationController@judgeApplication');
+
+    // Requesting feedback
+    Route::get('/applications/{application}/feedback/{question?}', 'FeedbackController@createFeedbackForm');
+    Route::post('/feedback', 'FeedbackController@createFeedback');
 });
