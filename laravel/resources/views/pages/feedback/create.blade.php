@@ -5,7 +5,53 @@
     <hr>
     
     {!! Form::open(['url' => 'feedback']) !!}
-        @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?"])
+        <input type="hidden" name="application_id" value="{{ $application->id }}">
+
+        @if($question->exists)
+            <input type="hidden" name="regarding_id" value="{{ $question->id }}">
+            <input type="hidden" name="regarding_type" value="question">
+
+            <?php
+
+            $answered = false;
+            $missing = false;
+            $answer = false;
+
+            // If this question has already been answered, use the update route instead of creating a new answer
+            if(isset($answers[$question->id]))
+            {
+                $answered = true;
+                $answer = $answers[$question->id]->answer;
+            }
+
+            ?>
+
+            <div class="profile">
+                <div class="row">
+                    <div class="col-sm-2 title">Original Question</div>
+                    <div class="col-sm-10 value">{{ $question->question }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 title">Applicant's Answer</div>
+                    <div class="col-sm-10 value">
+                        @if($question->type == 'file')
+                            @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
+                                @foreach($answers[$question->id]->documents as $document)
+                                    <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a><br>
+                                @endforeach
+                            @else
+                                No files uploaded.
+                            @endif
+                        @else
+                            {!! nl2br(e($answer)) !!}
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+        
+        @include('partials/form/text', ['name' => 'question', 'label' => 'Your Question', 'placeholder' => "What would you like to know?"])
 
         @include('partials/form/select',
         [
@@ -33,5 +79,6 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Request Feedback</button>
+        <a href="/applications/{{ $application->id }}/review" class="btn btn-danger">Cancel Request</a>
     {!! Form::close() !!}
 @endsection

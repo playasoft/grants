@@ -84,7 +84,7 @@
 - [x] Create application
 - [x] Answering questions
 - [x] Judging applications
-- [ ] Follow up questions
+- [x] Follow up questions
 
 
 ## Relationships

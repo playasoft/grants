@@ -23,8 +23,8 @@ class CreateFeedbackTable extends Migration
             $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('regarding_id')->unsigned();
-            $table->string('regarding_type');
+            $table->integer('regarding_id')->unsigned()->nullable();
+            $table->string('regarding_type')->nullable();
             $table->timestamps();
         });
     }

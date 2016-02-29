@@ -17,7 +17,15 @@ class FeedbackController extends Controller
     // Function to display a form when creating new feedback
     function createFeedbackForm(Application $application, Question $question)
     {
-        return view('pages/feedback/create', compact('application', 'question'));
+        // Generate an array of answers based on their associated question ID
+        $answers = [];
+        
+        foreach($application->answers as $answer)
+        {
+            $answers[$answer->question_id] = $answer;
+        }
+        
+        return view('pages/feedback/create', compact('application', 'question', 'answers'));
     }
 
     // Function for creating new feedback (post request)
