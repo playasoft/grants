@@ -33,7 +33,9 @@
                 'value' => $question->options
             ])
         </div>
- 
+
+        @include('partials/form/textarea', ['name' => 'help', 'label' => 'Help Text', 'placeholder' => "Additional information for the applicant", 'value' => $question->help])
+
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes'], 'value' => $question->required])
 
         <button type="submit" class="btn btn-primary">Save Changes</button>
