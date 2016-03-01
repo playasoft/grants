@@ -5,7 +5,7 @@
         </div>
 
         <div class="navbar-header">
-            <a class="pull-left" href="/"><img style="padding:5px" src="http://apogaea.com/wp-content/themes/aporust/javascript/particle.png"></a>
+            <a class="pull-left" href="/"><img style="padding:5px" src="/img/apo-logo-particle.png"></a>
             <a class="navbar-brand" href="/">Weightlifter</a>
         </div>
 
