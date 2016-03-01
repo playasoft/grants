@@ -8,6 +8,8 @@ class Feedback extends Model
 {
     protected $table = 'feedback';
 
+    protected $fillable = ['message', 'type', 'options', 'response'];
+
     // Feedback belong to an application
     public function application()
     {

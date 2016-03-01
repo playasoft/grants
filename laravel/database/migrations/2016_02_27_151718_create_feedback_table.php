@@ -16,7 +16,7 @@ class CreateFeedbackTable extends Migration
         {
             $table->increments('id');
             $table->string('message');
-            $table->enum('type', ['input', 'text', 'dropdown', 'boolean']);
+            $table->enum('type', ['input', 'text', 'dropdown', 'boolean', 'file']);
             $table->text('options');
             $table->text('response');
             $table->integer('application_id')->unsigned();

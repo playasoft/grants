@@ -51,7 +51,7 @@
             </div>
         @endif
         
-        @include('partials/form/text', ['name' => 'question', 'label' => 'Your Question', 'placeholder' => "What would you like to know?"])
+        @include('partials/form/text', ['name' => 'message', 'label' => 'Your Question', 'placeholder' => "What would you like to know?"])
 
         @include('partials/form/select',
         [

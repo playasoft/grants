@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Application;
 use App\Models\Question;
+use App\Models\Feedback;
 
 use App\Http\Requests\FeedbackRequest;
 
@@ -34,11 +36,40 @@ class FeedbackController extends Controller
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-feedback');
 
-        // Check application ID
-        // Check regarding ID / type
-        // Create new feedback
-        // Notify user
+        $input = $request->all();
 
-        return "// todo";
+        // Check application ID
+        $application = Application::find($input['application_id']);
+
+        // Check regarding ID / type
+        if($input['regarding_type'] == 'question')
+        {
+            $regarding = Question::find($input['regarding_id']);
+        }
+        elseif($input['regarding_type'] == 'document')
+        {
+            // todo
+        }
+        
+        // Create new feedback
+        $feedback = new Feedback;
+        $feedback->application_id = $application->id;
+
+        if(isset($regarding) && $regarding->exists)
+        {
+            $feedback->regarding_id = $regarding->id;
+            $feedback->regarding_type = $input['regarding_type'];
+        }
+
+        // Set the current judge ID for a record of who requested this feedback
+        $feedback->user_id = Auth::user()->id;
+        $feedback->save();
+
+        $feedback->update($input);
+
+        // todo: Notify user
+
+        $request->session()->flash('success', 'Your feedback has been requested.');
+        return redirect('/applications/' . $application->id . '/review');
     }
 }

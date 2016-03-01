@@ -26,7 +26,7 @@ class FeedbackRequest extends Request
         return
         [
             'application_id' => "required|integer|exists:applications,id",
-            'question' => 'required|min:3',
+            'message' => 'required|min:3',
             'type' => 'required|in:input,text,dropdown,boolean,file',
         ];
     }
