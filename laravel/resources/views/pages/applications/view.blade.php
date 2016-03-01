@@ -99,6 +99,7 @@
                         </span>
                     </div>
                 @endif
+                <label class="" for="{{ $question->id }}-answer">{!! nl2br(e($question->help)) !!}</label>
             </div>
         {!! Form::close() !!}
 
