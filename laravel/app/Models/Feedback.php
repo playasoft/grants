@@ -21,4 +21,10 @@ class Feedback extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    // Feedback can be associated to either an answer or a document
+    public function regarding()
+    {
+        return $this->morphTo();
+    }
 }

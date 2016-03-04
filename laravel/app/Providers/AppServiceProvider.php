@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
             
             return false;
         });
+
+        // Define polymorphic relationship models
+        Relation::morphMap(
+        [
+            'question' => \App\Models\Question::class,
+            'document' => \App\Models\Document::class,
+        ]);
     }
 
     /**
