@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('/answers/{answer}', 'AnswerController@updateAnswer');
 
     // Handling documents
+    Route::post('/documents/{application}/add', 'DocumentController@addDocument');
     Route::get('/documents/{document}/delete', 'DocumentController@deleteDocument');
 
     // Profile (UserData)
