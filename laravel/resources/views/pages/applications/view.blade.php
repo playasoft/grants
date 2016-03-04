@@ -73,7 +73,9 @@
                             @endforeach
                         </select>
                     @endif
-                    <label class="" for="{{ $question->id }}-answer">{!! nl2br(e($question->help)) !!}</label>
+                    <p>
+                        {!! nl2br(e($question->help)) !!}
+                    </p>
                 </div>
             {!! Form::close() !!}
         @else
@@ -103,7 +105,9 @@
                             <button type="submit" class="btn btn-success">Upload</button>
                         </span>
                     </div>
-                    <label class="" for="{{ $question->id }}-answer">{!! nl2br(e($question->help)) !!}</label>
+                    <p>
+                        {!! nl2br(e($question->help)) !!}
+                    </p>
                 </div>
             {!! Form::close() !!}
         @endif
