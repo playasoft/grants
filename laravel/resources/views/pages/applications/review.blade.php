@@ -162,6 +162,14 @@
         <a href="/applications/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
     @endcan
 
+    @if($application->feedback->count())
+        <h2>Feedback Requested</h2>
+
+        @foreach($application->feedback as $question)
+            @include('partials/applications/question-form')
+        @endforeach
+    @endif
+
     @can('view-submitted-application')
         <hr>
         
