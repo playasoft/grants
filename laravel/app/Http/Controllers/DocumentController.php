@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\Application;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class DocumentController extends Controller
 {
@@ -23,9 +24,10 @@ class DocumentController extends Controller
             return redirect('/login');
         }
 
-        $application = $document->application->id;
+        $path = public_path() . '/files/user/' . $document->file;
 
         $document->delete();
+        File::delete($path);
         $request->session()->flash('success', 'Your file has been deleted.');
         return redirect()->back();
     }
