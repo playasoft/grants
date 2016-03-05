@@ -17,49 +17,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-    // Private function to manage file uploads
-    private function handleUpload($request)
-    {
-        $fileName = false;
-        
-        // Save event image with a unique name
-        if($request->hasFile('document'))
-        {
-            // Create upload folder if it doesn't exist
-            if(!file_exists(public_path() . '/files/user'))
-            {
-                mkdir(public_path() . '/files/user', 0755, true);
-            }
-
-            // Make sure the original filename is sanitized
-            $file = pathinfo($request->file('document')->getClientOriginalName());
-            $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
-
-            // Move file to uploads directory
-            $fileName = time() . '-' . $fileName;
-            $request->file('document')->move(public_path() . '/files/user', $fileName);
-        }
-
-        return
-        [
-            'name' => $file['filename'],
-            'file' => $fileName
-        ];
-    }
-
-    // Helper function to attach a document to an answer
-    private function createDocument($answer, $upload)
-    {
-        $document = new Document;
-        $document->name = $upload['name'];
-        $document->file = $upload['file'];
-        $document->application_id = $answer->application_id;
-        $document->answer_id = $answer->id;
-        $document->user_id = Auth::user()->id;
-        $document->save();
-
-        return $document;
-    }
 
     public function createAnswer(AnswerRequest $request)
     {
@@ -94,10 +51,10 @@ class AnswerController extends Controller
         if($question->type == 'file')
         {
             // Save uploaded file
-            $upload = $this->handleUpload($request);
+            $upload = Document::handleUpload($request);
 
             // Save new document
-            $document = $this->createDocument($answer, $upload);
+            Document::createDocument($application, $upload, $answer);
         }
 
         $request->session()->flash('success', 'Your answer has been saved.');
@@ -106,6 +63,9 @@ class AnswerController extends Controller
 
     public function updateAnswer(AnswerRequest $request, Answer $answer)
     {
+        $input = $request->all();
+        $application = Application::find($input['application_id']);
+
         if($answer->user->id != Auth::user()->id)
         {
             $request->session()->flash('error', 'Only the person who created an application may answer questions for it.');
@@ -118,17 +78,16 @@ class AnswerController extends Controller
             return redirect('/applications/' . $application->id . '/review');
         }
 
-        $input = $request->all();
         $answer->update($input);
 
         // Check if a file needs to be uploaded
         if($answer->question->type == 'file')
         {
             // Save uploaded file
-            $upload = $this->handleUpload($request);
+            $upload = Document::handleUpload($request);
 
             // Save new document
-            $document = $this->createDocument($answer, $upload);
+            Document::createDocument($application, $upload, $answer);
         }
 
         $request->session()->flash('success', 'Your answer has been saved.');

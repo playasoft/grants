@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Document;
+use App\Models\Application;
+use App\Models\User;
 
 class Document extends Model
 {
@@ -25,4 +29,53 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    // Document Upload Helper
+    public static function handleUpload($request)
+    {
+        $fileName = false;
+        $destinationPath = public_path() . '/files/user';
+
+        // Save event image with a unique name
+        if($request->hasFile('document'))
+        {
+            // Create upload folder if it doesn't exist
+            if(!file_exists($destinationPath))
+            {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Make sure the original filename is sanitized
+            $file = pathinfo($request->file('document')->getClientOriginalName());
+            $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+
+            // Move file to uploads directory
+            $fileName = time() . '-' . $fileName;
+            $request->file('document')->move($destinationPath, $fileName);
+        }
+
+        return
+        [
+            'name' => $file['filename'],
+            'file' => $fileName
+        ];
+    }
+
+    // Helper function to attach a document to an application
+    public static function createDocument($application, $upload, $answer = null)
+    {
+        $document = new Document;
+        $document->name = $upload['name'];
+        $document->file = $upload['file'];
+        $document->application_id = $application->id;
+        $document->user_id = Auth::user()->id;
+        if($answer)
+        {
+            $document->answer_id = $answer->id;
+        }
+        $document->save();
+
+        return $document;
+    }
+
 }
