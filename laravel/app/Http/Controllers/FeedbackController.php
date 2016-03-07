@@ -72,4 +72,21 @@ class FeedbackController extends Controller
         $request->session()->flash('success', 'Your feedback has been requested.');
         return redirect('/applications/' . $application->id . '/review');
     }
+
+    // Function for saving user answers to feedback
+    function updateFeedback(Request $request, Feedback $feedback)
+    {
+        // Does the current user own the application this feedback is in regards to?
+        if($feedback->application->user->id != Auth::user()->id)
+        {
+            $request->session()->flash('error', 'Only the person who created an application may answer feedback for it.');
+            return redirect('/login');
+        }
+
+        $feedback->response = $request->input('response');
+        $feedback->save();
+
+        $request->session()->flash('success', 'Your answer has been saved.');
+        return redirect('/applications/' . $feedback->application->id . '/review');
+    }
 }

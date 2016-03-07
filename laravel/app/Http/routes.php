@@ -62,6 +62,9 @@ Route::group(['middleware' => ['auth']], function()
     // Profile (UserData)
     Route::get('/users/profile', 'UserController@editSelf');
     Route::post('/users/profile', 'UserController@updateSelf');
+
+    // Responding to feedback
+    Route::post('/feedback/{feedback}', 'FeedbackController@updateFeedback');
 });
 
 // Routes available to both admins and judges
