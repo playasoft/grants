@@ -12,7 +12,7 @@ if(Auth::user()->role == 'applicant')
 
 @if($feedback->type == 'file')
     <div class="form-group">
-        <label class="control-label" for="{{ $feedback->id }}-answer">{{ $feedback->message }}</label>
+        <label class="control-label" for="{{ $feedback->id }}-response">{{ $feedback->message }}</label>
         <span class="pull-right"><span class="status"></span></span>
 
         <p>
@@ -20,12 +20,12 @@ if(Auth::user()->role == 'applicant')
         </p>
     </div>
 @else
-    {!! Form::open(['url' => '/feedback/{{ $feedback->id }}', 'class' => 'ajax']) !!}
+    {!! Form::open(['url' => '/feedback/' . $feedback->id, 'class' => 'ajax']) !!}
         <div class="form-group">
-            <label class="control-label" for="{{ $feedback->id }}-answer">
+            <label class="control-label" for="{{ $feedback->id }}-response">
                 @if($feedback->regarding->exists)
                     @if($feedback->regarding_type == 'question')
-                        Feedback regarding your answer to: {{ $feedback->regarding->question }}<br>
+                        Feedback regarding your response to: {{ $feedback->regarding->question }}<br>
                     @endif
                 @endif
 
@@ -33,21 +33,21 @@ if(Auth::user()->role == 'applicant')
             </label>
             <span class="pull-right"><span class="status"></span></span>
             @if($feedback->type == 'input')
-                <input type="text" name="answer" class="form-control" id="{{ $feedback->id }}-answer" value="{{ $feedback->response }}" {{ $disabled }}>
+                <input type="text" name="response" class="form-control" id="{{ $feedback->id }}-response" value="{{ $feedback->response }}" {{ $disabled }}>
             @elseif($feedback->type == 'text')
-                <textarea name="answer" class="form-control" id="{{ $feedback->id }}-answer" {{ $disabled }}>{{ $feedback->response }}</textarea>
+                <textarea name="response" class="form-control" id="{{ $feedback->id }}-response" {{ $disabled }}>{{ $feedback->response }}</textarea>
             @elseif($feedback->type == 'boolean')
                 <div class="radio">
                     <label>
-                        <input type="radio" name="answer" value="yes" id="{{ $feedback->id }}-answer" {{ ($feedback->response == 'yes') ? 'checked' : '' }} {{ $disabled }}> Yes
+                        <input type="radio" name="response" value="yes" id="{{ $feedback->id }}-response" {{ ($feedback->response == 'yes') ? 'checked' : '' }} {{ $disabled }}> Yes
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="answer" value="no" id="{{ $feedback->id }}-answer" {{ ($feedback->response == 'no') ? 'checked' : '' }} {{ $disabled }}> No
+                        <input type="radio" name="response" value="no" id="{{ $feedback->id }}-response" {{ ($feedback->response == 'no') ? 'checked' : '' }} {{ $disabled }}> No
                     </label>
                 </div>
             @elseif($feedback->type == 'dropdown')
-                <select class="form-control" name="answer" id="{{ $feedback->id }}-answer" {{ $disabled }}>
+                <select class="form-control" name="response" id="{{ $feedback->id }}-response" {{ $disabled }}>
                     <option value="">----</option>
 
                     @foreach($feedback->dropdown() as $value => $option)
