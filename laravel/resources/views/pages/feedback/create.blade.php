@@ -64,7 +64,7 @@
                 'text' => "Paragraph",
                 'dropdown' => "Multiple Choice",
                 'boolean' => "Yes / No",
-                'file' => "File Upload",
+//                'file' => "File Upload",
             ]
         ])
         

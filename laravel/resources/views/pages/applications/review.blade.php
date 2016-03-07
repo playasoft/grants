@@ -165,8 +165,8 @@
     @if($application->feedback->count())
         <h2>Feedback Requested</h2>
 
-        @foreach($application->feedback as $question)
-            @include('partials/applications/question-form')
+        @foreach($application->feedback as $feedback)
+            @include('partials/applications/feedback-form')
         @endforeach
     @endif
 
