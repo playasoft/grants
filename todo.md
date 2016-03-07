@@ -138,5 +138,5 @@
 - [x] Judge submitting final answers / ratings
 - [x] Server-side checking for required answers
 - [x] Score aggregation when ratings are submitted
-- [ ] Provide feedback
+- [x] Provide feedback
 - [ ] Approve / deny applications
