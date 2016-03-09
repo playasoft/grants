@@ -44,6 +44,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-application',
             'view-submitted-application',
             'create-feedback',
+            'approve-application',
         ],
 
         'applicant' =>

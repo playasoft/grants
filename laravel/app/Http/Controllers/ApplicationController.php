@@ -262,4 +262,18 @@ class ApplicationController extends Controller
             return redirect('/applications');
         }
     }
+
+    // Function for admins to approve applications
+    function approveApplication(Application $application)
+    {
+        // Check if current user has permission
+        return "// todo";
+    }
+
+    // Function for admins to deny applications
+    function denyApplication(Application $application)
+    {
+        // Check if current user has permission
+        return "// todo";
+    }
 }

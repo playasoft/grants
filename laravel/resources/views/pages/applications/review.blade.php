@@ -337,7 +337,13 @@
     @endif
 
     @can('score-application')
-        @unless($judged)
+        @if($judged)
+            <p>
+                Thanks for your help! (You've already submitted your scores for this applcation.)
+            </p>
+
+            <a href="/applications" class="btn btn-primary">View All Applications</a>
+        @else
             {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
                 <p>
                     <b>
@@ -349,7 +355,9 @@
                 <button type="submit" class="btn btn-success">Submit Ratings</button>
             {!! Form::close() !!}
         @endunless
+    @endcan
 
+    @can('approve-application')
         @if($application->judge_status == 'ready')
             <hr>
 
