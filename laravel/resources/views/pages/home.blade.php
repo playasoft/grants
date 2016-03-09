@@ -10,7 +10,7 @@
 
         <h1>2016 Seed Round</h1>
         <p>
-            The 2016 Seed Round is open from <b>March 7 to March 21, 2016</b>.
+            The 2016 Seed Round is open from <b>March 9 to March 21, 2016</b>.
         </p>
 
         <p>
