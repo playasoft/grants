@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/css/main.css">
 
         <!-- Custom scripts -->
+        <script src="/js/fetch.js"></script>
         <script src="/js/bundle.js"></script>
 
         <!-- Mobile friendly viewport -->
