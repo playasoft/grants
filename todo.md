@@ -139,4 +139,4 @@
 - [x] Server-side checking for required answers
 - [x] Score aggregation when ratings are submitted
 - [x] Provide feedback
-- [ ] Approve / deny applications
+- [x] Approve / deny applications

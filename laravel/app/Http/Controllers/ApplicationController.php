@@ -264,16 +264,30 @@ class ApplicationController extends Controller
     }
 
     // Function for admins to approve applications
-    function approveApplication(Application $application)
+    function approveApplication(Application $application, Request $request)
     {
         // Check if current user has permission
-        return "// todo";
+        $this->authorize('approve-application');
+
+        $application->status = 'accepted';
+        $application->judge_status = 'finalized';
+        $application->save();
+
+        $request->session()->flash('success', 'This application has been approved.');
+        return redirect('/applications');
     }
 
     // Function for admins to deny applications
-    function denyApplication(Application $application)
+    function denyApplication(Application $application, Request $request)
     {
         // Check if current user has permission
-        return "// todo";
+        $this->authorize('approve-application');
+
+        $application->status = 'rejected';
+        $application->judge_status = 'finalized';
+        $application->save();
+
+        $request->session()->flash('success', 'This application has been denied.');
+        return redirect('/applications');
     }
 }
