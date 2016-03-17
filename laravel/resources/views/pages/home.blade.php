@@ -14,7 +14,7 @@
         </p>
 
         <p>
-            Apogaea has allocated $6,000 in art grant awesome-ness this year! This is the only creative grant round we are doing in 2016.  And since we want to spread as much of our seed around as we possibly can on a limited budget, there is a cap of <b>$599 maximum per project</b> for all applications. Please register and fill out an art grant application.
+            Apogaea has <b>$10,600</b> in art grant awesome-ness this year! This is the only creative grant round we are doing in 2016.  And since we want to spread as much of our seed around as we possibly can on a limited budget, there is a cap of <b>$599 maximum per project</b> for all applications. Please register and fill out an art grant application.
         </p>
 
         <p>
