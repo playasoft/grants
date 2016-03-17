@@ -52,6 +52,13 @@ class ApplicationController extends Controller
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-application');
 
+        // If applications are no longer allowed to be submitted
+        if(!env('ALLOW_APPLICATIONS', true))
+        {
+            $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
+            return redirect('/');
+        }
+
         // Generate a new application, assign required information
         $application = new Application;
         $application->status = "new";
@@ -66,8 +73,15 @@ class ApplicationController extends Controller
         return redirect('/applications/' . $application->id);
     }
 
-    public function createApplicationForm()
+    public function createApplicationForm(Request $request)
     {
+        // If applications are no longer allowed to be submitted
+        if(!env('ALLOW_APPLICATIONS', true))
+        {
+            $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
+            return redirect('/');
+        }
+
         return view('pages/applications/create');
     }
 

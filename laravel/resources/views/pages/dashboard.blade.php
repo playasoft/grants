@@ -58,7 +58,9 @@
     @endcan
 
     @can('create-application')
-        <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+        @if(env('ALLOW_APPLICATIONS', true))
+            <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+        @endif
     @endcan
 
     @can('view-submitted-application')
