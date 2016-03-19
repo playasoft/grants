@@ -51,8 +51,8 @@ class ApplicationController extends Controller
     {
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-application');
-
-        // If applications are no longer allowed to be submitted
+ 
+        // If applications are no longer allowed to be created
         if(!env('ALLOW_APPLICATIONS', true))
         {
             $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
@@ -75,7 +75,7 @@ class ApplicationController extends Controller
 
     public function createApplicationForm(Request $request)
     {
-        // If applications are no longer allowed to be submitted
+        // If applications are no longer allowed to be created
         if(!env('ALLOW_APPLICATIONS', true))
         {
             $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
@@ -210,6 +210,13 @@ class ApplicationController extends Controller
         {
             $request->session()->flash('error', 'Only the person who created an application may submit it.');
             return redirect('/login');
+        }
+
+        // If applications are no longer allowed to be submitted
+        if(!env('ALLOW_SUBMISSION', true))
+        {
+            $request->session()->flash('error', 'Sorry, you missed the deadline for submitting your application.');
+            return redirect('/');
         }
 
         if($this->missingRequiredAnswers($application))

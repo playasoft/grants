@@ -58,5 +58,7 @@
     {!! Form::close() !!}
     <hr>
 
-    <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Submit Application</a>
+    @if(env('ALLOW_SUBMISSION', true))
+        <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Submit Application</a>
+    @endif
 @endsection

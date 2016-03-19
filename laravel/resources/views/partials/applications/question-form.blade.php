@@ -58,7 +58,7 @@ if(isset($answers[$question->id]))
         <div class="form-group">
             <label class="control-label" for="{{ $question->id }}-answer">{{ $question->question }}</label>
             <span class="pull-right"><span class="status"></span></span>
-            @if($answers[$question->id]->documents->count())
+            @if(isset($answers[$question->id]) && $answers[$question->id]->documents->count())
                 <div>
                     <ul class="documents">
                         @foreach($answers[$question->id]->documents as $document)
