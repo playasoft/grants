@@ -158,6 +158,22 @@
         </tbody>
     </table>
 
+    <hr>
+    <h2>Files</h2>
+    @if($application->documents->count())
+        <div>
+            <ul class="documents">
+                @foreach($application->documents as $document)
+                    <li>
+                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @else
+        No files uploaded.
+    @endif
+
     @can('create-feedback')
         <a href="/applications/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
     @endcan
