@@ -8,6 +8,7 @@
             <tr>
                 <th>Name</th>
                 <th>Applicant</th>
+                <th>Status</th>
                 <th>Judge Status</th>
                 <th>Score</th>
                 <th>Date Created</th>
@@ -26,6 +27,7 @@
                         @endif
                     </td>
                     <td>{{ $application->user->name }}</td>
+                    <td>{{ $application->status }}</td>
                     <td>{{ $application->judge_status }}</td>
                     <td>{{ $application->objective_score }} / {{ $application->subjective_score }} / {{ $application->total_score }}</td>
                     <td>{{ $application->created_at->format('Y-m-d') }}</td>
