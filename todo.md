@@ -112,11 +112,11 @@
 
 
 ## Defined Events
-- [ ] User Registered
-- [ ] Application Submitted
-- [ ] Application Needs Review
-- [ ] Application Accepted
-- [ ] Application Rejected
+- [x] User Registered
+- [x] Application Submitted
+- [x] Application Needs Review
+- [x] Application Accepted
+- [x] Application Rejected
 
 
 ## Event Handlers
