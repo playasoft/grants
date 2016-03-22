@@ -74,6 +74,14 @@
  - [x] Regarding ID (The ID of the data this feedback is related to, if any)
  - [x] Regarding Type (Can be a question or a document)
 
+- Notifications
+ - [x] Type (Info, Warning, Email)
+ - [x] Status (New, Sent)
+ - [x] Message
+ - [x] Metadata (Some notifications are queued and combined into a single message)
+ - [x] User From
+ - [x] User To
+
 
 ## Pages
 - [x] Home page
