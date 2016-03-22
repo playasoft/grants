@@ -13,6 +13,7 @@ use Event;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\UserData;
+use App\Events\UserRegistered;
 
 class UserController extends Controller
 {
@@ -38,8 +39,8 @@ class UserController extends Controller
         $user->save();
         $this->auth->loginUsingID($user->id);
 
-        // TODO: Send notification emails
-        //Event::fire(new UserRegistered($user));
+        // Send notification emails
+        Event::fire(new UserRegistered($user));
 
         $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
         return redirect('/users/profile');

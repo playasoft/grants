@@ -120,11 +120,13 @@
 
 
 ## Event Handlers
-- [ ] Send user email when user is registered
+- [x] Send user email when user is registered
 - [ ] Send judges email when application is submitted
-- [ ] Send user email when application needs review
-- [ ] Send user email when application is accepted
-- [ ] Send user email when application is rejected
+- [ ] Send user email when application feedback is requested
+- [ ] Send judge email when application feedback is answered
+- [ ] Send user email when application is accepted / rejected
+- [ ] Send judge email when application is accepted / rejected
+- [ ] Send admins all activity
 
 
 ## User Workflow
