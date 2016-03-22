@@ -41,7 +41,7 @@ class FeedbackController extends Controller
         // Check application ID
         $application = Application::find($input['application_id']);
 
-        // Check regarding ID / type
+        // Check regarding ID / type, Note, nothing to be done for 'genereal' feedback
         if($input['regarding_type'] == 'question')
         {
             $regarding = Question::find($input['regarding_id']);
@@ -54,11 +54,11 @@ class FeedbackController extends Controller
         // Create new feedback
         $feedback = new Feedback;
         $feedback->application_id = $application->id;
+        $feedback->regarding_type = $input['regarding_type'];
 
         if(isset($regarding) && $regarding->exists)
         {
             $feedback->regarding_id = $regarding->id;
-            $feedback->regarding_type = $input['regarding_type'];
         }
 
         // Set the current judge ID for a record of who requested this feedback

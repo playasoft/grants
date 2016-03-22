@@ -23,10 +23,12 @@ if(Auth::user()->role == 'applicant')
     {!! Form::open(['url' => '/feedback/' . $feedback->id, 'class' => 'ajax']) !!}
         <div class="form-group">
             <label class="control-label" for="{{ $feedback->id }}-response">
-                @if($feedback->regarding->exists)
-                    @if($feedback->regarding_type == 'question')
+                @if($feedback->regarding_type == 'question')
+                    @if(isset($feedback->regarding->question))
                         Feedback regarding your response to: {{ $feedback->regarding->question }}<br>
                     @endif
+                @elseif($feedback->regarding_type == 'general')
+                    General Feedback regarding your Application:
                 @endif
 
                 {{ $feedback->message }}

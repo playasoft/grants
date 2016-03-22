@@ -6,7 +6,7 @@
     
     {!! Form::open(['url' => 'feedback']) !!}
         <input type="hidden" name="application_id" value="{{ $application->id }}">
-
+        <input type="hidden" name="regarding_type" value="general">
         @if($question->exists)
             <input type="hidden" name="regarding_id" value="{{ $question->id }}">
             <input type="hidden" name="regarding_type" value="question">
