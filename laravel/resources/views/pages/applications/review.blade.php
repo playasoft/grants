@@ -160,19 +160,29 @@
 
     <hr>
     <h2>Files</h2>
-    @if($application->documents->count())
+    {!! Form::open(['url' => '/documents/' . $application->id . '/add', 'files' => true,]) !!}
+        @if($application->documents->count())
+            <div>
+                <ul class="documents">
+                    @foreach($application->documents as $document)
+                        <li>
+                            <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
+                            <a href="/documents/{{ $document->id }}/delete" class="btn btn-danger">Delete</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @else
+            No files uploaded.
+        @endif
         <div>
-            <ul class="documents">
-                @foreach($application->documents as $document)
-                    <li>
-                        <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
-                    </li>
-                @endforeach
-            </ul>
+            <span class="btn btn-primary btn-file">
+                <input type="file" name="document">
+                <button type="submit" class="btn btn-success">Upload</button>
+            </span>
         </div>
-    @else
-        No files uploaded.
-    @endif
+    {!! Form::close() !!}
+    <hr>
 
     @can('create-feedback')
         <a href="/applications/{{ $application->id }}/feedback" class="btn btn-primary">Request General Feedback</a>
