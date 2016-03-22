@@ -20,7 +20,6 @@
     </head>
     <body>
         @include('partials/header')
-
         <section class="content container-fluid">
             @if(Session::has('success'))
                 <div class="general-alert alert alert-success" role="alert">
@@ -33,6 +32,13 @@
                     <b>Error!</b> {{ Session::get('error') }}
                 </div>
             @endif
+
+            @if(env('GLOBAL_NOTICE'))
+                <div class="general-alert alert alert-info" role="alert">
+                    {!! env('GLOBAL_NOTICE') !!}
+                </div>
+            @endif
+
 
             @yield('content')
         </section>
