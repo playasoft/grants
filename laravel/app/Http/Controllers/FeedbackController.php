@@ -41,7 +41,7 @@ class FeedbackController extends Controller
         // Check application ID
         $application = Application::find($input['application_id']);
 
-        // Check regarding ID / type, Note, nothing to be done for 'genereal' feedback
+        // Check regarding ID / type, Note, nothing to be done for 'general' feedback
         if($input['regarding_type'] == 'question')
         {
             $regarding = Question::find($input['regarding_id']);
