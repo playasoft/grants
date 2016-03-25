@@ -19,8 +19,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Status</th>
-                    <th>Date Created</th>
-                    <th>Date Modified</th>
+                    <th>Created</th>
+                    <th>Last Modified</th>
                 </tr>
             </thead>
 
@@ -35,8 +35,8 @@
                             @endif
                         </td>
                         <td>{{ $application->status }}</td>
-                        <td>{{ $application->created_at->format('Y-m-d') }}</td>
-                        <td>{{ $application->updated_at->format('Y-m-d') }}</td>
+                        <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
+                        <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
                     </tr>
                 @endforeach
             </tbody>

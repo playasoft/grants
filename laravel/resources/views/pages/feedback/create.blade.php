@@ -60,8 +60,8 @@
             'class' => 'answer-type',
             'options' =>
             [
-                'input' => "Short Sentence",
                 'text' => "Paragraph",
+                'input' => "Short Sentence",
                 'dropdown' => "Multiple Choice",
                 'boolean' => "Yes / No",
 //                'file' => "File Upload",
