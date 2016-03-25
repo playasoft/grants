@@ -7,6 +7,7 @@
         @else
             Review Submitted Application
         @endif
+         - {{ $application->name }}
     </h1>
     
     <hr>
@@ -30,6 +31,30 @@
     @endcan
 
     <h2>Project Information</h2>
+    @can('view-submitted-application')
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Judge Status</th>
+                    <th>Score</th>
+                    <th>Created</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ $application->status }}</td>
+                    <td>{{ $application->judge_status }}</td>
+                    <td>{{ $application->objective_score }} / {{ $application->subjective_score }} / {{ $application->total_score }}</td>
+                    <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
+                    <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    @endcan
+    <hr>
 
     <table class="table table-hover">
         <thead>
