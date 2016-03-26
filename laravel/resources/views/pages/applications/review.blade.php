@@ -369,7 +369,7 @@
         @endforeach
     @endcan
     
-    @if($application->status == 'new' && env('ALLOW_SUBMISSION', true)))
+    @if($application->status == 'new' && env('ALLOW_SUBMISSION', true))
         {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
             <p>
                 <b>
