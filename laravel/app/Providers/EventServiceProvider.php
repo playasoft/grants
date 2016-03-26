@@ -16,7 +16,29 @@ class EventServiceProvider extends ServiceProvider
     [
         'App\Events\UserRegistered' =>
         [
-            'App\Listeners\SendUserWelcome',
+            'App\Listeners\SendUserMessage',
+            'App\Listeners\QueueAdminMessage',
+        ],
+
+        'App\Events\ApplicationSubmitted' =>
+        [
+            'App\Listeners\SendUserMessage',
+            'App\Listeners\QueueJudgeMessage',
+            'App\Listeners\QueueAdminMessage',
+        ],
+
+        'App\Events\ApplicationChanged' =>
+        [
+            'App\Listeners\SendUserMessage',
+            'App\Listeners\QueueJudgeMessage',
+            'App\Listeners\QueueAdminMessage',
+        ],
+
+        'App\Events\FeedbackChanged' =>
+        [
+            'App\Listeners\QueueUserMessage',
+            'App\Listeners\QueueJudgeMessage',
+            'App\Listeners\QueueAdminMessage',
         ],
     ];
 
