@@ -13,6 +13,7 @@ use App\Models\Question;
 use App\Models\Feedback;
 
 use App\Http\Requests\FeedbackRequest;
+use App\Events\FeedbackChanged;
 
 class FeedbackController extends Controller
 {
@@ -50,7 +51,7 @@ class FeedbackController extends Controller
         {
             // todo
         }
-        
+
         // Create new feedback
         $feedback = new Feedback;
         $feedback->application_id = $application->id;
@@ -67,7 +68,8 @@ class FeedbackController extends Controller
 
         $feedback->update($input);
 
-        // todo: Notify user
+        // Notify applicant of new feedback requested
+        event(new FeedbackChanged($feedback, ['status' => 'created']));
 
         $request->session()->flash('success', 'Your feedback has been requested.');
         return redirect('/applications/' . $application->id . '/review');
@@ -85,6 +87,9 @@ class FeedbackController extends Controller
 
         $feedback->response = $request->input('response');
         $feedback->save();
+
+        // Notify judges of new answer
+        event(new FeedbackChanged($feedback, ['status' => 'updated']));
 
         $request->session()->flash('success', 'Your answer has been saved.');
         return redirect('/applications/' . $feedback->application->id . '/review');

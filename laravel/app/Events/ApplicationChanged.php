@@ -13,7 +13,7 @@ class ApplicationChanged extends Event
     use SerializesModels;
 
     public $application;
-    
+
     /**
      * Create a new event instance.
      *

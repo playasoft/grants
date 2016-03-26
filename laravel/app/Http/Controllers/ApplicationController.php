@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Application;
 use App\Models\Question;
@@ -15,8 +16,8 @@ use App\Models\User;
 use App\Models\Score;
 
 use App\Http\Requests\ApplicationRequest;
-
-use Illuminate\Support\Facades\Auth;
+use App\Events\ApplicationSubmitted;
+use App\Events\ApplicationChanged;
 
 class ApplicationController extends Controller
 {
@@ -234,6 +235,9 @@ class ApplicationController extends Controller
         $application->status = 'submitted';
         $application->save();
 
+        // Send notification to judges
+        event(new ApplicationSubmitted($application));
+
         $request->session()->flash('success', 'Thank you, your application has been submitted and will be reviewed by our judges.');
         return redirect('/');
     }
@@ -294,6 +298,9 @@ class ApplicationController extends Controller
         $application->judge_status = 'finalized';
         $application->save();
 
+        // Send notification to judges and applicant
+        event(new ApplicationChanged($application));
+
         $request->session()->flash('success', 'This application has been approved.');
         return redirect('/applications');
     }
@@ -307,6 +314,9 @@ class ApplicationController extends Controller
         $application->status = 'rejected';
         $application->judge_status = 'finalized';
         $application->save();
+
+        // Send notification to judges and applicant
+        event(new ApplicationChanged($application));
 
         $request->session()->flash('success', 'This application has been denied.');
         return redirect('/applications');

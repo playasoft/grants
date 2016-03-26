@@ -6,14 +6,12 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use App\Models\Application;
 use App\Models\Feedback;
 
-class ApplicationFeedback extends Event
+class FeedbackChanged extends Event
 {
     use SerializesModels;
 
-    public $application;
     public $feedback;
     public $change;
 
@@ -22,9 +20,8 @@ class ApplicationFeedback extends Event
      *
      * @return void
      */
-    public function __construct(Application $application, Feedback $feedback, $change)
+    public function __construct(Feedback $feedback, $change)
     {
-        $this->application = $application;
         $this->feedback = $feedback;
         $this->change = $change;
     }
