@@ -42,7 +42,14 @@ class Score extends Model
         {
             if($score->criteria->type == 'objective')
             {
-                $objective += (int)$score->score;
+                if ((int)$score->score) // If Yes or No
+                {
+                    $objective += (int)$score->score;
+                }
+                else // If criteria score is NA, 0, Add 1 (YES) to question's objective score.
+                {
+                    $objective += 1;
+                }
             }
             else
             {
