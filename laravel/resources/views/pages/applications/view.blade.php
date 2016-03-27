@@ -59,6 +59,7 @@
     <hr>
 
     @if(env('ALLOW_SUBMISSION', true))
-        <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Submit Application</a>
+    Next Step: Review your application prior to submission. <br>
+        <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Review Application</a>
     @endif
 @endsection

@@ -26,7 +26,9 @@
                             <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
                         @endif
                     </td>
-                    <td>{{ $application->user->name }}</td>
+                    <td>
+                        <a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a>
+                    </td>
                     <td>{{ $application->status }}</td>
                     <td>{{ $application->judge_status }}</td>
                     <td>{{ $application->objective_score }} / {{ $application->subjective_score }} / {{ $application->total_score }}</td>
