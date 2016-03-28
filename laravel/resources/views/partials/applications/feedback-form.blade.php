@@ -34,7 +34,9 @@ if(Auth::user()->role == 'applicant')
                 {{ $feedback->message }}
             </label>
             <span class="pull-right"><span class="status"></span></span>
-            @if($feedback->type == 'input')
+            @if(Auth::user()->role != 'applicant' && in_array($feedback->type, ['input', 'text']))
+                <p>{!! nl2br(e($feedback->response)) !!}</p>
+            @elseif($feedback->type == 'input')
                 <input type="text" name="response" class="form-control" id="{{ $feedback->id }}-response" value="{{ $feedback->response }}" {{ $disabled }}>
             @elseif($feedback->type == 'text')
                 <textarea name="response" class="form-control" id="{{ $feedback->id }}-response" {{ $disabled }}>{{ $feedback->response }}</textarea>
