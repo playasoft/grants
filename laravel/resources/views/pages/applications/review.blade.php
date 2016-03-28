@@ -216,7 +216,11 @@
     @if($application->feedback->count())
         <h2>Feedback Requested</h2>
 
-        @foreach($application->feedback as $feedback)
+        @foreach($application->feedback as $index => $feedback)
+            @if($index !== 0)
+                <hr>
+            @endif
+            
             @include('partials/applications/feedback-form')
         @endforeach
     @endif

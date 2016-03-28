@@ -65,5 +65,3 @@ if(Auth::user()->role == 'applicant')
         </div>
     {!! Form::close() !!}
 @endif
-
-<hr>
