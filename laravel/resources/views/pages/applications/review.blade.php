@@ -224,6 +224,9 @@
             @include('partials/applications/feedback-form')
         @endforeach
     @endif
+    @can('create-application')
+        <a href="/" class="btn btn-primary">Submit Response</a>
+    @endcan
 
     @can('view-submitted-application')
         <hr>
