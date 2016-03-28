@@ -27,6 +27,7 @@
         <p>
             <a class="btn btn-primary btn-lg" href="/about" role="button">Learn More</a>
             <a class="btn btn-success btn-lg" href="/register" role="button">Register an Account</a>
+            <a class="btn btn-success btn-lg" href="/login" role="button">Login</a>
         </p>
     </div>
 @endsection
