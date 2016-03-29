@@ -35,7 +35,11 @@ if(Auth::user()->role == 'applicant')
             </label>
             <span class="pull-right"><span class="status"></span></span>
             @if(Auth::user()->role != 'applicant' && in_array($feedback->type, ['input', 'text']))
-                <p>{!! nl2br(e($feedback->response)) !!}</p>
+                @if($feedback->response != '')
+                    <p>{!! nl2br(e($feedback->response)) !!}</p>
+                @else
+                    <p>[Applicant has not responded.]</p>
+                @endif
             @elseif($feedback->type == 'input')
                 <input type="text" name="response" class="form-control" id="{{ $feedback->id }}-response" value="{{ $feedback->response }}" {{ $disabled }}>
             @elseif($feedback->type == 'text')
