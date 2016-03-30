@@ -55,7 +55,13 @@ class SendUserMessage
 
     private function applicationSubmitted($event)
     {
-        // todo
+        $user = $event->application->user;
+        $application = $event->application;
+
+        Mail::send('emails/user-application-submitted', compact('user', 'application'), function ($message) use ($user)
+        {
+            $message->to($user->email, $user->name)->subject('You Submitted an Application');
+        });
     }
 
     private function applicationChanged($event)
