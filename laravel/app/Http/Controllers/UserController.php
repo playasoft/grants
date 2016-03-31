@@ -165,6 +165,27 @@ class UserController extends Controller
 
     public function forgotPassword(Request $request)
     {
+        $input = $request->all();
+
+        // Does the input match a registered username or email?
+        $user = User::where('name', $input['user'])->orWhere('email', $input['user'])->first();
+
+        if(!$user)
+        {
+            $request->session()->flash('error', 'No user was found with that information.');
+            return back();
+        }
+
+        // When was the last reset time?
+
+        // Don't allow resets more than once per day
+
+        // Generate a random reset token
+
+        // Trigger user notification
+
+        // Update the reset timestamp
+
         return "// todo";
     }
 }
