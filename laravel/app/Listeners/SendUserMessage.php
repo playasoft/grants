@@ -12,9 +12,10 @@ class SendUserMessage
 {
     private $handlers =
     [
-        "App\Events\UserRegistered" => "userRegistered",
-        "App\Events\ApplicationSubmitted" => "applicationSubmitted",
-        "App\Events\ApplicationChanged" => "applicationChanged",
+        'App\Events\UserRegistered' => 'userRegistered',
+        'App\Events\ApplicationSubmitted' => 'applicationSubmitted',
+        'App\Events\ApplicationChanged' => 'applicationChanged',
+        'App\Events\ForgotPassword' => 'forgotPassword',
     ];
 
     /**
@@ -67,5 +68,15 @@ class SendUserMessage
     private function applicationChanged($event)
     {
         // todo
+    }
+
+    private function forgotPassword($event)
+    {
+        $user = $event->user;
+
+        Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
+        {
+            $message->to($user->email, $user->name)->subject('Your Password Reset Code');
+        });
     }
 }

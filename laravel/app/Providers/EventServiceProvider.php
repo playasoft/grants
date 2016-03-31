@@ -40,6 +40,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\QueueJudgeMessage',
             'App\Listeners\QueueAdminMessage',
         ],
+
+        'App\Events\ForgotPassword' =>
+        [
+            'App\Listeners\SendUserMessage',
+        ],
     ];
 
 

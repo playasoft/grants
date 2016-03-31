@@ -13,7 +13,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
     protected $fillable = ['name', 'email', 'password', 'role'];
-
+    protected $dates = ['created_at', 'updated_at', 'reset_time'];
+    
     // Users have user data
     public function data()
     {

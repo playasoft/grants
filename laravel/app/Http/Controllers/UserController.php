@@ -13,6 +13,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\UserData;
 use App\Events\UserRegistered;
+use App\Events\ForgotPassword;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -177,15 +179,27 @@ class UserController extends Controller
         }
 
         // When was the last reset time?
-
-        // Don't allow resets more than once per day
+        if(!is_null($user->reset_time))
+        {
+            // Don't allow resets more than once per day
+            if($user->reset_time->diffInDays(Carbon::now()) < 1)
+            {
+                $request->session()->flash('error', "Your password has already been reset today.");
+                return back();
+            }
+        }
 
         // Generate a random reset token
-
-        // Trigger user notification
+        $user->reset_token = bin2hex(openssl_random_pseudo_bytes(8));
 
         // Update the reset timestamp
+        $user->reset_time = Carbon::now();
+        $user->save();
 
-        return "// todo";
+        // Trigger user notification
+        event(new ForgotPassword($user));
+
+        $request->session()->flash('success', 'A reset code has been sent to your email.');
+        return back();
     }
 }
