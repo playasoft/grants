@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHelpToQuestionsTable extends Migration
+class AddResetTokenToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class AddHelpToQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('questions', function (Blueprint $table)
+        Schema::table('users', function (Blueprint $table)
         {
-            $table->text('help');
+            $table->string('reset_token');
+            $table->timestamp('reset_time')->nullable();
         });
     }
 
@@ -25,9 +26,10 @@ class AddHelpToQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('questions', function (Blueprint $table)
+        Schema::table('users', function (Blueprint $table)
         {
-            $table->dropColumn('help');
+            $table->dropColumn('reset_token');
+            $table->dropColumn('reset_time');
         });
     }
 }
