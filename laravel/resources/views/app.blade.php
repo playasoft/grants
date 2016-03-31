@@ -33,13 +33,6 @@
                 </div>
             @endif
 
-            @if(env('GLOBAL_NOTICE'))
-                <div class="general-alert alert alert-info" role="alert">
-                    {!! env('GLOBAL_NOTICE') !!}
-                </div>
-            @endif
-
-
             @yield('content')
         </section>
 

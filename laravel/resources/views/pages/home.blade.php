@@ -1,6 +1,12 @@
 @extends('app')
 
 @section('content')
+    @if(env('GLOBAL_NOTICE'))
+        <div class="general-alert alert alert-info" role="alert">
+            {!! env('GLOBAL_NOTICE') !!}
+        </div>
+    @endif
+
     <div class="jumbotron">
         <h1>Apogaea Art Grant Application System</h1>
         <h2>Welcome!</h2>
