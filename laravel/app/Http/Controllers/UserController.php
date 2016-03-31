@@ -202,4 +202,20 @@ class UserController extends Controller
         $request->session()->flash('success', 'A reset code has been sent to your email.');
         return back();
     }
+
+    public function verifyToken(Request $request, $token)
+    {
+        $yesterday = date('Y-m-d H:i:s', strtotime("24 hours ago"));
+
+        // Only select matching tokens from the past day
+        $user = User::where('reset_token', $token)->where('reset_time', '>=', $yesterday)->first();
+
+        if(!$user)
+        {
+            $request->session()->flash('error', 'Invalid reset code. It may have expired.');
+            return redirect('/forgot');
+        }
+
+        return view('pages/forgot', compact('token', 'user'));
+    }
 }

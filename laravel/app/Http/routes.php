@@ -37,6 +37,7 @@ Route::group(['middleware' => ['web']], function()
 
     Route::get('/forgot', 'PageController@view');
     Route::post('/forgot', 'UserController@forgotPassword');
+    Route::get('/forgot/{token}', 'UserController@verifyToken');
 
     Route::post('/register', 'UserController@create');
     Route::post('/login', 'UserController@login');
