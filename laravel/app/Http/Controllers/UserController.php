@@ -162,4 +162,9 @@ class UserController extends Controller
         $request->session()->flash('success', 'Your profile was updated.');
         return redirect('/');
     }
+
+    public function forgotPassword(Request $request)
+    {
+        return "// todo";
+    }
 }
