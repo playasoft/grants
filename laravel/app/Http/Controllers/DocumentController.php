@@ -34,8 +34,7 @@ class DocumentController extends Controller
 
     public function addDocument(Application $application, Request $request)
     {
-        // ToDo add judge and admin use
-        if($application->user->id != Auth::user()->id)
+        if($application->user->id != Auth::user()->id && !(Auth::user()->can('add-files')))
         {
             $request->session()->flash('error', 'Only the person who created an application may answer questions for it.');
             return redirect('/login');

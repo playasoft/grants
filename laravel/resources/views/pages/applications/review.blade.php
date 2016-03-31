@@ -18,7 +18,7 @@
         <div class="profile">
             <div class="row">
                 <div class="col-sm-2 title">Username</div>
-                <div class="col-sm-10 value">{{ $application->user->name }}</div>
+                <div class="col-sm-10 value"><a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a></div>
             </div>
 
             <div class="row">
