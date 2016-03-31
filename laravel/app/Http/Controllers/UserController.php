@@ -218,4 +218,25 @@ class UserController extends Controller
 
         return view('pages/forgot', compact('token', 'user'));
     }
+
+    public function changePassword(UserRequest $request, $token)
+    {
+        $input = $request->all();
+        $yesterday = date('Y-m-d H:i:s', strtotime("24 hours ago"));
+
+        // Only select matching tokens from the past day
+        $user = User::where('reset_token', $token)->where('reset_time', '>=', $yesterday)->first();
+
+        if(!$user)
+        {
+            $request->session()->flash('error', 'Invalid reset code. It may have expired.');
+            return redirect('/forgot');
+        }
+
+        $user->password = bcrypt($input['password']);
+        $user->save();
+
+        $request->session()->flash('success', 'Your password has been reset, you may now log in.');
+        return redirect('/login');
+    }
 }
