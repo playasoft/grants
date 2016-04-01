@@ -67,7 +67,26 @@ class SendUserMessage
 
     private function applicationChanged($event)
     {
-        // todo
+        $user = $event->application->user;
+        $application = $event->application;
+        $subject = false;
+
+        if($application->status == 'accepted')
+        {
+            $subject = "Your Art Grant is approved!";
+        }
+        elseif($application->status == 'rejected')
+        {
+            $subject = "Your Art Grant was not approved";
+        }
+
+        if($subject)
+        {
+            Mail::send('emails/user-application-' . $application->status, compact('user', 'application'), function ($message) use ($user, $subject)
+            {
+                $message->to($user->email, $user->name)->subject($subject);
+            });
+        }
     }
 
     private function forgotPassword($event)
