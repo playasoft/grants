@@ -27,11 +27,16 @@ $(window).on('scroll', function()
     // Loop through all score elements on the page
     $('.score').each(function()
     {
-        // Is this element currently being displayed?
-        if(onScreen(this))
+        // Has this score already been autosaved? 
+        if(!$(this).data('autoSaved'))
         {
-            // Make sure the value has been saved
-            $(this).find('input, select, option, textarea').trigger('blur');
+            // Is this element currently being displayed?
+            if(onScreen(this))
+            {
+                // Auto-save the value when it appears on screen
+                $(this).find('input, select, option, textarea').trigger('blur');
+                $(this).data('autoSaved', true);
+            }
         }
     });
 });
