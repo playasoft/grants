@@ -274,7 +274,7 @@
 
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="score" value="1" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> N/A
+                                        <input type="radio" name="score" value="0" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> N/A
                                     </label>
                                 </div>
                             </td>
