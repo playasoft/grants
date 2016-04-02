@@ -45,7 +45,7 @@ class ScoreController extends Controller
         }
 
         // Check if a score already exists for this criteria
-        $score = Score::firstOrNew(['application_id' => $application->id, 'criteria_id' => $criteria->id]);
+        $score = Score::firstOrNew(['application_id' => $application->id, 'criteria_id' => $criteria->id, 'user_id' => Auth::user()->id]);
 
         // Add submitted information
         $score->application_id = $application->id;
