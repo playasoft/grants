@@ -18,6 +18,7 @@
                     <li><a href="/questions">Questions</a></li>
                     <li><a href="/criteria">Criteria</a></li>
                     <li><a href="/applications">Applications</a></li>
+                    <li><a href="/scores">Scores</a></li>
                 @endif
             </ul>
 

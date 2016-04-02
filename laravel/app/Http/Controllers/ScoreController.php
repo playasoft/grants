@@ -11,6 +11,7 @@ use App\Models\Application;
 use App\Models\Criteria;
 use App\Models\Score;
 use App\Models\Judged;
+use App\Models\User;
 
 use App\Http\Requests\ScoreRequest;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class ScoreController extends Controller
         $this->authorize('score-application');
 
         $input = $request->all();
-        
+
         $application = Application::find($input['application_id']);
         $criteria = Criteria::find($input['criteria_id']);
 
@@ -58,4 +59,45 @@ class ScoreController extends Controller
         $request->session()->flash('success', 'Your score has been saved.');
         return redirect('/applications/' . $application->id . '/review');
     }
+
+    function listScores()
+    {
+        $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+        $criteria = Criteria::get();
+        $appScores = [[]]; // Store the average scores for each criterion of each application
+
+        foreach($applications as $application)
+        {
+            $scores = Score::where('scores.application_id', $application->id)->join('judged', function($join)
+            {
+                $join->on('judged.user_id', '=', 'scores.user_id')->on('judged.application_id', '=', 'scores.application_id');
+            })->get();
+
+            foreach($criteria as $criterion)
+            {
+                $criterionScores = $scores->where('criteria_id', $criterion->id);
+                $appScores[$application->id][$criterion->id] = $criterionScores->avg('score');
+            }
+        }
+        return view('pages/applications/listscores', compact('applications', 'criteria', 'appScores'));
+    }
+
+    function viewScore(Application $application)
+    {
+        $criteria = Criteria::get();
+        $judges = User::where(['role' => 'judge'])->get();
+        $judgeScores = [[]];
+
+        // Select all scores made by each judge
+        foreach ($judges as $judge)
+        {
+            $scores = Score::where('user_id', $judge->id)->get();
+            foreach($scores as $score)
+            {
+                $judgeScores[$judge->id][$score->criteria_id] = $score->score;
+            }
+        }
+        return view('pages/applications/scores', compact('application', 'criteria', 'judges', 'judgeScores'));
+    }
+
 }
