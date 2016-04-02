@@ -249,7 +249,7 @@
 
             ?>
         
-            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+            {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
                 <input type="hidden" name="application_id" value="{{ $application->id }}">
                 <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
 
@@ -315,7 +315,7 @@
 
             ?>
         
-            {!! Form::open(['url' => '/score', 'class' => 'ajax']) !!}
+            {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
                 <input type="hidden" name="application_id" value="{{ $application->id }}">
                 <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
 
