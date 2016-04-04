@@ -36,7 +36,6 @@ class Score extends Model
 
         $objective = 0;
         $subjective = 0;
-        $total = 0;
 
         foreach($scores as $score)
         {
@@ -55,13 +54,11 @@ class Score extends Model
             {
                 $subjective += (int)$score->score;
             }
-
-            $total += (int)$score->score;
         }
 
         $application->objective_score = $objective;
         $application->subjective_score = $subjective;
-        $application->total_score = $total;
+        $application->total_score = $objective + $subjective;
         $application->save();
 
         return compact('objective', 'subjective', 'total');
