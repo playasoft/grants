@@ -114,6 +114,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     // Approving / denying applications
     Route::post('/applications/{application}/approve', 'ApplicationController@approveApplication');
     Route::post('/applications/{application}/deny', 'ApplicationController@denyApplication');
+
+    // Update Scores
+    Route::get('/recalcscores', 'ScoreController@recalcScores');
 });
 
 // Routes only available to judges

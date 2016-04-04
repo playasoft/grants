@@ -100,4 +100,18 @@ class ScoreController extends Controller
         return view('pages/applications/scores', compact('application', 'criteria', 'judges', 'judgeScores'));
     }
 
+    function recalcScores(Request $request)
+    {
+        $this->authorize('recalculate-scores');
+
+        $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+
+        foreach ($applications as $application)
+        {
+            Score::calculateTotals($application);
+        }
+
+        $request->session()->flash('success', 'Scores Recalculated.');
+        return redirect('applications/');
+    }
 }

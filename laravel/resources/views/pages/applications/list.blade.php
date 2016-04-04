@@ -1,7 +1,11 @@
 @extends('app')
 
 @section('content')
-    <h1>All Applications</h1>
+    <h1>All Applications
+         @if(in_array(Auth::user()->role, ['admin']))
+            <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;"><a href="/recalcscores">Recalculate Scores</a></div>
+        @endif
+    </h1>
     <hr>
     <table class="table table-hover">
         <thead>
