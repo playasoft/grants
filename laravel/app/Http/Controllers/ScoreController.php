@@ -98,7 +98,7 @@ class ScoreController extends Controller
             }
         }
         
-        return view('pages/applications/listscores', compact('applications', 'criteria', 'appScores'));
+        return view('pages/scores/list', compact('applications', 'criteria', 'appScores'));
     }
 
     public function viewScore(Application $application)
@@ -118,7 +118,7 @@ class ScoreController extends Controller
             }
         }
 
-        return view('pages/applications/scores', compact('application', 'criteria', 'judges', 'judgeScores'));
+        return view('pages/scores/view', compact('application', 'criteria', 'judges', 'judgeScores'));
     }
 
     public function recalcScores(Request $request)

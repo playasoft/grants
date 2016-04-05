@@ -25,7 +25,7 @@
             </tr>
         </tbody>
     </table>
-    <hr>
+
     <table class="table table-hover"><thead>
         <thead>
             <tr>
