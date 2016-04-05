@@ -29,9 +29,9 @@
     <table class="table table-hover"><thead>
         <thead>
             <tr>
-            <th>Judge</th>
+                <th>Judge</th>
                 @foreach($criteria as $criterion)
-                    <th>C {{ $criterion->id }}</th>
+                    <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
                 @endforeach
             </tr>
         </thead>
