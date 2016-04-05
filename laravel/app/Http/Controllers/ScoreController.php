@@ -105,12 +105,12 @@ class ScoreController extends Controller
     {
         $criteria = Criteria::get();
         $judges = User::where(['role' => 'judge'])->get();
-        $judgeScores = [[]];
+        $judgeScores = [];
 
         // Select all scores made by each judge
         foreach ($judges as $judge)
         {
-            $scores = Score::where('user_id', $judge->id)->get();
+            $scores = $application->scores()->where('user_id', $judge->id)->get();
            
             foreach($scores as $score)
             {

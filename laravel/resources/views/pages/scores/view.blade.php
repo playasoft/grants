@@ -2,7 +2,7 @@
 
 @section('content')
 @can('view-submitted-application')
-    <h1>score: <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a></h1>
+    <h1>Scores for: <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a></h1>
     <hr>
     <table class="table table-hover">
         <thead>
