@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 class ScoreController extends Controller
 {
     // Function to save and update the scores for criteria
-    function scoreCriteria(ScoreRequest $request)
+    public function scoreCriteria(ScoreRequest $request)
     {
         // Check if current user is allowed to score things
         $this->authorize('score-application');
@@ -60,11 +60,11 @@ class ScoreController extends Controller
         return redirect('/applications/' . $application->id . '/review');
     }
 
-    function listScores()
+    public function listScores()
     {
         $applications = Application::whereIn('status', ['submitted', 'review'])->get();
         $criteria = Criteria::get();
-        $appScores = [[]]; // Store the average scores for each criterion of each application
+        $appScores = []; // Store the average scores for each criterion of each application
 
         foreach($applications as $application)
         {
@@ -73,16 +73,35 @@ class ScoreController extends Controller
                 $join->on('judged.user_id', '=', 'scores.user_id')->on('judged.application_id', '=', 'scores.application_id');
             })->get();
 
+            $criteriaScores = [];
+
+            foreach($scores as $score)
+            {
+                if(!isset($criteriaScores[$score->criteria_id]))
+                {
+                    $criteriaScores[$score->criteria_id] = ['average' => 0, 'total' => 0, 'count' => 0];
+                }
+
+                $criteriaScores[$score->criteria_id]['count']++;
+                $criteriaScores[$score->criteria_id]['total'] += $score->score;
+                $criteriaScores[$score->criteria_id]['average'] = $criteriaScores[$score->criteria_id]['total'] / $criteriaScores[$score->criteria_id]['count'];
+            }
+
             foreach($criteria as $criterion)
             {
-                $criterionScores = $scores->where('criteria_id', $criterion->id);
-                $appScores[$application->id][$criterion->id] = $criterionScores->avg('score');
+                if(!isset($criteriaScores[$criterion->id]))
+                {
+                    $criteriaScores[$criterion->id] = ['average' => 0];
+                }
+
+                $appScores[$application->id][$criterion->id] = $criteriaScores[$criterion->id]['average'];
             }
         }
+        
         return view('pages/applications/listscores', compact('applications', 'criteria', 'appScores'));
     }
 
-    function viewScore(Application $application)
+    public function viewScore(Application $application)
     {
         $criteria = Criteria::get();
         $judges = User::where(['role' => 'judge'])->get();
@@ -92,15 +111,17 @@ class ScoreController extends Controller
         foreach ($judges as $judge)
         {
             $scores = Score::where('user_id', $judge->id)->get();
+           
             foreach($scores as $score)
             {
                 $judgeScores[$judge->id][$score->criteria_id] = $score->score;
             }
         }
+
         return view('pages/applications/scores', compact('application', 'criteria', 'judges', 'judgeScores'));
     }
 
-    function recalcScores(Request $request)
+    public function recalcScores(Request $request)
     {
         $this->authorize('recalculate-scores');
 
