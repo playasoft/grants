@@ -37,12 +37,14 @@
         </thead>
         <tbody>
             @foreach ($judges as $judge)
-            <tr>
-                <td><a href="/users/{{ $judge->id }}">{{ $judge->name }}</a></td>
-                @foreach($criteria as $criterion)
-                    <td>{{ $judgeScores[$judge->id][$criterion->id] }}</td>
-                @endforeach
-            </tr>
+		@if(isset($judgeScores[$judge->id]))
+                    <tr>
+                        <td><a href="/users/{{ $judge->id }}">{{ $judge->name }}</a></td>
+                        @foreach($criteria as $criterion)
+                            <td>{{ $judgeScores[$judge->id][$criterion->id] or 'N/A' }}</td>
+                        @endforeach
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
