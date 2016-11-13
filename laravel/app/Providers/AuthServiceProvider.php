@@ -12,7 +12,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
+    protected $policies =
+    [
         'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
@@ -41,6 +42,10 @@ class AuthServiceProvider extends ServiceProvider
             'create-criteria',
             'edit-criteria',
             'delete-criteria',
+            'view-round',
+            'create-round',
+            'edit-round',
+            'delete-round',
             'view-application',
             'view-submitted-application',
             'create-feedback',
@@ -59,6 +64,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-users',
             'view-questions',
             'view-criteria',
+            'view-round',
             'view-submitted-application',
             'score-application',
             'create-feedback',
@@ -70,6 +76,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-users',
             'view-questions',
             'view-critieria',
+            'view-round',
         ],
     ];
 

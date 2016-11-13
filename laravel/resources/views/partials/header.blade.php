@@ -11,14 +11,15 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/about">About</a></li>
-
                 @if(Auth::check() && in_array(Auth::user()->role, ['admin', 'judge', 'observer']))
+                    <li><a href="/applications">Applications</a></li>
+                    <li><a href="/rounds">Rounds</a></li>
                     <li><a href="/users">Users</a></li>
                     <li><a href="/questions">Questions</a></li>
                     <li><a href="/criteria">Criteria</a></li>
-                    <li><a href="/applications">Applications</a></li>
                     <li><a href="/scores">Scores</a></li>
+                @else
+                    <li><a href="/about">About</a></li>
                 @endif
             </ul>
 

@@ -81,6 +81,9 @@ Route::group(['middleware' => ['auth', 'role:admin|judge|observer']], function()
     // Viewing criteria
     Route::get('/criteria', 'CriteriaController@listCriteria');
 
+    // Viewing grant rounds
+    Route::get('/rounds', 'RoundController@listRounds');
+
     // Viewing users
     Route::get('/users', 'UserController@listUsers');
     Route::get('/users/{user}', 'UserController@viewUser');
@@ -106,6 +109,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     Route::get('/criteria/{criteria}', 'CriteriaController@editCriteriaForm');
     Route::post('/criteria/{criteria}', 'CriteriaController@editCriteria');
     Route::get('/criteria/{criteria}/delete', 'CriteriaController@deleteCriteria');
+
+    // Creating and modifying grant rounds
+    Route::post('/rounds', 'RoundController@createRound');
+    Route::get('/rounds/create', 'RoundController@createRoundForm');
+    Route::get('/rounds/{round}', 'RoundController@editRoundForm');
+    Route::post('/rounds/{round}', 'RoundController@editRound');
+    Route::get('/rounds/{round}/delete', 'RoundController@deleteRound');
 
     //Modifying Users
     Route::get('/users/{user}/edit', 'UserController@editUser');
