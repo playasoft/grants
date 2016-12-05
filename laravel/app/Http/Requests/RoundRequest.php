@@ -13,8 +13,7 @@ class RoundRequest extends Request
      */
     public function authorize()
     {
-        // Todo: Set this to true
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +23,17 @@ class RoundRequest extends Request
      */
     public function rules()
     {
+        $moneyFormat = 'regex:/^\$?[0-9.]+$/';
+        
         return
         [
-            // Todo
+            'name' => 'required',
+            'description' => 'required|min:50',
+            'budget' => $moneyFormat,
+            'min_request_amount' => $moneyFormat,
+            'max_request_amount' => $moneyFormat,
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d'
         ];
     }
 }

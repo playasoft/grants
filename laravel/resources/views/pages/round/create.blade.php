@@ -18,8 +18,8 @@
         @include('partials/form/text', ['name' => 'budget', 'label' => 'Budget available for this round', 'placeholder' => "$750,000"])
         @include('partials/form/text', ['name' => 'min_request_amount', 'label' => 'Minimum application amount', 'placeholder' => "$600"])
         @include('partials/form/text', ['name' => 'max_request_amount', 'label' => 'Budget available for this round', 'placeholder' => "$20,000"])
-        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'placeholder' => "12/15/2020"])
-        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'placeholder' => "1/15/2021"])
+        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'placeholder' => "2020-12-15"])
+        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'placeholder' => "2021-1-15"])
 
         <button type="submit" class="btn btn-primary">Create New Grant Round</button>
     {!! Form::close() !!}
