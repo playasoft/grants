@@ -9,6 +9,9 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Budget</th>
+                <th>Start Date</th>
+                <th>End Date</th>
             </tr>
         </thead>
 
@@ -18,11 +21,14 @@
                     <td><b>{{ $round->id }}</b></td>
                     <td>
                         @can('edit-round')
-                            <a href="/rounds/{{ $round->id }}">[todo]</a>
+                            <a href="/rounds/{{ $round->id }}">{{ $round->name }}</a>
                         @else
-                            [todo]
+                            {{ $round->name }}
                         @endcan
                     </td>
+                    <td>${{ $round->budget }}</td>
+                    <td>{{ $round->start_date }}</td>
+                    <td>{{ $round->end_date }}</td>
                 </tr>
             @endforeach
         </tbody>

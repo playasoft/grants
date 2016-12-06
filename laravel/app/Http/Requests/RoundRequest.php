@@ -23,7 +23,7 @@ class RoundRequest extends Request
      */
     public function rules()
     {
-        $moneyFormat = 'regex:/^\$?[0-9.]+$/';
+        $moneyFormat = 'regex:/^\$?[0-9.,]+$/';
         
         return
         [

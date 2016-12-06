@@ -15,8 +15,7 @@ class RoundController extends Controller
 {
     function listRounds()
     {
-        // todo 
-        $rounds = []; // Round::latest()->get();
+        $rounds = Round::latest()->get();
         return view('pages/round/list', compact('rounds'));
     }
 
@@ -29,7 +28,7 @@ class RoundController extends Controller
         $round = Round::create($input);
 
         $request->session()->flash('success', 'Your round has been created.');
-        return redirect('/round');
+        return redirect('/rounds');
     }
 
     function createRoundForm()
@@ -46,7 +45,7 @@ class RoundController extends Controller
         $round->update($input);
 
         $request->session()->flash('success', 'The round has been updated.');
-        return redirect('/round');
+        return redirect('/rounds');
     }
 
     function editRoundForm(Round $round)
@@ -61,6 +60,6 @@ class RoundController extends Controller
         $round->delete();
 
         $request->session()->flash('success', 'The round has been deleted.');
-        return redirect('/round');
+        return redirect('/rounds');
     }
 }
