@@ -1,0 +1,28 @@
+.review {
+    height: 800px;
+
+    .title {
+        font-weight: bold;
+        padding: 10px;
+    }
+    .h-scroll {
+        height: 100%;
+        overflow-y: scroll;
+    }
+    .ans {
+        margin: 10px;
+        background-color: #eee;
+        padding: 10px;
+    }
+    .btn {
+        margin:10px;
+    }
+    .feedback {
+        margin: 15px;
+        background-color: #fafafa;
+        padding: 10px;
+    }
+    .danger {
+        background-color: #a94442;
+    }
+}
