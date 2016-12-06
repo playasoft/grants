@@ -25,6 +25,11 @@ class RoundController extends Controller
         $this->authorize('create-round');
 
         $input = $request->all();
+
+        // TODO: Is there a better way to do this automatically?
+        $input['budget'] =  filter_var($input['budget'], FILTER_SANITIZE_NUMBER_FLOAT);
+        $input['min_request_amount'] = filter_var($input['min_request_amount'], FILTER_SANITIZE_NUMBER_FLOAT);
+        $input['max_request_amount'] = filter_var($input['max_request_amount'], FILTER_SANITIZE_NUMBER_FLOAT);
         $round = Round::create($input);
 
         $request->session()->flash('success', 'Your round has been created.');
