@@ -1,3 +1,17 @@
+<?php
+
+// If there are any currently ongoing grant rounds, display information about the first one on the home page
+if($ongoing->count())
+{
+    $featured = $ongoing->first();
+}
+elseif($upcoming->count())
+{
+    $featured = $upcoming->first();
+}
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -13,19 +27,19 @@
             This is <b>Weightlifter</b>, the online Art Grant Application system for Apogaea. Want to make an art project for Apogaea but worried about the cost? We'll lift that weight off your shoulders!
         </p>
 
-        @if(!empty($current))
-            <h1>{{ $current->name }}</h1>
+        @if(!empty($featured))
+            <h1>{{ $featured->name }}</h1>
 
             <p>
-                This round is open from <b>{{ Carbon\Carbon::createFromFormat("Y-m-d", $current->start_date)->format('F j, Y') }} to {{ Carbon\Carbon::createFromFormat("Y-m-d", $current->end_date)->format('F j, Y') }}</b>.
+                This round is open from <b>{{ Carbon\Carbon::createFromFormat("Y-m-d", $featured->start_date)->format('F j, Y') }} to {{ Carbon\Carbon::createFromFormat("Y-m-d", $featured->end_date)->format('F j, Y') }}</b>.
             </p>
 
             <p>
-                {{ $current->description }}
+                {{ $featured->description }}
             </p>
         @else
             <p>
-                <b>Grant applications are currently closed.</b>
+                <b>Grant applications are featuredly closed.</b>
                 You may register for an account or log into your existing account, but no new applications can be created at this time.
             </p>
         @endif

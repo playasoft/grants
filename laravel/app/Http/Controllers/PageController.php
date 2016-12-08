@@ -17,8 +17,8 @@ class PageController extends Controller
     // Display different home page views if you're logged in or out
     public function home()
     {
-        $upcoming = Round::where('end_date', '>', Carbon::now())->orderBy('start_date', 'desc')->get();
-        $current = $upcoming->shift();
+        $ongoing = Round::ongoing();
+        $upcoming = Round::upcoming();
 
         if($this->auth->check())
         {
@@ -31,11 +31,11 @@ class PageController extends Controller
                 $applications = $this->auth->user()->applications;
             }
             
-            return view('pages/dashboard', compact('applications', 'current', 'upcoming'));
+            return view('pages/dashboard', compact('applications', 'ongoing', 'upcoming'));
         }
         else
         {
-            return view('pages/home', compact('current', 'upcoming'));
+            return view('pages/home', compact('ongoing', 'upcoming'));
         }
     }
     

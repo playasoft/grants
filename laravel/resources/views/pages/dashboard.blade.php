@@ -58,7 +58,8 @@
     @endcan
 
     @can('create-application')
-        @if(env('ALLOW_APPLICATIONS', true))
+        {{-- Only allow applications to be created if there is an ongoing funding round --}}
+        @if($ongoing->count())
             <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
         @endif
     @endcan
