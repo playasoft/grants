@@ -9,19 +9,26 @@
 
     <div class="jumbotron">
         <h1>Apogaea Art Grant Application System</h1>
-        <h2>Welcome!</h2>
         <p>
-            This is <b>Weightlifter</b>, the online Apogaea Art Grant Application system.
+            This is <b>Weightlifter</b>, the online Art Grant Application system for Apogaea. Want to make an art project for Apogaea but worried about the cost? We'll lift that weight off your shoulders!
         </p>
 
-        <h1>2016 Seed Round</h1>
-        <p>
-            The 2016 Seed Round is open from <b>March 9 to March 21, 2016</b>.
-        </p>
+        @if(!empty($current))
+            <h1>{{ $current->name }}</h1>
 
-        <p>
-            Apogaea has <b>$10,600</b> in art grant awesome-ness this year! This is the only creative grant round we are doing in 2016.  And since we want to spread as much of our seed around as we possibly can on a limited budget, there is a cap of <b>$599 maximum per project</b> for all applications. Please register and fill out an art grant application.
-        </p>
+            <p>
+                This round is open from <b>{{ Carbon\Carbon::createFromFormat("Y-m-d", $current->start_date)->format('F j, Y') }} to {{ Carbon\Carbon::createFromFormat("Y-m-d", $current->end_date)->format('F j, Y') }}</b>.
+            </p>
+
+            <p>
+                {{ $current->description }}
+            </p>
+        @else
+            <p>
+                <b>Grant applications are currently closed.</b>
+                You may register for an account or log into your existing account, but no new applications can be created at this time.
+            </p>
+        @endif
 
         <p>
             If you have problems or questions, please contact <a href="mailto:grants@apogaea.com">grants@apogaea.com</a></br>
