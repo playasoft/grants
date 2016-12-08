@@ -14,6 +14,7 @@ use App\Models\Criteria;
 use App\Models\Judged;
 use App\Models\User;
 use App\Models\Score;
+use App\Models\Round;
 
 use App\Http\Requests\ApplicationRequest;
 use App\Events\ApplicationSubmitted;
@@ -52,9 +53,11 @@ class ApplicationController extends Controller
     {
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-application');
- 
-        // If applications are no longer allowed to be created
-        if(!env('ALLOW_APPLICATIONS', true))
+
+        // Only allow applications to be created if there is an ongoing funding round
+        $ongoing = Round::ongoing();
+
+        if(!$ongoing->count())
         {
             $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
             return redirect('/');
@@ -64,6 +67,7 @@ class ApplicationController extends Controller
         $application = new Application;
         $application->status = "new";
         $application->user_id = Auth::user()->id;
+        $application->round_id = $ongoing->first()->id;
         $application->save();
 
         // Assign user input
@@ -76,8 +80,10 @@ class ApplicationController extends Controller
 
     public function createApplicationForm(Request $request)
     {
-        // If applications are no longer allowed to be created
-        if(!env('ALLOW_APPLICATIONS', true))
+        // Only allow applications to be created if there is an ongoing funding round
+        $ongoing = Round::ongoing();
+
+        if(!$ongoing->count())
         {
             $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
             return redirect('/');
