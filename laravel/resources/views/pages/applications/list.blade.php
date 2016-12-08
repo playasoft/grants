@@ -10,6 +10,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>Round</th>
                 <th>Name</th>
                 <th>Applicant</th>
                 <th>Status</th>
@@ -23,6 +24,13 @@
         <tbody>
             @foreach($applications as $application)
                 <tr>
+                    <td>
+                        @if(isset($application->round))
+                            {{ $application->round->name }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
                     <td>
                         @if($application->status == 'new')
                             <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>

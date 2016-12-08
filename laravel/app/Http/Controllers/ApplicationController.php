@@ -27,11 +27,11 @@ class ApplicationController extends Controller
         {
             if(in_array($this->auth->user()->role, ['admin']))
             {
-                $applications = Application::get();
+                $applications = Application::orderBy('updated_at', 'desc')->get();
             }
             elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'desc')->get();
             }
             else
             {

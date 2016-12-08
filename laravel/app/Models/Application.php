@@ -14,6 +14,12 @@ class Application extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    // Applications belong to a round
+    public function round()
+    {
+        return $this->belongsTo('App\Models\Round');
+    }
+
     // Applications can have multiple answers
     public function answers()
     {
