@@ -58,8 +58,8 @@
     {!! Form::close() !!}
     <hr>
 
-    @if(env('ALLOW_SUBMISSION', true))
-    Next Step: Review your application prior to submission. <br>
+    @if($application->round->status() == 'ongoing')
+        Next Step: Review your application prior to submission. <br>
         <a href="/applications/{{ $application->id }}/review" class="btn btn-success">Review Application</a>
     @endif
 @endsection

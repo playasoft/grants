@@ -30,4 +30,30 @@ class Round extends Model
                     ->orderBy('start_date', 'desc')->get();
     }
 
+    // Helper function to determine if a round is currently ongoing, upcoming, or ended
+    public function status()
+    {
+        $start = Carbon::createFromFormat("Y-m-d", $this->start_date);
+        $end = Carbon::createFromFormat("Y-m-d", $this->end_date);
+        $now = Carbon::now();
+
+        // Set the end date to 23:59:59
+        $end->addHours(23)->addMinutes(59)->addSeconds(59);
+
+        if($now->lt($start))
+        {
+            // If the current date is less than the start date, this round is upcoming
+            return 'upcoming';
+        }
+        elseif($now->between($start, $end))
+        {
+            // If the current date is between the start and end date, this round is ongoing
+            return 'ongoing';
+        }
+        else
+        {
+            // Otherwise it must be over!
+            return 'ended';
+        }
+    }
 }

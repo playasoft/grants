@@ -350,7 +350,8 @@
             @endcan
         </div>
         <div class="clearfix visible-xs"></div>
-        @if($application->status == 'new' && env('ALLOW_SUBMISSION', true))
+
+        @if($application->status == 'new' && $application->round->status() == 'ongoing')
             {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
                 <p>
                     <b>
@@ -367,8 +368,6 @@
                 <button type="submit" class="btn btn-success">Submit Application</button>
             {!! Form::close() !!}
         @endif
-
-
 
         @can('approve-application')
             @if($application->judge_status == 'ready')

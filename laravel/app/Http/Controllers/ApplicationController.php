@@ -219,8 +219,8 @@ class ApplicationController extends Controller
             return redirect('/login');
         }
 
-        // If applications are no longer allowed to be submitted
-        if(!env('ALLOW_SUBMISSION', true))
+        // Prevent submitting applications when a round is not currently ongoing
+        if($application->round->status() != 'ongoing')
         {
             $request->session()->flash('error', 'Sorry, you missed the deadline for submitting your application.');
             return redirect('/');
