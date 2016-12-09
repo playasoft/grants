@@ -182,171 +182,179 @@
 
         <div class="{{ Auth::user()->role == 'applicant' ? '' : 'col-xs-4' }} h-scroll">
             @can('view-submitted-application')
-                <h2>Judge {{ Auth::user()->username ?: Auth::user()->name }} Score</h2>
+                @if($application->round->status() != 'ended')
+                    <div class="alert alert-info" role="alert">
+                        Please wait until the grant round is over before judging an application.
+                    </div>
+                @else
+                    <h2>Judge {{ Auth::user()->username ?: Auth::user()->name }} Score</h2>
 
-                <h3>Objective Criteria</h3>
+                    <h3>Objective Criteria</h3>
 
-                @foreach($criteria['objective'] as $objective)
-                    <?php
+                    @foreach($criteria['objective'] as $objective)
+                        <?php
 
-                    $score = false;
-                    $answer = false;
+                        $score = false;
+                        $answer = false;
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($scores[$objective->id]))
-                    {
-                        $score = $scores[$objective->id]->score;
-                        $answer = $scores[$objective->id]->answer;
-                    }
+                        // If this question has already been answered, use the update route instead of creating a new answer
+                        if(isset($scores[$objective->id]))
+                        {
+                            $score = $scores[$objective->id]->score;
+                            $answer = $scores[$objective->id]->answer;
+                        }
 
-                    ?>
+                        ?>
 
-                    {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
-                        <input type="hidden" name="application_id" value="{{ $application->id }}">
-                        <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
+                        {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
+                            <input type="hidden" name="application_id" value="{{ $application->id }}">
+                            <input type="hidden" name="criteria_id" value="{{ $objective->id }}">
 
-                        <div class="form-group">
-                            <label class="control-label">{{ $objective->question }}</label>
-                            <span class="pull-right"><span class="status"></span></span>
+                            <div class="form-group">
+                                <label class="control-label">{{ $objective->question }}</label>
+                                <span class="pull-right"><span class="status"></span></span>
 
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="1" {{ ($score == '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Yes
-                                            </label>
-                                        </div>
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="1" {{ ($score == '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Yes
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="-1" {{ ($score == '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
-                                            </label>
-                                        </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="-1" {{ ($score == '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="0" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> N/A
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td class="button" style="width:10%; line-height: 2.5em">
-                                        @if($objective->required)
-                                            <span class="information error">Required</span>
-                                        @else
-                                            <span class="information success">Optional</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    {!! Form::close() !!}
-                @endforeach
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="0" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> N/A
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td class="button" style="width:10%; line-height: 2.5em">
+                                            @if($objective->required)
+                                                <span class="information error">Required</span>
+                                            @else
+                                                <span class="information success">Optional</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {!! Form::close() !!}
+                    @endforeach
 
-                <hr>
+                    <hr>
 
-                <h3>Subjective Criteria</h3>
+                    <h3>Subjective Criteria</h3>
 
-                @foreach($criteria['subjective'] as $subjective)
-                    <?php
+                    @foreach($criteria['subjective'] as $subjective)
+                        <?php
 
-                    $score = false;
-                    $answer = false;
+                        $score = false;
+                        $answer = false;
 
-                    // If this question has already been answered, use the update route instead of creating a new answer
-                    if(isset($scores[$subjective->id]))
-                    {
-                        $score = $scores[$subjective->id]->score;
-                        $answer = $scores[$subjective->id]->answer;
-                    }
+                        // If this question has already been answered, use the update route instead of creating a new answer
+                        if(isset($scores[$subjective->id]))
+                        {
+                            $score = $scores[$subjective->id]->score;
+                            $answer = $scores[$subjective->id]->answer;
+                        }
 
-                    ?>
+                        ?>
 
-                    {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
-                        <input type="hidden" name="application_id" value="{{ $application->id }}">
-                        <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
+                        {!! Form::open(['url' => '/score', 'class' => 'ajax score']) !!}
+                            <input type="hidden" name="application_id" value="{{ $application->id }}">
+                            <input type="hidden" name="criteria_id" value="{{ $subjective->id }}">
 
-                        <div class="form-group">
-                            <label class="control-label">{{ $subjective->question }}</label>
-                            <span class="pull-right"><span class="status"></span></span>
+                            <div class="form-group">
+                                <label class="control-label">{{ $subjective->question }}</label>
+                                <span class="pull-right"><span class="status"></span></span>
 
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="2" {{ ($score == '2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Very
-                                            </label>
-                                        </div>
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="2" {{ ($score == '2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Very
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="1" {{ ($score == '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> A bit
-                                            </label>
-                                        </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="1" {{ ($score == '1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> A bit
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="0" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Meh
-                                            </label>
-                                        </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="0" {{ ($score == '0') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Meh
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="-1" {{ ($score == '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Not really
-                                            </label>
-                                        </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="-1" {{ ($score == '-1') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> Not really
+                                                </label>
+                                            </div>
 
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" name="score" value="-2" {{ ($score == '-2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
-                                            </label>
-                                        </div>
-                                    </td>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="score" value="-2" {{ ($score == '-2') ? 'checked' : '' }} {{ ($judged) ? 'disabled' : '' }}> No
+                                                </label>
+                                            </div>
+                                        </td>
 
-                                    <td class="button" style="width:10%; line-height: 2.5em">
-                                        @if($subjective->required)
-                                            <span class="information error">Required</span>
-                                        @else
-                                            <span class="information success">Optional</span>
-                                        @endif
-                                    </td>
+                                        <td class="button" style="width:10%; line-height: 2.5em">
+                                            @if($subjective->required)
+                                                <span class="information error">Required</span>
+                                            @else
+                                                <span class="information success">Optional</span>
+                                            @endif
+                                        </td>
 
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    {!! Form::close() !!}
-                @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" name="answer" placeholder="Explain your rating (optional)" value="{{ $answer or '' }}" {{ ($judged) ? 'disabled' : '' }}>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {!! Form::close() !!}
+                    @endforeach
+                @endif
             @endcan
             @can('score-application')
-                @if($judged)
-                    <p>
-                        Thanks for your help! (You've already submitted your scores for this applcation.)
-                    </p>
-
-                    <a href="/applications" class="btn btn-primary">View All Applications</a>
-                @else
-                    {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+                @if($application->round->status() == 'ended')
+                    @if($judged)
                         <p>
-                            <b>
-                                Warning! After submitting your ratings, you will not be able to make changes to your answers.<br>
-                                Please make sure everything is accurate before submitting.
-                            </b>
+                            Thanks for your help! (You've already submitted your scores for this applcation.)
                         </p>
 
-                        <button type="submit" class="btn btn-success">Submit Ratings</button>
-                    {!! Form::close() !!}
-                @endunless
+                        <a href="/applications" class="btn btn-primary">View All Applications</a>
+                    @else
+                        {!! Form::open(['url' => "applications/{$application->id}/judge"]) !!}
+                            <p>
+                                <b>
+                                    Warning! After submitting your ratings, you will not be able to make changes to your answers.<br>
+                                    Please make sure everything is accurate before submitting.
+                                </b>
+                            </p>
+
+                            <button type="submit" class="btn btn-success">Submit Ratings</button>
+                        {!! Form::close() !!}
+                    @endunless
+                @endif
             @endcan
         </div>
         <div class="clearfix visible-xs"></div>

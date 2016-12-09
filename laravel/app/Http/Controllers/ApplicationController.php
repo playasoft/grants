@@ -254,6 +254,12 @@ class ApplicationController extends Controller
         // Check if current user is allowed to score things
         $this->authorize('score-application');
 
+        if($application->round->status() != 'ended')
+        {
+            $request->session()->flash('error', 'Please wait until the grant round is over before judging an application.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
         if(!in_array($application->judge_status, ['new', 'ready']))
         {
             $request->session()->flash('error', 'This application has already been finalized.');

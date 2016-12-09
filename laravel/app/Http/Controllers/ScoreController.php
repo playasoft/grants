@@ -29,6 +29,12 @@ class ScoreController extends Controller
         $application = Application::find($input['application_id']);
         $criteria = Criteria::find($input['criteria_id']);
 
+        if($application->round->status() != 'ended')
+        {
+            $request->session()->flash('error', 'Please wait until the grant round is over before judging an application.');
+            return redirect('/applications/' . $application->id . '/review');
+        }
+
         // Make sure the application hasn't been finalized
         if(!in_array($application->judge_status, ['new', 'ready']))
         {
