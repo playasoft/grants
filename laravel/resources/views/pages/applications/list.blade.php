@@ -25,7 +25,7 @@
             @foreach($applications as $application)
                 <tr>
                     <td>
-                        @if(isset($application->round))
+                        @if($application->round_id)
                             {{ $application->round->name }}
                         @else
                             N/A
