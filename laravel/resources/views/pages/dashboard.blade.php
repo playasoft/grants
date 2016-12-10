@@ -1,3 +1,9 @@
+<?php
+
+$rounds = $ongoing->merge($upcoming);
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -6,6 +12,41 @@
         <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;">User Level: <b>{{ ucfirst(Auth::user()->role) }}</b></div>
     </h1>
     <hr>
+
+    @if($rounds->count())
+        <h2>Available Grant Rounds</h2>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="max-width:50%">Description</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($rounds->sortBy('start_date') as $round)
+                    <tr>
+                        <td>{{ $round->name }}</td>
+                        <td>{{ $round->description }}</td>
+                        <td>{{ $round->status() }}</td>
+                        <td>{{ $round->start_date }}</td>
+                        <td>{{ $round->end_date }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <hr>
+    @else
+        <p>
+            <b>Grant applications are currently closed.</b>
+            You may review your existing account, but no new applications can be created at this time.
+        </p>
+    @endif
 
     @if($applications->count())
         @if(in_array(Auth::user()->role, ['judge', 'observer']))
