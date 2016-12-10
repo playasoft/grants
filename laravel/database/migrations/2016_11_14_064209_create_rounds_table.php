@@ -25,11 +25,15 @@ class CreateRoundsTable extends Migration
             $table->timestamps();
         });
 
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
         Schema::table('applications', function (Blueprint $table)
         {
             $table->integer('round_id')->unsigned();
             $table->foreign('round_id')->references('id')->on('rounds');
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 
     /**
@@ -39,6 +43,8 @@ class CreateRoundsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
         Schema::table('applications', function (Blueprint $table)
         {
             $table->dropForeign('round_id');
@@ -46,5 +52,7 @@ class CreateRoundsTable extends Migration
         });
 
         Schema::drop('rounds');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
