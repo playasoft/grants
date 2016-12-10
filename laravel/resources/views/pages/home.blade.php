@@ -39,7 +39,7 @@ elseif($upcoming->count())
             </p>
         @else
             <p>
-                <b>Grant applications are featuredly closed.</b>
+                <b>Grant applications are currently closed.</b>
                 You may register for an account or log into your existing account, but no new applications can be created at this time.
             </p>
         @endif
