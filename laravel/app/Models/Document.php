@@ -30,29 +30,31 @@ class Document extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    // Document Upload Helper
+    // Helper function to make sure uploaded files have unique filenames
     public static function handleUpload($request)
     {
         $fileName = false;
         $destinationPath = public_path() . '/files/user';
 
-        // Save event image with a unique name
-        if($request->hasFile('document'))
+        if(!$request->hasFile('document'))
         {
-            // Create upload folder if it doesn't exist
-            if(!file_exists($destinationPath))
-            {
-                mkdir($destinationPath, 0755, true);
-            }
-
-            // Make sure the original filename is sanitized
-            $file = pathinfo($request->file('document')->getClientOriginalName());
-            $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
-
-            // Move file to uploads directory
-            $fileName = time() . '-' . $fileName;
-            $request->file('document')->move($destinationPath, $fileName);
+            $request->session()->flash('error', 'No file uploaded. Make sure you select a file to upload.');
+            return false;
         }
+
+        // Create upload folder if it doesn't exist
+        if(!file_exists($destinationPath))
+        {
+            mkdir($destinationPath, 0755, true);
+        }
+
+        // Make sure the original filename is sanitized
+        $file = pathinfo($request->file('document')->getClientOriginalName());
+        $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+
+        // Move file to uploads directory
+        $fileName = time() . '-' . $fileName;
+        $request->file('document')->move($destinationPath, $fileName);
 
         return
         [

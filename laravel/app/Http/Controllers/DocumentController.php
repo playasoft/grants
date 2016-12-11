@@ -40,14 +40,17 @@ class DocumentController extends Controller
             return redirect('/login');
         }
 
-        // Save uploaded file
+        // Try to save uploaded file
         $upload = Document::handleUpload($request);
 
-        // Save new document
-        Document::createDocument($application, $upload, null);
+        if($upload)
+        {
+            // Save new document
+            Document::createDocument($application, $upload, null);
 
-        $request->session()->flash('success', 'Your file has been added.');
+            $request->session()->flash('success', 'Your file has been added.');
+        }
+
         return redirect()->back();
-
     }
 }

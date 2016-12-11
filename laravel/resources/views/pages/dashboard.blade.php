@@ -14,7 +14,7 @@ $rounds = $ongoing->merge($upcoming);
     <hr>
 
     @if($rounds->count())
-        <h2>Available Grant Rounds</h2>
+        <h2>Current Grant Rounds</h2>
 
         <table class="table table-hover">
             <thead>
