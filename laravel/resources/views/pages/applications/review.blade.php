@@ -80,7 +80,7 @@
     <hr>
 
     <div class="row-fluid review">
-        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8' }} h-scroll">
+        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8 h-scroll' }}">
             @can('view-submitted-application')
                 <h2>Project Application </h2>
             @else
