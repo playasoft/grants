@@ -12,6 +12,7 @@ use App\Models\Criteria;
 use App\Models\Score;
 use App\Models\Judged;
 use App\Models\User;
+use App\Models\Round;
 
 use App\Http\Requests\ScoreRequest;
 use Illuminate\Support\Facades\Auth;
@@ -103,8 +104,9 @@ class ScoreController extends Controller
                 $appScores[$application->id][$criterion->id] = $criteriaScores[$criterion->id]['average'];
             }
         }
-        
-        return view('pages/scores/list', compact('applications', 'criteria', 'appScores'));
+
+        $rounds = Round::latest()->get();
+        return view('pages/scores/list', compact('applications', 'criteria', 'appScores', 'rounds'));
     }
 
     public function viewScore(Application $application)

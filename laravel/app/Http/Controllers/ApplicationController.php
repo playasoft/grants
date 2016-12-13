@@ -40,7 +40,8 @@ class ApplicationController extends Controller
                 return redirect('');
             }
 
-            return view('pages/applications/list', compact('applications'));
+            $rounds = Round::latest()->get();
+            return view('pages/applications/list', compact('applications', 'rounds'));
         }
         else
         {

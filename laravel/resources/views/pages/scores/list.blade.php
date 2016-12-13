@@ -4,27 +4,33 @@
     @can('view-submitted-application')
         <h1>All Applications Scores</h1>
         Average score for each criteria.
-        <hr>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                <th>Name</th>
-                    @foreach($criteria as $criterion)
-                        <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
-                    @endforeach
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach($applications as $application)
+        @foreach($rounds as $round)
+            <hr>
+            <h2> {{ $round->name }} </h2>
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                    <td><a href="/scores/{{ $application->id }}">{{ $application->name }}</a></td>
-                    @foreach($criteria as $criterion)
-                        <td>{{ round($appScores[$application->id][$criterion->id], 3) }}</td>
-                    @endforeach
+                    <th>Name</th>
+                        @foreach($criteria as $criterion)
+                            <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
+                        @endforeach
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    @foreach($applications as $application)
+                        @if($application->round_id == $round->id)
+                            <tr>
+                            <td><a href="/scores/{{ $application->id }}">{{ $application->name }}</a></td>
+                            @foreach($criteria as $criterion)
+                                <td>{{ round($appScores[$application->id][$criterion->id], 3) }}</td>
+                            @endforeach
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+        @endforeach
     @endcan
 @endsection
