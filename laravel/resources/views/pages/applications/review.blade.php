@@ -80,7 +80,7 @@
     <hr>
 
     <div class="row-fluid review">
-        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8' }} h-scroll">
+        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8 h-scroll' }}">
             @can('view-submitted-application')
                 <h2>Project Application </h2>
             @else
@@ -358,44 +358,45 @@
             @endcan
         </div>
         <div class="clearfix visible-xs"></div>
+        <div class="col-xs-12">
+            @if($application->status == 'new' && $application->round->status() == 'ongoing')
+                {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
+                    <p>
+                        <b>
+                            Warning! After submitting your application, you will not be able to make changes to your answers.
+                            Please make sure everything is accurate before submitting.
+                        </b>
+                    </p>
 
-        @if($application->status == 'new' && $application->round->status() == 'ongoing')
-            {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
-                <p>
-                    <b>
-                        Warning! After submitting your application, you will not be able to make changes to your answers.
-                        Please make sure everything is accurate before submitting.
-                    </b>
-                </p>
+                    <p>
+                        When your application is reviewed, you may be contacted with follow-up questions.
+                    </p>
 
-                <p>
-                    When your application is reviewed, you may be contacted with follow-up questions.
-                </p>
-
-                <a href="/applications/{{ $application->id }}" class="btn btn-primary">Make Changes</a>
-                <button type="submit" class="btn btn-success">Submit Application</button>
-            {!! Form::close() !!}
-        @endif
-
-        @can('approve-application')
-            @if($application->judge_status == 'ready')
-                <hr>
-
-                <p>
-                    <b>
-                        Warning! Approving or denying an application will notify the user who submitted it.<br>
-                        After the application is approved or denied, nobody will be able to submit new scores.
-                    </b>
-                </p>
-
-                {!! Form::open(['url' => "applications/{$application->id}/approve", 'style' => "display: inline-block"]) !!}
-                    <button type="submit" class="btn btn-success">Approve Application</button>
-                {!! Form::close() !!}
-
-                {!! Form::open(['url' => "applications/{$application->id}/deny", 'style' => "display: inline-block"]) !!}
-                    <button type="submit" class="btn btn-danger">Deny Application</button>
+                    <a href="/applications/{{ $application->id }}" class="btn btn-primary">Make Changes</a>
+                    <button type="submit" class="btn btn-success">Submit Application</button>
                 {!! Form::close() !!}
             @endif
-        @endcan
+
+            @can('approve-application')
+                @if($application->judge_status == 'ready')
+                    <hr>
+
+                    <p>
+                        <b>
+                            Warning! Approving or denying an application will notify the user who submitted it.<br>
+                            After the application is approved or denied, nobody will be able to submit new scores.
+                        </b>
+                    </p>
+
+                    {!! Form::open(['url' => "applications/{$application->id}/approve", 'style' => "display: inline-block"]) !!}
+                        <button type="submit" class="btn btn-success">Approve Application</button>
+                    {!! Form::close() !!}
+
+                    {!! Form::open(['url' => "applications/{$application->id}/deny", 'style' => "display: inline-block"]) !!}
+                        <button type="submit" class="btn btn-danger">Deny Application</button>
+                    {!! Form::close() !!}
+                @endif
+            @endcan
+        </div>
     </div>
 @endsection
