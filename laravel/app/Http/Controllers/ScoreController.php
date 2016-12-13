@@ -68,7 +68,7 @@ class ScoreController extends Controller
 
     public function listScores()
     {
-        $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+        $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('total_score', 'desc')->get();
         $criteria = Criteria::get();
         $appScores = []; // Store the average scores for each criterion of each application
 
