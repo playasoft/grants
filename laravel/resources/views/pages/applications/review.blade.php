@@ -80,7 +80,7 @@
     <hr>
 
     <div class="row-fluid review">
-        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8' }} h-scroll">
+        <div class="{{ Auth::user()->role == 'applicant' ? 'col-xs-12' : 'col-xs-8' }} y-scroll">
             @can('view-submitted-application')
                 <h2>Project Application </h2>
             @else
@@ -180,7 +180,7 @@
             <hr>
         </div>
 
-        <div class="{{ Auth::user()->role == 'applicant' ? '' : 'col-xs-4' }} h-scroll">
+        <div class="{{ Auth::user()->role == 'applicant' ? '' : 'col-xs-4' }} y-scroll">
             @can('view-submitted-application')
                 @if($application->round->status() != 'ended')
                     <div class="alert alert-info" role="alert">
