@@ -11,7 +11,10 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                        <th>Name</th>
+                            <th>Name</th>
+                            <th>Total Score</th>
+                            <th>Objective Score</th>
+                            <th>Subjective Score</th>
                             @foreach($criteria as $criterion)
                                 <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
                             @endforeach
@@ -23,6 +26,9 @@
                             @if($application->round_id == $round->id)
                                 <tr>
                                 <td><a href="/scores/{{ $application->id }}">{{ $application->name }}</a></td>
+                                <td>{{ $application->total_score }}</td>
+                                <td>{{ $application->objective_score }}</td>
+                                <td>{{ $application->subjective_score }}</td>
                                 @foreach($criteria as $criterion)
                                     <td>{{ round($appScores[$application->id][$criterion->id], 3) }}</td>
                                 @endforeach
