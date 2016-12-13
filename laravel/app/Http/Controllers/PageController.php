@@ -30,15 +30,16 @@ class PageController extends Controller
             {
                 $applications = $this->auth->user()->applications;
             }
-            
-            return view('pages/dashboard', compact('applications', 'ongoing', 'upcoming'));
+
+            $rounds = Round::get();
+            return view('pages/dashboard', compact('applications', 'ongoing', 'upcoming', 'rounds'));
         }
         else
         {
             return view('pages/home', compact('ongoing', 'upcoming'));
         }
     }
-    
+
     // General purpose function for displaying views
     public function view(Request $request)
     {

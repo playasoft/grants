@@ -1,6 +1,6 @@
 <?php
 
-$rounds = $ongoing->merge($upcoming);
+$showrounds = $ongoing->merge($upcoming);
 
 ?>
 
@@ -13,7 +13,7 @@ $rounds = $ongoing->merge($upcoming);
     </h1>
     <hr>
 
-    @if($rounds->count())
+    @if($showrounds->count())
         <h2>Current Grant Rounds</h2>
 
         <table class="table table-hover">
@@ -28,7 +28,7 @@ $rounds = $ongoing->merge($upcoming);
             </thead>
 
             <tbody>
-                @foreach($rounds->sortBy('start_date') as $round)
+                @foreach($showrounds->sortBy('start_date') as $round)
                     <tr>
                         <td>{{ $round->name }}</td>
                         <td>{{ $round->description }}</td>
@@ -54,34 +54,40 @@ $rounds = $ongoing->merge($upcoming);
         @else
             <h2>Your Applications</h2>
         @endif
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Last Modified</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach($applications as $application)
+        @foreach($rounds as $round)
+            <hr>
+            <h3> {{ $round->name }} </h3>
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                        <td>
-                            @if($application->status == 'new')
-                                <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
-                            @else
-                                <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
-                            @endif
-                        </td>
-                        <td>{{ $application->status }}</td>
-                        <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
-                        <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Last Modified</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    @foreach($applications as $application)
+                        @if($application->round_id == $round->id)
+                            <tr>
+                                <td>
+                                    @if($application->status == 'new')
+                                        <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
+                                    @else
+                                        <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
+                                    @endif
+                                </td>
+                                <td>{{ $application->status }}</td>
+                                <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
+                                <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+        @endforeach
     @else
         @if(in_array(Auth::user()->role, ['judge', 'observer']))
             <div class="general-alert alert alert-info" role="alert">
