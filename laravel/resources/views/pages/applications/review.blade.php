@@ -377,6 +377,19 @@
                 {!! Form::close() !!}
             @endif
 
+            @if($application->status != 'new' && $application->round->status() == 'ongoing')
+                {!! Form::open(['url' => "applications/{$application->id}/withdraw"]) !!}
+                    <p>
+                        <b>
+                            Warning! After withdrawing your application, your application will not judged.
+                            You may make changes and re-submit as long as the round is open.
+                        </b>
+                    </p>
+
+                    <button type="submit" class="btn btn-warning">Withdraw (Un-Submit) Application</button>
+                {!! Form::close() !!}
+            @endif
+
             @can('approve-application')
                 @if($application->judge_status == 'ready')
                     <hr>
