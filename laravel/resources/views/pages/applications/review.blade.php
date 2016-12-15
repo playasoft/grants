@@ -353,7 +353,7 @@
 
                             <button type="submit" class="btn btn-success">Submit Ratings</button>
                         {!! Form::close() !!}
-                    @endunless
+                    @endif
                 @endif
             @endcan
         </div>
