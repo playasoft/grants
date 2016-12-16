@@ -248,6 +248,34 @@ class ApplicationController extends Controller
         return redirect('/');
     }
 
+    // This function is called when a user withdraw their application
+    // They may withdraw during or after the round has ended (but before it is finalized)
+    // TODO - add withdrawn to the status field migration.
+    public function withdrawApplication(Application $application, Request $request)
+    {
+        // Did the current user create this application?
+        if($application->user->id != Auth::user()->id)
+        {
+            $request->session()->flash('error', 'Only the person who created an application may witdraw it.');
+            return redirect('/login');
+        }
+
+        if($application->status != 'submitted')
+        {
+            $request->session()->flash('error', 'Your application is not submitted, thus you do not need to withdraw it.');
+            return redirect('/applications/' . $application->id );
+        }
+
+        $application->status = 'new'; // TODO 'withdawn';
+        $application->save();
+
+        // Send notification to judges? Does it matter if a judge knows it is withdrawn?
+        // event(new ApplicationSubmitted($application));
+
+        $request->session()->flash('success', 'Warning! Your application has been withdrawn. It will not be judged. You must submit it to be reviewed by our judges.');
+        return redirect('/');
+    }
+
     // This function is called when a judge submits their scores for an application
     public function judgeApplication(Application $application, Request $request)
     {

@@ -353,7 +353,7 @@
 
                             <button type="submit" class="btn btn-success">Submit Ratings</button>
                         {!! Form::close() !!}
-                    @endunless
+                    @endif
                 @endif
             @endcan
         </div>
@@ -374,6 +374,19 @@
 
                     <a href="/applications/{{ $application->id }}" class="btn btn-primary">Make Changes</a>
                     <button type="submit" class="btn btn-success">Submit Application</button>
+                {!! Form::close() !!}
+            @endif
+
+            @if($application->status != 'new' && $application->round->status() == 'ongoing')
+                {!! Form::open(['url' => "applications/{$application->id}/withdraw"]) !!}
+                    <p>
+                        <b>
+                            Warning! After withdrawing your application, your application will not judged.
+                            You may make changes and re-submit as long as the round is open.
+                        </b>
+                    </p>
+
+                    <button type="submit" class="btn btn-warning">Withdraw (Un-Submit) Application</button>
                 {!! Form::close() !!}
             @endif
 
