@@ -60,3 +60,11 @@ textarea {
 td, th {
     max-width: 20em;
 }
+
+.table-hover tbody tr:hover td {
+    background: #ffff99;
+}
+
+.scrollable {
+    overflow: auto;
+}

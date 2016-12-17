@@ -28,11 +28,11 @@ class ApplicationController extends Controller
         {
             if(in_array($this->auth->user()->role, ['admin']))
             {
-                $applications = Application::orderBy('updated_at', 'desc')->get();
+                $applications = Application::orderBy('total_score', 'desc')->get();
             }
             elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'desc')->get();
+                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('total_score', 'desc')->get();
             }
             else
             {
@@ -40,7 +40,8 @@ class ApplicationController extends Controller
                 return redirect('');
             }
 
-            return view('pages/applications/list', compact('applications'));
+            $rounds = Round::latest()->get();
+            return view('pages/applications/list', compact('applications', 'rounds'));
         }
         else
         {
