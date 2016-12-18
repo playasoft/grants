@@ -23,10 +23,13 @@ class ApplicationRequest extends Request
      */
     public function rules()
     {
+        $moneyFormat = 'regex:/^\$?[0-9.,]+$/';
+
         return
         [
             'name' => "required|min:3",
             'description' => "required|min:100",
+            'budget' => "required|" . $moneyFormat,
         ];
     }
 }
