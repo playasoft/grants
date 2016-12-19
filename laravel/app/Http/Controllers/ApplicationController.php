@@ -43,7 +43,7 @@ class ApplicationController extends Controller
                 return redirect('');
             }
 
-            $rounds = Round::latest()->get();
+            $rounds = Round::orderBy('start_date', 'desc')->get();
             return view('pages/applications/list', compact('applications', 'rounds'));
         }
         else

@@ -31,7 +31,7 @@ class PageController extends Controller
                 $applications = $this->auth->user()->applications;
             }
 
-            $rounds = Round::get();
+            $rounds = Round::orderBy('start_date', 'desc')->get();
             return view('pages/dashboard', compact('applications', 'ongoing', 'upcoming', 'rounds'));
         }
         else
