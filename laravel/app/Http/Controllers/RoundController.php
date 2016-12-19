@@ -9,15 +9,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Round;
 use App\Http\Requests\RoundRequest;
-
+use App\Misc\Helper;
 
 class RoundController extends Controller
 {
-    private function filterFloat($input)
-    {
-        return filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    }
-
     function listRounds()
     {
         $rounds = Round::latest()->get();
@@ -32,9 +27,9 @@ class RoundController extends Controller
         $input = $request->all();
 
         // TODO: Is there a better way to do this automatically?
-        $input['budget'] = $this->filterFloat($input['budget']);
-        $input['min_request_amount'] = $this->filterFloat($input['min_request_amount']);
-        $input['max_request_amount'] = $this->filterFloat($input['max_request_amount']);
+        $input['budget'] = Helper::filterFloat($input['budget']);
+        $input['min_request_amount'] = Helper::filterFloat($input['min_request_amount']);
+        $input['max_request_amount'] = Helper::filterFloat($input['max_request_amount']);
         $round = Round::create($input);
 
         $request->session()->flash('success', 'Your round has been created.');
@@ -54,9 +49,9 @@ class RoundController extends Controller
         $input = $request->all();
 
         // TODO: Is there a better way to do this automatically?
-        $input['budget'] =  $this->filterFloat($input['budget']);
-        $input['min_request_amount'] = $this->filterFloat($input['min_request_amount']);
-        $input['max_request_amount'] = $this->filterFloat($input['max_request_amount']);
+        $input['budget'] =  Helper::filterFloat($input['budget']);
+        $input['min_request_amount'] = Helper::filterFloat($input['min_request_amount']);
+        $input['max_request_amount'] = Helper::filterFloat($input['max_request_amount']);
 
         $round->update($input);
 

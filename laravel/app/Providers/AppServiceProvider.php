@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+use App\Misc\Helper;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -49,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
             
             return false;
         });
+
+        
 
         // Define polymorphic relationship models
         Relation::morphMap(

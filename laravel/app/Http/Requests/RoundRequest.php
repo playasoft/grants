@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Misc\Helper;
 
 class RoundRequest extends Request
 {
@@ -23,15 +24,13 @@ class RoundRequest extends Request
      */
     public function rules()
     {
-        $moneyFormat = 'regex:/^\$?[0-9.,]+$/';
-        
         return
         [
             'name' => 'required',
             'description' => 'required|min:50',
-            'budget' => $moneyFormat,
-            'min_request_amount' => $moneyFormat,
-            'max_request_amount' => $moneyFormat,
+            'budget' => Helper::$moneyFormat,
+            'min_request_amount' => Helper::$moneyFormat,
+            'max_request_amount' => Helper::$moneyFormat,
             'start_date' => 'required|date_format:Y-m-d',
             'end_date' => 'required|date_format:Y-m-d'
         ];

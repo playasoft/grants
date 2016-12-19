@@ -19,9 +19,11 @@ use App\Models\Round;
 use App\Http\Requests\ApplicationRequest;
 use App\Events\ApplicationSubmitted;
 use App\Events\ApplicationChanged;
+use App\Misc\Helper;
 
 class ApplicationController extends Controller
 {
+
     public function listApplications()
     {
         if($this->auth->check())
@@ -64,15 +66,32 @@ class ApplicationController extends Controller
             return redirect('/');
         }
 
-        // Generate a new application, assign required information
+        // Get user input
+        $input = $request->all();
+        $input['budget'] = Helper::filterFloat($input['budget']);
+
+        $current = $ongoing->first();
+
+        if($current->min_request_amount && $input['budget'] < $current->min_request_amount)
+        {
+            $request->session()->flash('error', 'Your application budget is lower than the minimum for this grant round.');
+            return redirect()->back();
+        }
+
+        if($current->max_request_amount && $input['budget'] > $current->max_request_amount)
+        {
+            $request->session()->flash('error', 'Your application budget is higher than the maximum for this grant round.');
+            return redirect()->back();
+        }
+
+        // Generate a new application, assign non-fillable information
         $application = new Application;
         $application->status = "new";
         $application->user_id = Auth::user()->id;
-        $application->round_id = $ongoing->first()->id;
+        $application->round_id = $current->id;
         $application->save();
 
-        // Assign user input
-        $input = $request->all();
+        // Save user input
         $application->update($input);
 
         $request->session()->flash('success', 'Your application has been created.');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Misc\Helper;
 
 class ApplicationRequest extends Request
 {
@@ -23,13 +24,11 @@ class ApplicationRequest extends Request
      */
     public function rules()
     {
-        $moneyFormat = 'regex:/^\$?[0-9.,]+$/';
-
         return
         [
             'name' => "required|min:3",
             'description' => "required|min:100",
-            'budget' => "required|" . $moneyFormat,
+            'budget' => "required|" . Helper::$moneyFormat,
         ];
     }
 }
