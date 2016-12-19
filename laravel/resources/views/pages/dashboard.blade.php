@@ -61,6 +61,7 @@ $showrounds = $ongoing->merge($upcoming);
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Budget</th>
                         <th>Status</th>
                         <th>Created</th>
                         <th>Last Modified</th>
@@ -78,6 +79,7 @@ $showrounds = $ongoing->merge($upcoming);
                                         <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
                                     @endif
                                 </td>
+                                <td>${{ $application->budget }}</td>
                                 <td>{{ $application->status }}</td>
                                 <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
                                 <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>

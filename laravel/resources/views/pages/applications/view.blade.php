@@ -25,9 +25,9 @@
         @include('partials/form/text',
         [
             'name' => 'budget',
-            'label' => 'Budget',
+            'label' => 'Requested funds',
             'placeholder' => "$1337",
-            'help' => "The maximum amount of your request",
+            'help' => "The maximum amount your project needs",
             'value' => '$' . $application->budget
         ])
     {!! Form::close() !!}
