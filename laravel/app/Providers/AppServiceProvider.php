@@ -52,8 +52,6 @@ class AppServiceProvider extends ServiceProvider
             return false;
         });
 
-        
-
         // Define polymorphic relationship models
         Relation::morphMap(
         [

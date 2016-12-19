@@ -20,6 +20,7 @@ use App\Http\Requests\ApplicationRequest;
 use App\Events\ApplicationSubmitted;
 use App\Events\ApplicationChanged;
 use App\Misc\Helper;
+use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
 {
@@ -66,22 +67,24 @@ class ApplicationController extends Controller
             return redirect('/');
         }
 
+        // Get the current grant round
+        $current = $ongoing->first();
+
         // Get user input
         $input = $request->all();
         $input['budget'] = Helper::filterFloat($input['budget']);
 
-        $current = $ongoing->first();
-
-        if($current->min_request_amount && $input['budget'] < $current->min_request_amount)
+        if($current->min_request_amount || $current->max_request_amount)
         {
-            $request->session()->flash('error', 'Your application budget is lower than the minimum for this grant round.');
-            return redirect()->back();
-        }
+            $validator = Validator::make($input,
+            [
+                'budget' => "numeric|min:{$current->min_request_amount}|max:{$current->max_request_amount}"
+            ]);
 
-        if($current->max_request_amount && $input['budget'] > $current->max_request_amount)
-        {
-            $request->session()->flash('error', 'Your application budget is higher than the maximum for this grant round.');
-            return redirect()->back();
+            if($validator->fails())
+            {
+                return redirect()->back()->withErrors($validator)->withInput($request->all());
+            }
         }
 
         // Generate a new application, assign non-fillable information
@@ -156,6 +159,8 @@ class ApplicationController extends Controller
         }
 
         $input = $request->all();
+        $input['budget'] = Helper::filterFloat($input['budget']);
+
         $application->update($input);
 
         $request->session()->flash('success', 'Your application has been updated.');
