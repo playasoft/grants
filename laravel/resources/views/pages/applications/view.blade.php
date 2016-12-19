@@ -21,6 +21,15 @@
             'placeholder' => "We are creating an interactive life size anamatronic pony you can climb inside of and really learn what it's like to be equine. Also the whole thing is covered in blinky lights. You've probably never seen this many LEDs in your life!",
             'value' => $application->description
         ])
+
+        @include('partials/form/text',
+        [
+            'name' => 'budget',
+            'label' => 'Budget',
+            'placeholder' => "$1337",
+            'help' => "The maximum amount of your request",
+            'value' => '$' . $application->budget
+        ])
     {!! Form::close() !!}
 
     <hr>

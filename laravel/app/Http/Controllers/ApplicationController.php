@@ -74,6 +74,7 @@ class ApplicationController extends Controller
         $input = $request->all();
         $input['budget'] = Helper::filterFloat($input['budget']);
 
+        // Validate requested budget against the current round settings
         if($current->min_request_amount || $current->max_request_amount)
         {
             $validator = Validator::make($input,
@@ -158,8 +159,35 @@ class ApplicationController extends Controller
             return redirect('/applications/' . $application->id . '/review');
         }
 
+        // Only allow applications to be created if there is an ongoing funding round
+        $ongoing = Round::ongoing();
+
+        if(!$ongoing->count())
+        {
+            $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
+            return redirect('/');
+        }
+
+        // Get the current grant round
+        $current = $ongoing->first();
+
+        // Get user input
         $input = $request->all();
         $input['budget'] = Helper::filterFloat($input['budget']);
+
+        // Validate requested budget against the current round settings
+        if($current->min_request_amount || $current->max_request_amount)
+        {
+            $validator = Validator::make($input,
+            [
+                'budget' => "numeric|min:{$current->min_request_amount}|max:{$current->max_request_amount}"
+            ]);
+
+            if($validator->fails())
+            {
+                return redirect()->back()->withErrors($validator)->withInput($request->all());
+            }
+        }
 
         $application->update($input);
 
