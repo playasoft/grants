@@ -2,6 +2,15 @@
 
 @section('content')
     <h1>Edit Your Application</h1>
+    <p>Problem? Email <a href="mailto:grants@apogaea.com">grants@apogaea.com</a>!</p>
+    <hr>
+
+    <h3>Recomended Reading</h3>
+    <ul>
+        <li><a href="http://apogaea.com/art-installations/creativegrants/#FAQ">21 hints for writing a winning grant application.</a>
+             (PRO TIP: Pay attention to <a href="http://apogaea.com/art-installations/creativegrants/#Ques19">#19<a>
+                  and <a href="http://apogaea.com/art-installations/creativegrants/#Ques21">#21</a>< in particular!)</li>
+    </ul>
     <hr>
 
     <h2>Basic Information</h2>
@@ -34,7 +43,12 @@
 
     <hr>
 
-    <h2>Questions About Your Project</h2>
+    <h2>Project Details</h2>
+    <p>
+        Specific details regarding your project. Note the details below each question.
+        Refer to the tips at the top of the page,
+    </p>
+    <br>
 
     @foreach($questions as $question)
         @include('partials/applications/question-form')

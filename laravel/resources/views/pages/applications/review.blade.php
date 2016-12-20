@@ -9,7 +9,7 @@
         @endif
          - {{ $application->name }}
     </h1>
-
+    <p>Problem? Email <a href="mailto:grants@apogaea.com">grants@apogaea.com</a>!</p>
     <hr>
 
     @can('view-submitted-application')
