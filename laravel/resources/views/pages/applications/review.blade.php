@@ -176,8 +176,13 @@
                 <div>
                     <span class="btn btn-primary btn-file">
                         <input type="file" name="document">
-                        <button type="submit" class="btn btn-success">Upload</button>
                     </span>
+
+                    <button type="submit" class="btn btn-success">Upload</button>
+
+                    <p>
+                        Note: Maximum upload size is <?php echo ini_get('upload_max_filesize'); ?>B per file
+                    </p>
                 </div>
             {!! Form::close() !!}
             <hr>
