@@ -1,6 +1,8 @@
 @extends('app')
 
 @section('content')
+    @include('partials/applications/round-ending-notification')
+
     <h1>
         @if($application->status == 'new')
             Review Before Submitting

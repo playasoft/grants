@@ -1,6 +1,8 @@
 @extends('app')
 
 @section('content')
+    @include('partials/applications/round-ending-notification')
+
     <h1>Edit Your Application</h1>
     <p>Problem? Email <a href="mailto:grants@apogaea.com">grants@apogaea.com</a>!</p>
     <hr>
