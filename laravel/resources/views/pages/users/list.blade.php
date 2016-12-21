@@ -22,7 +22,7 @@
                 <tr>
                     <td><a href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
                     <td>{{ $user->data->burner_name or ''}}</td>
-                    <td>{{ $user->email }}</td>
+                    <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                     <td>{{ $user->role }}</td>
                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
                     @if(in_array(Auth::user()->role, ['admin']))

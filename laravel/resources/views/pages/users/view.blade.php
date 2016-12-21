@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-sm-2 title">Email</div>
-            <div class="col-sm-10 value">{{ $user->email }}</div>
+            <div class="col-sm-10 value"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
         </div>
 
         <div class="row">
