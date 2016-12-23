@@ -8,7 +8,7 @@ $endDate->addHours(23)->addMinutes(59)->addSeconds(59);
 
 // Defaults
 $class = "alert-warning";
-$message = "<b>Notice:</b> There's only %s day%s until the current grant round ends.";
+$message = "<b>Notice:</b> There's only <span class='time-remaining'>%s day%s</span> until the current grant round ends.";
 $value = $endDate->diffInDays(Carbon::now());
 $plural = "s";
 
@@ -16,13 +16,13 @@ $plural = "s";
 if($endDate->diffInHours(Carbon::now()) < 1)
 {
     $class = "alert-danger";
-    $message = "<b>RED ALERT!</b> There's only %s minute%s until the current grant round ends.";
+    $message = "<b>RED ALERT!</b> There's only <span class='time-remaining'>%s minute%s</span> until the current grant round ends.";
     $value = $endDate->diffInMinutes(Carbon::now()); 
 }
 elseif($endDate->diffInDays(Carbon::now()) < 1)
 {
     $class = "alert-danger";
-    $message = "<b>Warning:</b> There's only %s hour%s until the current grant round ends.";
+    $message = "<b>Warning:</b> There's only <span class='time-remaining'>%s hour%s</span> until the current grant round ends.";
     $value = $endDate->diffInHours(Carbon::now());
 }
 
@@ -47,7 +47,7 @@ $message = sprintf($message, $value, $plural);
 ?>
 
 @if($application->round->status() == "ongoing" && $endDate->diffInDays(Carbon::now()) <= 7)
-    <div class="general-alert alert {{ $class }}" role="alert">
+    <div class="round-ending general-alert alert {{ $class }}" role="alert" data-seconds="{{ $endDate->diffInSeconds(Carbon::now()) }}">
         {!! $message !!}
     </div>
 @endif
