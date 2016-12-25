@@ -10,8 +10,9 @@
     <h3>Recomended Reading</h3>
     <ul>
         <li><a href="http://apogaea.com/art-installations/creativegrants/#FAQ">21 hints for writing a winning grant application.</a>
-             (PRO TIP: Pay attention to <a href="http://apogaea.com/art-installations/creativegrants/#Ques19">#19<a>
-                  and <a href="http://apogaea.com/art-installations/creativegrants/#Ques21">#21</a>< in particular!)</li>
+             (PRO TIP: Pay attention to <a href="http://apogaea.com/art-installations/creativegrants/#Ques19">#19</a>
+                  and <a href="http://apogaea.com/art-installations/creativegrants/#Ques21">#21</a>in particular!)
+        </li>
     </ul>
     <hr>
 

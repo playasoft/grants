@@ -61,11 +61,16 @@ $showrounds = $ongoing->merge($upcoming);
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Applicant</th>
+                        @can('view-submitted-application')
+                            <th>Applicant</th>
+                        @endcan
                         <th>Budget</th>
                         <th>Status</th>
                         <th>Created</th>
                         <th>Last Modified</th>
+                        @if(Auth::user()->role == 'applicant')
+                            <th>&nbsp;</th>
+                        @endif
                     </tr>
                 </thead>
 
@@ -80,11 +85,22 @@ $showrounds = $ongoing->merge($upcoming);
                                         <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
                                     @endif
                                 </td>
-                                <td><a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a></td>
+                                @can('view-submitted-application')
+                                    <td><a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a></td>
+                                @endcan
                                 <td>${{ $application->budget }}</td>
                                 <td>{{ $application->status }}</td>
                                 <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
                                 <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
+                                @if(Auth::user()->role == 'applicant')
+                                    <td>
+                                        @if($application->status == 'new')
+                                            <a href="/applications/{{ $application->id }}" class="btn btn-primary">Edit</a>
+                                        @else
+                                            <a href="/applications/{{ $application->id }}/withdraw" class="btn btn-warning">Withdraw</a>
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @endif
                     @endforeach
