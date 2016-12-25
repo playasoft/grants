@@ -27,6 +27,16 @@
                 <div class="col-sm-2 title">Email</div>
                 <div class="col-sm-10 value">{{ $application->user->email }}</div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-2 title">Burner Name</div>
+                <div class="col-sm-10 value">{{ $application->user->data->burner_name or 'Not Provided' }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2 title">Real Name</div>
+                <div class="col-sm-10 value">{{ $application->user->data->real_name or 'Not Provided' }}</div>
+            </div>
         </div>
 
         <hr>
