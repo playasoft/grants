@@ -383,9 +383,13 @@
                 {!! Form::open(['url' => "applications/{$application->id}/submit"]) !!}
                     <p>
                         <b>
-                            Warning! After submitting your application, you will not be able to make changes to your answers.
-                            Please make sure everything is accurate before submitting.
+                            Warning! Your application will not be reviewed by our judges unless it is submitted.
+                            After submitting your application, you will not be able to make changes to your answers.
                         </b>
+                    </p>
+
+                    <p>
+                        If you need to make any changes to a submitted application, you will be able to withdraw (un-submit) your application as long as the round is open.
                     </p>
 
                     <p>
