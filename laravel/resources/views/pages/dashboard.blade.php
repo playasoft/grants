@@ -97,7 +97,9 @@ $showrounds = $ongoing->merge($upcoming);
                                         @if($application->status == 'new')
                                             <a href="/applications/{{ $application->id }}" class="btn btn-primary">Edit</a>
                                         @else
-                                            <a href="/applications/{{ $application->id }}/withdraw" class="btn btn-warning">Withdraw</a>
+                                            {!! Form::open(['url' => "applications/{$application->id}/withdraw"]) !!}
+                                                <button type="submit" class="btn btn-warning">Withdraw</button>
+                                            {!! Form::close() !!}
                                         @endif
                                     </td>
                                 @endif
