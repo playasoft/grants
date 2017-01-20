@@ -371,7 +371,8 @@
                                 </b>
                             </p>
 
-                            <button type="submit" class="btn btn-success">Submit Ratings</button>
+                            <button type="submit" name='judged' class="btn btn-success">Submit Ratings</button>
+                            <button type="submit" name='abstain'class="btn btn-warning">Abstain</button>
                         {!! Form::close() !!}
                     @endif
                 @endif

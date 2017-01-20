@@ -77,7 +77,7 @@ class ScoreController extends Controller
         {
             $scores = Score::where('scores.application_id', $application->id)->join('judged', function($join)
             {
-                $join->on('judged.user_id', '=', 'scores.user_id')->on('judged.application_id', '=', 'scores.application_id');
+                $join->on('judged.user_id', '=', 'scores.user_id')->on('judged.application_id', '=', 'scores.application_id')->where('judged.status', '!=', 'abstain');
             })->get();
 
             $criteriaScores = [];
@@ -119,10 +119,18 @@ class ScoreController extends Controller
         foreach ($judges as $judge)
         {
             $scores = $application->scores()->where('user_id', $judge->id)->get();
-           
+            // Make sure this user hasn't already submitted their scores
+            $judged = Judged::where(['application_id' => $application->id, 'user_id' => $judge->id])->get()->first();
+
             foreach($scores as $score)
             {
-                $judgeScores[$judge->id][$score->criteria_id] = $score->score;
+                if(empty($judged)) {
+                    $judgeScores[$judge->id][$score->criteria_id] = 'NS';
+                } elseif($judged->status == 'abstain') {
+                    $judgeScores[$judge->id][$score->criteria_id] = 'AB';
+                } else {
+                    $judgeScores[$judge->id][$score->criteria_id] = $score->score;
+                }
             }
         }
 
