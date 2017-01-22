@@ -132,7 +132,7 @@ class ApplicationController extends Controller
         }
 
         $questions = Question::get();
-        
+
         // Generate an array of answers based on their associated question ID
         $answers = [];
 
@@ -214,10 +214,10 @@ class ApplicationController extends Controller
             'objective' => Criteria::where('type', 'objective')->get(),
             'subjective' => Criteria::where('type', 'subjective')->get(),
         ];
-        
+
         // Generate an array of answers based on their associated question ID
         $answers = [];
-        
+
         foreach($application->answers as $answer)
         {
             $answers[$answer->question_id] = $answer;
@@ -360,6 +360,11 @@ class ApplicationController extends Controller
             $judged = new Judged;
             $judged->application_id = $application->id;
             $judged->user_id = Auth::user()->id;
+            if ($request->exists('abstain')){
+                $judged->status = 'abstain';
+            }else {
+                $judged->status = 'judged';
+            }
             $judged->save();
 
             // Compare the total number of judges vs number of judges who have scored this application
