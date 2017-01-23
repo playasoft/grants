@@ -5,8 +5,8 @@ namespace App\Listeners;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
 use App\Models\User;
+use App\Models\Notification;
 
 class QueueJudgeMessage
 {
@@ -44,13 +44,51 @@ class QueueJudgeMessage
 
     private function applicationSubmitted($event)
     {
-        $user = $event->application->user;
+        $user_from = $event->application->user;
         $application = $event->application;
+        $options =
+        [
+            'event' => 'ApplicationSubmitted',
+            'application' => $application->id,
+        ];
+
+        // Loop through all judges and queue a notification for them
+        $judges = User::whereIn('role', ['judge', 'observer'])->get();
+
+        foreach($judges as $judge)
+        {
+            Notification::queue($judge, 'email', $options, $user_from);
+        }
     }
 
     private function feedbackChanged($event)
     {
         $feedback = $event->feedback;
         $change = $event->change;
+        $options =
+        [
+            'feedback' => $feedback->id,
+        ];
+
+        if($change['status'] == 'created')
+        {
+            // When the feedback is created, set "user_from" to be the judge that created the feedback
+            $user_from = $event->feedback->user;
+            $options['event'] = 'FeedbackCreated';
+        }
+        else
+        {
+            // When the feedback is updated, set "user_from" to be the user that responded
+            $user_from = $event->feedback->application->user;
+            $options['event'] = 'FeedbackUpdated';
+        }
+
+        // Loop through all judges and queue a notification for them
+        $judges = User::whereIn('role', ['judge', 'observer'])->get();
+
+        foreach($judges as $judge)
+        {
+            Notification::queue($judge, 'email', $options, $user_from);
+        }
     }
 }

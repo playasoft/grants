@@ -5,8 +5,8 @@ namespace App\Listeners;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
 use App\Models\User;
+use App\Models\Notification;
 
 class QueueUserMessage
 {
@@ -43,7 +43,22 @@ class QueueUserMessage
 
     private function feedbackChanged($event)
     {
+        $user = $event->feedback->application->user;
         $feedback = $event->feedback;
         $change = $event->change;
+
+        // Only notify users when feedback is initially created
+        if($change['status'] == 'created')
+        {
+            // The feedback user is the judge that requested it
+            $user_from = $event->feedback->user;
+            $options =
+            [
+                'feedback' => $feedback->id,
+                'event' => 'FeedbackCreated',
+            ];
+
+            Notification::queue($user, 'email', $options, $user_from);
+        }
     }
 }
