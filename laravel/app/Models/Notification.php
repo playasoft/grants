@@ -20,6 +20,17 @@ class Notification extends Model
 
     public static function send(User $user_to, $type, $metadata, User $user_from = null)
     {
+        // Email template variables
+        $templateVars = ['user' => $user_to];
+
+        // Check if any template variables were set in the metadata
+        if(isset($metadata['template-vars']))
+        {
+            // Prevent template vars from being saved in the database
+            $templateVars = array_merge($templateVars, $metadata['template-vars']);
+            unset($metadata['template-vars']);
+        }
+
         $notification = new Notification;
         $notification->type = $type;
         $notification->status = 'new';
@@ -30,7 +41,7 @@ class Notification extends Model
 
         if($type == 'email')
         {
-            Mail::send($metadata['template'], ['user' => $user_to], function ($message) use ($user_to, $metadata)
+            Mail::send($metadata['template'], $templateVars, function ($message) use ($user_to, $metadata)
             {
                 $message->to($user_to->email, $user_to->name)->subject($metadata['subject']);
             });

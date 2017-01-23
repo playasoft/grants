@@ -63,7 +63,8 @@ class SendUserMessage
         $options =
         [
             'template' => 'emails/user-application-submitted',
-            'subject' => 'You Submitted an Application'
+            'template-vars' => compact('application'),
+            'subject' => 'You Submitted an Application',
         ];
 
         Notification::send($user, 'email', $options);
@@ -89,7 +90,8 @@ class SendUserMessage
             $options =
             [
                 'template' => 'emails/user-application-' . $application->status,
-                'subject' => $subject
+                'template-vars' => compact('application'),
+                'subject' => $subject,
             ];
 
             Notification::send($user, 'email', $options);
