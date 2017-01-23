@@ -5,8 +5,8 @@ namespace App\Listeners;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
 use App\Models\User;
+use App\Models\Notification;
 
 class SendUserMessage
 {
@@ -47,22 +47,26 @@ class SendUserMessage
     private function userRegistered($event)
     {
         $user = $event->user;
+        $options =
+        [
+            'template' => 'emails/user-welcome',
+            'subject' => 'Welcome to Weightlifter!'
+        ];
 
-        Mail::send('emails/user-welcome', compact('user'), function ($message) use ($user)
-        {
-            $message->to($user->email, $user->name)->subject('Welcome to Weightlifter!');
-        });
+        Notification::send($user, 'email', $options);
     }
 
     private function applicationSubmitted($event)
     {
         $user = $event->application->user;
         $application = $event->application;
+        $options =
+        [
+            'template' => 'emails/user-application-submitted',
+            'subject' => 'You Submitted an Application'
+        ];
 
-        Mail::send('emails/user-application-submitted', compact('user', 'application'), function ($message) use ($user)
-        {
-            $message->to($user->email, $user->name)->subject('You Submitted an Application');
-        });
+        Notification::send($user, 'email', $options);
     }
 
     private function applicationChanged($event)
@@ -82,20 +86,25 @@ class SendUserMessage
 
         if($subject)
         {
-            Mail::send('emails/user-application-' . $application->status, compact('user', 'application'), function ($message) use ($user, $subject)
-            {
-                $message->to($user->email, $user->name)->subject($subject);
-            });
+            $options =
+            [
+                'template' => 'emails/user-application-' . $application->status,
+                'subject' => $subject
+            ];
+
+            Notification::send($user, 'email', $options);
         }
     }
 
     private function forgotPassword($event)
     {
         $user = $event->user;
+        $options =
+        [
+            'template' => 'emails/forgot-password',
+            'subject' => 'Your Password Reset Code'
+        ];
 
-        Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
-        {
-            $message->to($user->email, $user->name)->subject('Your Password Reset Code');
-        });
+        Notification::send($user, 'email', $options);
     }
 }
