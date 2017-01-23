@@ -10,6 +10,11 @@ use App\Models\User;
 
 class QueueUserMessage
 {
+    private $handlers =
+    [
+        'App\Events\FeedbackChanged' => 'feedbackChanged',
+    ];
+
     /**
      * Create the event listener.
      *
@@ -28,6 +33,17 @@ class QueueUserMessage
      */
     public function handle($event)
     {
-        // todo
+        $class = get_class($event);
+
+        if(isset($this->handlers[$class]))
+        {
+            call_user_func(array($this, $this->handlers[$class]), $event);
+        }
+    }
+
+    private function feedbackChanged($event)
+    {
+        $feedback = $event->feedback;
+        $change = $event->change;
     }
 }

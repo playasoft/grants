@@ -10,6 +10,12 @@ use App\Models\User;
 
 class QueueJudgeMessage
 {
+    private $handlers =
+    [
+        'App\Events\ApplicationSubmitted' => 'applicationSubmitted',
+        'App\Events\FeedbackChanged' => 'feedbackChanged',
+    ];
+
     /**
      * Create the event listener.
      *
@@ -28,6 +34,23 @@ class QueueJudgeMessage
      */
     public function handle($event)
     {
-        // todo
+        $class = get_class($event);
+
+        if(isset($this->handlers[$class]))
+        {
+            call_user_func(array($this, $this->handlers[$class]), $event);
+        }
+    }
+
+    private function applicationSubmitted($event)
+    {
+        $user = $event->application->user;
+        $application = $event->application;
+    }
+
+    private function feedbackChanged($event)
+    {
+        $feedback = $event->feedback;
+        $change = $event->change;
     }
 }
