@@ -85,11 +85,15 @@ class FeedbackController extends Controller
             return redirect('/login');
         }
 
+        // If this is the first time the feedback has been answered
+        if(empty($feedback->response))
+        {
+            // Notify judges of new answer
+            event(new FeedbackChanged($feedback, ['status' => 'updated']));
+        }
+
         $feedback->response = $request->input('response');
         $feedback->save();
-
-        // Notify judges of new answer
-        event(new FeedbackChanged($feedback, ['status' => 'updated']));
 
         $request->session()->flash('success', 'Your answer has been saved.');
         return redirect('/applications/' . $feedback->application->id . '/review');
