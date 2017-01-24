@@ -73,7 +73,11 @@ if(Auth::user()->role == 'applicant')
             {!! Form::close() !!}
         @endif
     @endforeach
+
     @if($submit)
-        <a href="/" class="btn btn-primary">Submit Answers</a>
+        <div class="submit-answer">
+            <button class="btn btn-primary">Submit Answer</button>
+            <span class="status success hidden">Answer Saved!</span>
+        </div>
     @endif
 @endif
