@@ -4,6 +4,7 @@ namespace App\Console\Commands\Notifications;
 
 use Illuminate\Console\Command;
 use DB;
+use Mail;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Feedback;
@@ -95,12 +96,19 @@ class Send extends Command
     {
         $applications = [];
         $notification_ids = [];
+        $feedback_ids = [];
 
         // Loop through all notifications and find the associated feedback
         foreach($notifications as $notification)
         {
             $metadata = json_decode($notification->metadata);
             $feedback = Feedback::find($metadata->feedback);
+
+            // Prevent displaying multiple copies of the same feedback (question asked and user responded on the same day)
+            if(in_array($feedback->id, $feedback_ids))
+            {
+                continue;
+            }
 
             // Group all feedback by what application it belongs to
             if(!isset($applications[$feedback->application->id]))
@@ -110,11 +118,13 @@ class Send extends Command
 
             $applications[$feedback->application->id]['feedback'][] = $feedback;
             $notification_ids[] = $notification->id;
+            $feedback_ids[] = $feedback->id;
         }
 
         // Send daily digest email with different templates based on the user it's being sent to
-        if(in_array($user->role, ['judge', 'observer'])
+        if(in_array($user->role, ['judge', 'observer']))
         {
+            echo "Sending daily digest email to judge: {$user->email}\n";
             Mail::send("emails/judge-daily-digest", compact('applications'), function ($message) use ($user)
             {
                 $message->to($user->email, $user->name)->subject('Weightlifter Daily Digest - ' . date('m/d/Y'));
@@ -122,6 +132,7 @@ class Send extends Command
         }
         else
         {
+            echo "Sending daily digest email to user: {$user->email}\n";
             Mail::send("emails/user-daily-digest", compact('applications'), function ($message) use ($user)
             {
                 $message->to($user->email, $user->name)->subject('We have some questions about your application!');
