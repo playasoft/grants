@@ -31,11 +31,11 @@ class ApplicationController extends Controller
         {
             if(in_array($this->auth->user()->role, ['admin']))
             {
-                $applications = Application::orderBy('total_score', 'desc')->get();
+                $applications = Application::orderBy('updated_at', 'asc')->get();
             }
             elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('total_score', 'desc')->get();
+                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'asc')->get();
             }
             else
             {
