@@ -24,13 +24,17 @@ class PageController extends Controller
         {
             if(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'asc')->get();
+                // Get all applications where the application is submitted and the judge has not submitted a score(judged).
+                $applications = Application::whereIn('applications.status', ['submitted', 'review'])
+                    ->leftJoin('judged', 'judged.application_id', '=', 'applications.id')
+                    ->whereNull('judged.user_id')
+                    ->orderBy('applications.updated_at', 'asc')
+                    ->get(['applications.*']);
             }
             else
             {
                 $applications = $this->auth->user()->applications;
             }
-
             $rounds = Round::orderBy('start_date', 'desc')->get();
             return view('pages/dashboard', compact('applications', 'ongoing', 'upcoming', 'rounds'));
         }
