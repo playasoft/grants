@@ -24,7 +24,7 @@ class PageController extends Controller
         {
             if(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->get();
+                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'asc')->get();
             }
             else
             {
