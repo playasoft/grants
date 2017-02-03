@@ -21,7 +21,6 @@ class PageController extends Controller
     {
         $ongoing = Round::ongoing();
         $upcoming = Round::upcoming();
-        $user_id = Auth::user()->id;
 
         if($this->auth->check())
         {
@@ -29,7 +28,7 @@ class PageController extends Controller
             {
                 // Get all applications where the application is submitted and the judge has not submitted a score(judged).
                 // TODO: There should be a way to make this work with a single eloquent db access via a left join
-                $judgedapps = Judged::where('user_id', '=', $user_id)->pluck('application_id')->toArray();
+                $judgedapps = Judged::where('user_id', '=', Auth::user()->id)->pluck('application_id')->toArray();
                 $applications = Application::whereIn('applications.status', ['submitted', 'review'])
                     ->whereNotIn('applications.id', $judgedapps)
                     ->get();
