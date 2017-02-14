@@ -14,7 +14,7 @@ class SendUserMessage
     [
         'App\Events\UserRegistered' => 'userRegistered',
         'App\Events\ApplicationSubmitted' => 'applicationSubmitted',
-        'App\Events\ApplicationChanged' => 'applicationChanged',
+//        'App\Events\ApplicationChanged' => 'applicationChanged',
         'App\Events\ForgotPassword' => 'forgotPassword',
     ];
 
@@ -70,6 +70,7 @@ class SendUserMessage
         Notification::send($user, 'email', $options);
     }
 
+/*
     private function applicationChanged($event)
     {
         $user = $event->application->user;
@@ -97,6 +98,7 @@ class SendUserMessage
             Notification::send($user, 'email', $options);
         }
     }
+*/
 
     private function forgotPassword($event)
     {

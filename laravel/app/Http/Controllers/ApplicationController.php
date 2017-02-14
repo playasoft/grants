@@ -397,7 +397,7 @@ class ApplicationController extends Controller
         $application->save();
 
         // Send notification to judges and applicant
-        event(new ApplicationChanged($application));
+//        event(new ApplicationChanged($application));
 
         $request->session()->flash('success', 'This application has been approved.');
         return redirect('/applications');
@@ -414,7 +414,7 @@ class ApplicationController extends Controller
         $application->save();
 
         // Send notification to judges and applicant
-        event(new ApplicationChanged($application));
+ //       event(new ApplicationChanged($application));
 
         $request->session()->flash('success', 'This application has been denied.');
         return redirect('/applications');
