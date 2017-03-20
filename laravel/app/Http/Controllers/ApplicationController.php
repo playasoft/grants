@@ -35,7 +35,7 @@ class ApplicationController extends Controller
             }
             elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
             {
-                $applications = Application::whereIn('status', ['submitted', 'review'])->orderBy('updated_at', 'asc')->get();
+                $applications = Application::whereIn('status', ['submitted', 'review', 'accepted', 'rejected'])->orderBy('updated_at', 'asc')->get();
             }
             else
             {
