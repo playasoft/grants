@@ -353,18 +353,23 @@ class ApplicationController extends Controller
         if(!empty($judged))
         {
             $request->session()->flash('error', 'You have already judged this application!');
-            return redirect('/applications');
+            return redirect('/');
         }
         else
         {
             $judged = new Judged;
             $judged->application_id = $application->id;
             $judged->user_id = Auth::user()->id;
-            if ($request->exists('abstain')){
+
+            if($request->exists('abstain'))
+            {
                 $judged->status = 'abstain';
-            }else {
+            }
+            else
+            {
                 $judged->status = 'judged';
             }
+
             $judged->save();
 
             // Compare the total number of judges vs number of judges who have scored this application
@@ -382,7 +387,7 @@ class ApplicationController extends Controller
             Score::calculateTotals($application);
 
             $request->session()->flash('success', 'Your final scores have been submitted.');
-            return redirect('/applications');
+            return redirect('/');
         }
     }
 
@@ -414,7 +419,7 @@ class ApplicationController extends Controller
         $application->save();
 
         // Send notification to judges and applicant
- //       event(new ApplicationChanged($application));
+//        event(new ApplicationChanged($application));
 
         $request->session()->flash('success', 'This application has been denied.');
         return redirect('/applications');
