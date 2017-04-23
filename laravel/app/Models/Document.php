@@ -50,7 +50,7 @@ class Document extends Model
 
         // Make sure the original filename is sanitized
         $file = pathinfo($request->file('document')->getClientOriginalName());
-        $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+        $fileName = preg_replace('/[^a-z0-9-_]/i', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/i', '', $file['extension']);
 
         // Move file to uploads directory
         $fileName = time() . '-' . $fileName;
