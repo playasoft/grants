@@ -3,7 +3,7 @@
 @section('content')
     <h1>Create a Question</h1>
     <hr>
-    
+
     {!! Form::open(['url' => 'questions']) !!}
         @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?"])
 
@@ -19,9 +19,10 @@
                 'dropdown' => "Multiple Choice",
                 'boolean' => "Yes / No",
                 'file' => "File Upload",
+                'budget' => "Itemized Budget",
             ]
         ])
-        
+
         <div class="question-options hidden">
             @include('partials/form/textarea',
             [

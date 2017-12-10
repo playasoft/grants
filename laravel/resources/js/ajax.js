@@ -8,7 +8,7 @@ function save(scope)
     var status = $(scope).parents('.form-group').find('.status');
     var value = $(scope).value();
     var input = $(scope);
-    
+
     // Check if this is a radio button and is selected
     if(input.attr('type') == 'radio' && input.prop('checked'))
     {
@@ -67,7 +67,7 @@ $(document).ready(function()
     {
         var status = $(this).parents('.form-group').find('.status');
         var scope = this;
-        
+
         // Clear timeout to debounce user input
         if(timeout)
         {
