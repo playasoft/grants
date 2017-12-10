@@ -8,7 +8,13 @@ class Question extends Model
 {
     protected $fillable = ['question', 'type', 'options', 'required', 'help'];
 
-    // Helper function to generate arrays for dropdowns from saved options 
+    // Questions belong to a round
+    public function round()
+    {
+        return $this->belongsTo('App\Models\Round');
+    }
+
+    // Helper function to generate arrays for dropdowns from saved options
     public function dropdown()
     {
         $options = explode("\n", $this->options);
