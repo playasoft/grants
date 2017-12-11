@@ -3,7 +3,7 @@
 @section('content')
     <h1>Edit Question</h1>
     <hr>
-    
+
     {!! Form::open() !!}
         @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?", 'value' => $question->question])
 
@@ -19,10 +19,11 @@
                 'dropdown' => "Multiple Choice",
                 'boolean' => "Yes / No",
                 'file' => "File Upload",
+                'budget' => 'Itemized Budget',
             ],
             'value' => $question->type
         ])
-        
+
         <div class="question-options hidden">
             @include('partials/form/textarea',
             [

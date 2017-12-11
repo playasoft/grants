@@ -3,7 +3,7 @@
 @section('content')
     <h1>Request Feedback from User</h1>
     <hr>
-    
+
     {!! Form::open(['url' => 'feedback']) !!}
         <input type="hidden" name="application_id" value="{{ $application->id }}">
         <input type="hidden" name="regarding_type" value="general">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         @endif
-        
+
         @include('partials/form/text', ['name' => 'message', 'label' => 'Your Question', 'placeholder' => "What would you like to know?", 'limit' => 255])
 
         @include('partials/form/select',
@@ -67,7 +67,7 @@
 //                'file' => "File Upload",
             ]
         ])
-        
+
         <div class="question-options hidden">
             @include('partials/form/textarea',
             [

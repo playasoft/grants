@@ -154,6 +154,10 @@
                         @else
                             No files uploaded.
                         @endif
+                    @elseif($question->type == 'budget')
+                        @if( isset( $answers[$question->id] ) )
+                            @each('partials/form/budget-itemized',  $answers, 'answer')
+                        @endif
                     @else
                         {!! nl2br(e($answer)) !!}
                     @endif

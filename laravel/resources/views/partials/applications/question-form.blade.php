@@ -45,7 +45,7 @@ if(isset($answers[$question->id]))
                 </select>
             @elseif($question->type == 'budget')
                 <div class="row">
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
                       Price
                     </div>
                     <div class="col-xs-9">
@@ -53,22 +53,23 @@ if(isset($answers[$question->id]))
                     </div>
                 </div>
 
-                <div class="vue-budget" v-html class="form-group" >
-                    <div >
-                        <div class="row" v-for="(item,index) in fields">
-                            <div class="col-xs-3">
-                                <input type="number"  v-on:change='inputChanged' v-model="item.cost">
+                <div class="vue-budget" >
+
+                    <div>
+                        <div class="row form-group" v-for="(item,index) in fields" >
+                            <div class="col-xs-2">
+                                <input type="number" class="form-control"  v-on:change='inputChanged' v-model="item.cost">
                             </div>
                              <div class="col-xs-8">
-                                <input type="text"  v-on:change='inputChanged' v-model="item.description">
+                                <input type="text" class="form-control"  v-on:change='inputChanged' v-model="item.description">
                             </div>
-                            <button type="button" v-on:click='removeField(index)'>X</button>
+                            <button type="button" class="btn btn-danger btn-sm" v-on:click='removeField(index)'>x</button>
                         </div>
                     </div>
 
-                    <button type="button" v-on:click='addField'> Add field</button>
+                    <button type="button" class="btn " v-on:click='addField'> Add Item</button>
                     <input name="answer" id="{{ $question->id }}-answer" type="textarea" class="hidden" v-bind:value='outputString'>
-
+                    <br>
                 </div>
 
 
