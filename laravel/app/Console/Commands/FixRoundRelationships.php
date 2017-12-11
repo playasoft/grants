@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Round;
 use App\Models\Question;
 use App\Models\Criteria;
+use App\Models\Answer;
+use App\Models\Feedback;
+use App\Models\Score;
 use Illuminate\Console\Command;
 
 class FixRoundRelationships extends Command
@@ -53,21 +56,43 @@ class FixRoundRelationships extends Command
                 continue;
             }
 
-            foreach($questions as $question)
+            dump("Processing round {$round->name}");
+
+            // Get a list of all applications that exist for this round
+            $applications = $round->applications->pluck('id');
+
+            // Check if this round already has questions or criteria before populating them
+            if(!count($round->questions))
             {
-                $newQuestion = $question->replicate();
-                $newQuestion->round_id = $round->id;
-                $newQuestion->save();
+                dump("This round has no questions, automatically populating...");
+
+                foreach($questions as $question)
+                {
+                    $newQuestion = $question->replicate();
+                    $newQuestion->round_id = $round->id;
+                    $newQuestion->save();
+
+                    // Update application data to reflect the new question ID
+                    Answer::whereIn('application_id', $applications)->where('question_id', $question->id)->update(['question_id' => $newQuestion->id]);
+                    Feedback::whereIn('application_id', $applications)->where('regarding_id', $question->id)->where('regarding_type', 'question')->update(['regarding_id' => $newQuestion->id]);
+                }
             }
 
-            foreach($criteria as $criterion)
+            if(!count($round->criteria))
             {
-                $newCriterion = $criterion->replicate();
-                $newCriterion->round_id = $round->id;
-                $newCriterion->save();
-            }
+                dump("This round has no criteria, automatically populating...");
 
-            dump("Copied questions and criteria into round - {$round->name}");
+                foreach($criteria as $criterion)
+                {
+                    $newCriterion = $criterion->replicate();
+                    $newCriterion->round_id = $round->id;
+                    $newCriterion->save();
+
+                    Score::whereIn('application_id', $applications)->where('criteria_id', $criterion->id)->update(['criteria_id' => $newCriterion->id]);
+                }
+            }
         }
+
+        dump("All done!");
     }
 }
