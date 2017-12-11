@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CriteriaRequest;
 
 use App\Models\Criteria;
 use App\Models\Round;
 
-use App\Http\Requests\CriteriaRequest;
+use App\Misc\Helper;
 
 
 class CriteriaController extends Controller
@@ -35,7 +36,10 @@ class CriteriaController extends Controller
 
     function createCriteriaForm()
     {
-        return view('pages/criteria/create');
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/criteria/create', compact('roundDropdown'));
     }
 
     function editCriteria(CriteriaRequest $request, Criteria $criteria)
@@ -52,7 +56,10 @@ class CriteriaController extends Controller
 
     function editCriteriaForm(Criteria $criteria)
     {
-        return view('pages/criteria/edit', compact('criteria'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/criteria/edit', compact('criteria', 'roundDropdown'));
     }
 
     function deleteCriteria(Request $request, Criteria $criteria)

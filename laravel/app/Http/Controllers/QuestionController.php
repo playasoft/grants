@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuestionRequest;
 
 use App\Models\Question;
 use App\Models\Round;
 
-use App\Http\Requests\QuestionRequest;
+use App\Misc\Helper;
 
 
 class QuestionController extends Controller
@@ -35,7 +36,10 @@ class QuestionController extends Controller
 
     function createQuestionForm()
     {
-        return view('pages/questions/create');
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/questions/create', compact('roundDropdown'));
     }
 
     function editQuestion(QuestionRequest $request, Question $question)
@@ -52,7 +56,10 @@ class QuestionController extends Controller
 
     function editQuestionForm(Question $question)
     {
-        return view('pages/questions/edit', compact('question'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/questions/edit', compact('question', 'roundDropdown'));
     }
 
     function deleteQuestion(Request $request, Question $question)
