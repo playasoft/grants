@@ -1,6 +1,10 @@
 @extends('app')
 
 @section('content')
+    @can('create-criteria')
+        <a href="/criteria/create" class="btn btn-primary pull-right">Create new Criteria</a>
+    @endcan
+
     <h1>Criteria for Judges</h1>
 
     @foreach($rounds as $round)

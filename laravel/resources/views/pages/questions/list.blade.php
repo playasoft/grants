@@ -1,6 +1,10 @@
 @extends('app')
 
 @section('content')
+    @can('create-question')
+        <a href="/questions/create" class="btn btn-primary pull-right">Create a Question</a>
+    @endcan
+
     <h1>Questions for Applicants</h1>
 
     @foreach($rounds as $round)
