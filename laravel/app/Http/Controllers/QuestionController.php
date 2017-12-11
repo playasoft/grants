@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Question;
+use App\Models\Round;
+
 use App\Http\Requests\QuestionRequest;
 
 
@@ -15,8 +17,8 @@ class QuestionController extends Controller
 {
     function listQuestions()
     {
-        $questions = Question::latest()->get();
-        return view('pages/questions/list', compact('questions'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        return view('pages/questions/list', compact('rounds'));
     }
 
     function createQuestion(QuestionRequest $request)

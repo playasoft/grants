@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Criteria;
+use App\Models\Round;
+
 use App\Http\Requests\CriteriaRequest;
 
 
@@ -15,8 +17,8 @@ class CriteriaController extends Controller
 {
     function listCriteria()
     {
-        $criteria = Criteria::latest()->get();
-        return view('pages/criteria/list', compact('criteria'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        return view('pages/criteria/list', compact('rounds'));
     }
 
     function createCriteria(CriteriaRequest $request)

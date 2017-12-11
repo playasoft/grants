@@ -2,34 +2,36 @@
 
 @section('content')
     <h1>Questions for Applicants</h1>
-    <hr>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Question</th>
-                <th>Type</th>
-                <th>Required</th>
-            </tr>
-        </thead>
+    @foreach($rounds as $round)
+        <hr>
+        <h2> {{ $round->name }} </h2>
 
-        <tbody>
-            @foreach($questions as $question)
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td><b>{{ $question->id }}</b></td>
-                    <td>
-                        @can('edit-question')
-                            <a href="/questions/{{ $question->id }}">{{ $question->question }}</a></td>
-                        @else
-                            {{ $question->question }}
-                        @endcan
-                    <td>{{ $question->type }}</td>
-                    <td>{{ $question->required }}</td>
+                    <th>Question</th>
+                    <th>Type</th>
+                    <th>Required</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach($round->questions as $question)
+                    <tr>
+                        <td>
+                            @can('edit-question')
+                                <a href="/questions/{{ $question->id }}">{{ $question->question }}</a></td>
+                            @else
+                                {{ $question->question }}
+                            @endcan
+                        <td>{{ $question->type }}</td>
+                        <td>{{ $question->required }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
 
     @can('create-question')
         <a href="/questions/create" class="btn btn-primary">Create a Question</a>
