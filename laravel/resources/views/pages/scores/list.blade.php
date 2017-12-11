@@ -15,25 +15,25 @@
                             <th>Total Score</th>
                             <th>Objective Score</th>
                             <th>Subjective Score</th>
-                            @foreach($criteria as $criterion)
-                                <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
+                            @foreach($round->criteria as $index => $criterion)
+                                <th title="{{ $criterion->question }}">C {{ $index + 1 }}</th>
                             @endforeach
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($applications as $application)
-                            @if($application->round_id == $round->id)
-                                <tr>
+                        @foreach($round->applications()->whereIn('status', ['submitted', 'review', 'accepted', 'rejected'])->orderBy('total_score', 'desc')->get() as $application)
+                            <tr>
                                 <td><a href="/scores/{{ $application->id }}">{{ $application->name }}</a></td>
                                 <td>{{ $application->total_score }}</td>
                                 <td>{{ $application->objective_score }}</td>
                                 <td>{{ $application->subjective_score }}</td>
-                                @foreach($criteria as $criterion)
-                                    <td>{{ round($appScores[$application->id][$criterion->id], 3) }}</td>
+                                @foreach($round->criteria as $criterion)
+                                    @if(isset($appScores[$application->id][$criterion->id]))
+                                        <td>{{ round($appScores[$application->id][$criterion->id], 3) }}</td>
+                                    @endif
                                 @endforeach
-                                </tr>
-                            @endif
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
