@@ -46,15 +46,18 @@ if(isset($answers[$question->id]))
             @elseif($question->type == 'budget')
                 <div class="row">
                     <div class="col-xs-2">
-                      Price
+                        <label>
+                            Price
+                        </label>
                     </div>
                     <div class="col-xs-9">
-                      Description
+                        <label>
+                            Description
+                        </label>
                     </div>
                 </div>
 
-                <div class="vue-budget" >
-
+                <div class="vue-budget">
                     <div>
                         <div class="row form-group" v-for="(item,index) in fields" >
                             <div class="col-xs-2">
@@ -67,13 +70,12 @@ if(isset($answers[$question->id]))
                         </div>
                     </div>
 
-                    <button type="button" class="btn " v-on:click='addField'> Add Item</button>
-                    <input name="answer" id="{{ $question->id }}-answer" type="textarea" class="hidden" v-bind:value='outputString'>
+                    <button type="button" class="btn btn-primary" v-on:click='addField'> Add Item</button>
+                    <input name="answer" id="{{ $question->id }}-answer" type="hidden" v-bind:value='outputString'>
                     <br>
                 </div>
-
-
             @endif
+
             <p>
                 {!! nl2br(e($question->help)) !!}
             </p>
