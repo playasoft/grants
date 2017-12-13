@@ -63,10 +63,10 @@ if(isset($answers[$question->id]))
                             <div class="col-xs-2">
                                 <input type="number" class="form-control"  v-on:change='inputChanged' v-model="item.cost">
                             </div>
-                             <div class="col-xs-8">
-                                <input type="text" class="form-control"  v-on:change='inputChanged' v-model="item.description">
+                            <div class="col-xs-10">
+                                <button type="button" class="btn btn-danger btn-sm pull-right" v-on:click='removeField(index)'>x</button>
+                                <input type="text" class="form-control" style="width: calc(100% - 3em)"  v-on:change='inputChanged' v-model="item.description">
                             </div>
-                            <button type="button" class="btn btn-danger btn-sm" v-on:click='removeField(index)'>x</button>
                         </div>
                     </div>
 
