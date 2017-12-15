@@ -52,21 +52,15 @@ $(document).ready(function()
                     let preFilledAnswer = this.$el.getAttribute('answer');
                     if( preFilledAnswer ){
                         //Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
-                        this.$set(this, 'fields', JSON.parse( preFilledAnswer ).map( (answer) =>
-                            {
-                                var toArr = answer.split(":");
-                                return {cost: toArr[0], description: toArr[1]}
-                            }
-                        ));
+                        this.$set(this, 'fields', JSON.parse( preFilledAnswer ) );
                     }
-                    console.log(this.fields);
                 },
 
                 methods:
                 {
                     inputChanged:function()
                     {
-                        let newOutput = JSON.stringify(this.fields.map(function(item){return item.cost + ":" + item.description}));
+                        let newOutput = JSON.stringify(this.fields.map(function(item){return '{cost:'+item.cost + ":" + 'description:'+item.description}));
                         this.$set(this, 'outputString' , newOutput.toString());
 
                         // Trigger AJAX autosave behavior
