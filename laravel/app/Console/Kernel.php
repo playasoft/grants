@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     [
         Commands\Notifications\Generate::class,
         Commands\Notifications\Send::class,
+        Commands\FixRoundRelationships::class,
     ];
 
     /**

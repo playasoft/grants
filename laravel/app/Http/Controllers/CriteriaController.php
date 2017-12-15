@@ -6,17 +6,20 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CriteriaRequest;
 
 use App\Models\Criteria;
-use App\Http\Requests\CriteriaRequest;
+use App\Models\Round;
+
+use App\Misc\Helper;
 
 
 class CriteriaController extends Controller
 {
     function listCriteria()
     {
-        $criteria = Criteria::latest()->get();
-        return view('pages/criteria/list', compact('criteria'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        return view('pages/criteria/list', compact('rounds'));
     }
 
     function createCriteria(CriteriaRequest $request)
@@ -33,7 +36,10 @@ class CriteriaController extends Controller
 
     function createCriteriaForm()
     {
-        return view('pages/criteria/create');
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/criteria/create', compact('roundDropdown'));
     }
 
     function editCriteria(CriteriaRequest $request, Criteria $criteria)
@@ -50,7 +56,10 @@ class CriteriaController extends Controller
 
     function editCriteriaForm(Criteria $criteria)
     {
-        return view('pages/criteria/edit', compact('criteria'));
+        $rounds = Round::orderBy('start_date', 'desc')->get();
+        $roundDropdown = Helper::makeDropdown($rounds, 'id', 'name');
+
+        return view('pages/criteria/edit', compact('criteria', 'roundDropdown'));
     }
 
     function deleteCriteria(Request $request, Criteria $criteria)

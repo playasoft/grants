@@ -105,7 +105,7 @@ class ScoreController extends Controller
             }
         }
 
-        $rounds = Round::latest()->get();
+        $rounds = Round::orderBy('start_date', 'desc')->get();
         return view('pages/scores/list', compact('applications', 'criteria', 'appScores', 'rounds'));
     }
 
