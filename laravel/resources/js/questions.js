@@ -54,17 +54,19 @@ $(document).ready(function()
                         //Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
                         this.$set(this, 'fields', JSON.parse( preFilledAnswer ) );
                     }
+                    console.log(preFilledAnswer);
                 },
 
                 methods:
                 {
                     inputChanged:function()
                     {
-                        let newOutput = JSON.stringify(this.fields.map(function(item){return '{cost:'+item.cost + ":" + 'description:'+item.description}));
-                        this.$set(this, 'outputString' , newOutput.toString());
+                        let newOutput = JSON.stringify(this.fields);
+                        this.$set(this, 'outputString' , newOutput);
 
                         // Trigger AJAX autosave behavior
                         $(this.$el).find('[name="answer"]').trigger('change');
+                        console.log(newOutput);
                     },
 
                     addField:function()
@@ -75,6 +77,7 @@ $(document).ready(function()
                     removeField:function(index)
                     {
                         this.fields.splice(index, 1);
+                        this.inputChanged();
                     }
                 }
             });
