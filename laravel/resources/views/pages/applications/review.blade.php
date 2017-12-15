@@ -141,6 +141,12 @@
                         $answer = "Your answer is missing.";
                    }
                 }
+
+                // If this is an itemized budget
+                if($question->type == 'budget')
+                {
+                    $answer = json_decode($answer);
+                }
                 ?>
 
 
@@ -155,9 +161,11 @@
                             No files uploaded.
                         @endif
                     @elseif($question->type == 'budget')
-                        @if( isset( $answers[$question->id] ) )
-                            @each('partials/form/budget-itemized',  $answers, 'answer')
-                        @endif
+                        <ul>
+                            @foreach($answer as $line)
+                                <li>{{ $line }}</li>
+                            @endforeach
+                        </ul>
                     @else
                         {!! nl2br(e($answer)) !!}
                     @endif
