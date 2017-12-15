@@ -54,7 +54,6 @@ $(document).ready(function()
                         //Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
                         this.$set(this, 'fields', JSON.parse( preFilledAnswer ) );
                     }
-                    console.log(preFilledAnswer);
                 },
 
                 methods:
@@ -66,7 +65,6 @@ $(document).ready(function()
 
                         // Trigger AJAX autosave behavior
                         $(this.$el).find('[name="answer"]').trigger('change');
-                        console.log(newOutput);
                     },
 
                     addField:function()
