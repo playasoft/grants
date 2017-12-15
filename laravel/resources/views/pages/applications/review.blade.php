@@ -163,7 +163,10 @@
                     @elseif($question->type == 'budget')
                         <ul>
                             @foreach($answer as $line)
-                                <li>{{ $line }}</li>
+                            <li>
+                                Cost: {{ $line->cost }}<br>
+                                Description: {{ $line->description }}
+                            </li>
                             @endforeach
                         </ul>
                     @else
