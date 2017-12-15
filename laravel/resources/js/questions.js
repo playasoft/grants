@@ -47,6 +47,21 @@ $(document).ready(function()
                     }
                 },
 
+                mounted :function()
+                {
+                    let preFilledAnswer = this.$el.getAttribute('answer');
+                    if( preFilledAnswer ){
+                        //Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
+                        this.$set(this, 'fields', JSON.parse( preFilledAnswer ).map( (answer) =>
+                            {
+                                var toArr = answer.split(":");
+                                return {cost: toArr[0], description: toArr[1]}
+                            }
+                        ));
+                    }
+                    console.log(this.fields);
+                },
+
                 methods:
                 {
                     inputChanged:function()

@@ -57,7 +57,7 @@ if(isset($answers[$question->id]))
                     </div>
                 </div>
 
-                <div class="vue-budget">
+                <div class="vue-budget"  answer='{{ isset($answer) ? $answer : [] }}'>
                     <div>
                         <div class="row form-group" v-for="(item,index) in fields" >
                             <div class="col-xs-2">
