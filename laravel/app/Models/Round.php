@@ -30,6 +30,21 @@ class Round extends Model
                     ->orderBy('start_date', 'desc')->get();
     }
 
+    public function applications()
+    {
+        return $this->hasMany('App\Models\Application');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question');
+    }
+
+    public function criteria()
+    {
+        return $this->hasMany('App\Models\Criteria');
+    }
+
     // Helper function to determine if a round is currently ongoing, upcoming, or ended
     public function status()
     {

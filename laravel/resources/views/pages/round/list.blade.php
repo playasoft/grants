@@ -1,6 +1,10 @@
 @extends('app')
 
 @section('content')
+    @can('create-round')
+        <a href="/rounds/create" class="btn btn-primary pull-right">Create new Grant Round</a>
+    @endcan
+
     <h1>Application Grant Rounds</h1>
     <hr>
 

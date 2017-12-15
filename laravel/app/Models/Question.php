@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['question', 'type', 'options', 'required', 'help'];
+    protected $fillable = ['round_id', 'question', 'type', 'options', 'required', 'help'];
+
+    // Questions belong to a round
+    public function round()
+    {
+        return $this->belongsTo('App\Models\Round');
+    }
 
     // Helper function to generate arrays for dropdowns from saved options
     public function dropdown()

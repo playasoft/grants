@@ -5,6 +5,13 @@
     <hr>
 
     {!! Form::open(['url' => 'questions']) !!}
+        @include('partials/form/select',
+        [
+            'name' => 'round_id',
+            'label' => 'Round',
+            'options' => $roundDropdown
+        ])
+
         @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?"])
 
         @include('partials/form/select',

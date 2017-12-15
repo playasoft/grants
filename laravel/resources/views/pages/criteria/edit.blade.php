@@ -3,8 +3,16 @@
 @section('content')
     <h1>Edit Criteria</h1>
     <hr>
-    
+
     {!! Form::open() !!}
+        @include('partials/form/select',
+        [
+            'name' => 'round_id',
+            'label' => 'Round',
+            'options' => $roundDropdown,
+            'value' => $criteria->round_id
+        ])
+
         @include('partials/form/text', ['name' => 'question', 'label' => 'Question', 'placeholder' => "What would you like to know?", 'value' => $criteria->question])
 
         @include('partials/form/select',

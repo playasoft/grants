@@ -30,17 +30,17 @@
         <thead>
             <tr>
                 <th>Judge</th>
-                @foreach($criteria as $criterion)
-                    <th title="{{ $criterion->question }}">C {{ $criterion->id }}</th>
+                @foreach($application->round->criteria as $index => $criterion)
+                    <th title="{{ $criterion->question }}">C {{ $index + 1 }}</th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             @foreach ($judges as $judge)
-		@if(isset($judgeScores[$judge->id]))
+                @if(isset($judgeScores[$judge->id]))
                     <tr>
                         <td><a href="/users/{{ $judge->id }}">{{ $judge->name }}</a></td>
-                        @foreach($criteria as $criterion)
+                        @foreach($application->round->criteria as $criterion)
                             <td>{{ $judgeScores[$judge->id][$criterion->id] or 'N/A' }}</td>
                         @endforeach
                     </tr>

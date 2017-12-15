@@ -131,7 +131,7 @@ class ApplicationController extends Controller
             return redirect('/applications/' . $application->id . '/review');
         }
 
-        $questions = Question::get();
+        $questions = $application->round->questions;
 
         // Generate an array of answers based on their associated question ID
         $answers = [];
@@ -208,11 +208,11 @@ class ApplicationController extends Controller
             }
         }
 
-        $questions = Question::get();
+        $questions = $application->round->questions;
         $criteria =
         [
-            'objective' => Criteria::where('type', 'objective')->get(),
-            'subjective' => Criteria::where('type', 'subjective')->get(),
+            'objective' => $application->round->criteria()->where('type', 'objective')->get(),
+            'subjective' => $application->round->criteria()->where('type', 'subjective')->get(),
         ];
 
         // Generate an array of answers based on their associated question ID
