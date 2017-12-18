@@ -247,8 +247,8 @@ class ApplicationController extends Controller
             $answers[$answer->question_id] = $answer;
         }
 
-        // Loop through all required questions
-        $questions = Question::where('required', 1)->get();
+        // Loop through all required questions for this round
+        $questions = $application->round->questions()->where('required', 1)->get();
 
         foreach($questions as $question)
         {
