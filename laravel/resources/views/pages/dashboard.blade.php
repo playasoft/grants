@@ -55,6 +55,14 @@ $showrounds = $ongoing->merge($upcoming);
             <h2>Your Applications</h2>
         @endif
         @foreach($rounds as $round)
+            <?php
+
+            if(!count($applications->where('round_id', $round->id)))
+            {
+                continue;
+            }
+
+            ?>
             <hr>
             <h3> {{ $round->name }} </h3>
             <table class="table table-hover">
