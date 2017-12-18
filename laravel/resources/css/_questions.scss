@@ -2,3 +2,18 @@
     height: 100px;
     min-height: auto;
 }
+
+.budget-cost {
+    position: relative;
+
+    input {
+        margin-left: 1.25em;
+    }
+
+    &::before {
+        content: '$';
+        font-size: 1.5em;
+        color: #3e8f3e;
+        position: absolute;
+    }
+}

@@ -45,12 +45,12 @@ if(isset($answers[$question->id]))
                 </select>
             @elseif($question->type == 'budget')
                 <div class="row">
-                    <div class="col-xs-2">
+                    <div class="col-xs-4 col-sm-3">
                         <label>
-                            Price
+                            Price (in USD)
                         </label>
                     </div>
-                    <div class="col-xs-9">
+                    <div class="col-xs-8 col-sm-9">
                         <label>
                             Description
                         </label>
@@ -60,10 +60,10 @@ if(isset($answers[$question->id]))
                 <div class="vue-budget"  answer='{{ isset($answer) ? $answer : [] }}'>
                     <div>
                         <div class="row form-group" v-for="(item,index) in fields" >
-                            <div class="col-xs-2">
+                            <div class="col-xs-4 col-sm-3 budget-cost">
                                 <input type="number" class="form-control"  v-on:change='inputChanged' v-model="item.cost">
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-xs-8 col-sm-9">
                                 <button type="button" class="btn btn-danger btn-sm pull-right" v-on:click='removeField(index)'>x</button>
                                 <input type="text" class="form-control" style="width: calc(100% - 3em)"  v-on:change='inputChanged' v-model="item.description">
                             </div>
