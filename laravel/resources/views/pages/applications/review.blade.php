@@ -162,9 +162,11 @@
                         @endif
                     @elseif($question->type == 'budget')
                         <ul>
-                            @foreach($answer as $row)
-                                <li>${{ $row->cost }} - {{ $row->description }}</li>
-                            @endforeach
+                            @if($answer)
+                                @foreach($answer as $row)
+                                    <li>${{ $row->cost }} - {{ $row->description }}</li>
+                                @endforeach
+                            @endif
                         </ul>
                     @else
                         {!! nl2br(e($answer)) !!}
