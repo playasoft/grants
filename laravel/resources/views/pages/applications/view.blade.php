@@ -60,6 +60,7 @@
     <h2>Application Files</h2>
     <p>
         Upload any additional application files; drawings, plans, photos, past projects, etc.
+        Please name files descriptivly.
     </p>
 
     {!! Form::open(['url' => '/documents/' . $application->id . '/add', 'files' => true,]) !!}
