@@ -21,6 +21,11 @@ if(isset($answers[$question->id]))
         <div class="form-group">
             <label class="control-label" for="{{ $question->id }}-answer">{{ $question->question }}</label>
             <span class="pull-right"><span class="status"></span></span>
+
+            <p>
+                {!! nl2br(e($question->help)) !!}
+            </p>
+
             @if($question->type == 'input')
                 <input type="text" name="answer" class="form-control" id="{{ $question->id }}-answer" value="{{ $answer }}">
             @elseif($question->type == 'text')
@@ -75,10 +80,6 @@ if(isset($answers[$question->id]))
                     <br>
                 </div>
             @endif
-
-            <p>
-                {!! nl2br(e($question->help)) !!}
-            </p>
         </div>
     {!! Form::close() !!}
 @else
