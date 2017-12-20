@@ -242,4 +242,12 @@ class UserController extends Controller
         $request->session()->flash('success', 'Your password has been reset, you may now log in.');
         return redirect('/login');
     }
+
+    public function loginAsUser(User $user, Request $request)
+    {
+        $this->auth->loginUsingID($user->id);
+        $request->session()->flash('success', "You are now logged in as {$user->name}.");
+        return redirect('/');
+    }
+
 }

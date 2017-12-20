@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web']], function()
     Route::post('/forgot', 'UserController@forgotPassword');
     Route::get('/forgot/{token}', 'UserController@verifyToken');
     Route::post('/forgot/{token}', 'UserController@changePassword');
-    
+
     Route::post('/register', 'UserController@create');
     Route::post('/login', 'UserController@login');
 });
@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     //Modifying Users
     Route::get('/users/{user}/edit', 'UserController@editUser');
     Route::post('/users/{user}/edit', 'UserController@updateUser');
+    Route::get('/users/{user}/login', 'UserController@loginAsUser');
 
     // Approving / denying applications
     Route::post('/applications/{application}/approve', 'ApplicationController@approveApplication');

@@ -7,6 +7,7 @@
     @if(in_array(Auth::user()->role, ['admin']))
         <div class="pull-right">
             <a href="/users/{{ $user->id }}/edit" class="btn btn-success">Edit Profile</a>
+            <a href="/users/{{ $user->id }}/login" class="btn btn-primary">Login as this User</a>
         </div>
     @endif
 
