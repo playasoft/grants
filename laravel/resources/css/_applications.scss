@@ -1,3 +1,16 @@
+.before-you-start {
+    font-size: 2em;
+    white-space: normal;
+
+    a {
+        color: #fff;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
 .documents li {
     margin-bottom: 0.4em;
 }

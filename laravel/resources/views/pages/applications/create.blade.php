@@ -5,11 +5,12 @@
     <hr>
 
     <h2>Before You Start</h2>
-    <p>
+
+    <div class="btn btn-danger before-you-start">
         <a href="http://apogaea.com/art-installations/creativegrants/#apply">
             REQUIRED READING FOR WRITING A WINNING GRANT (click here before creating your application)
         </a>
-    </p>
+    </div>
 
     <h2>Basic Information</h2>
     <p>
