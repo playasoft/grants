@@ -57,7 +57,7 @@ $showrounds = $ongoing->merge($upcoming);
         @foreach($rounds as $round)
             <?php
 
-            if(!count($applications->where('round_id', $round->id)))
+            if(!count($applications->where('round_id', (string)$round->id)))
             {
                 continue;
             }
