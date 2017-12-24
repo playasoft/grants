@@ -27,27 +27,29 @@
                 </thead>
 
                 <tbody>
-                    @foreach($round->applications as $application)
-                        <tr>
-                            <td>
-                                @if($application->status == 'new')
-                                    <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
-                                @else
-                                    <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a>
-                            </td>
-                            <td>${{ $application->budget }}</td>
-                            <td>{{ $application->status }}</td>
-                            <td>{{ $application->judge_status }}</td>
-                            <td>{{ $application->objective_score }}</td>
-                            <td>{{ $application->subjective_score }}</td>
-                            <td>{{ $application->total_score }}</td>
-                            <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
-                            <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
-                        </tr>
+                    @foreach($applications as $application)
+                        @if($application->round_id == $round->id)
+                            <tr>
+                                <td>
+                                    @if($application->status == 'new')
+                                        <a href="/applications/{{ $application->id }}">{{ $application->name }}</a>
+                                    @else
+                                        <a href="/applications/{{ $application->id }}/review">{{ $application->name }}</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a>
+                                </td>
+                                <td>${{ $application->budget }}</td>
+                                <td>{{ $application->status }}</td>
+                                <td>{{ $application->judge_status }}</td>
+                                <td>{{ $application->objective_score }}</td>
+                                <td>{{ $application->subjective_score }}</td>
+                                <td>{{ $application->total_score }}</td>
+                                <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
+                                <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
