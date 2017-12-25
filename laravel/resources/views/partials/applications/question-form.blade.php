@@ -79,6 +79,9 @@ if(isset($answers[$question->id]))
                     <input name="answer" id="{{ $question->id }}-answer" type="hidden" v-bind:value='outputString'>
                     <br>
                 </div>
+
+ddddddddd
+
             @endif
         </div>
     {!! Form::close() !!}
