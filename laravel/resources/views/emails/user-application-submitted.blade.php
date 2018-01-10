@@ -5,7 +5,7 @@
     You may withdraw (and re-submit) your application up until the final deadline.
     Submitting this application does not guarantee that you will recieve funding.
     You may receive additional emails if additional questions are asked in the Q&A period following the grant deadline.
-    You will be notified when your application is either approved or denied.
+    You will be notified within 30 days of the grant round deadline whether your application is either approved or denied.
 </p>
 
 <p>
