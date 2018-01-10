@@ -77,6 +77,7 @@ class AuthServiceProvider extends ServiceProvider
             'view-questions',
             'view-critieria',
             'view-round',
+            'create-feedback',
         ],
     ];
 
