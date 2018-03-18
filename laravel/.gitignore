@@ -11,3 +11,4 @@ composer.lock
 bundle.js
 config.js
 main.css
+package-lock.json
