@@ -15,6 +15,7 @@ A laravel app to create weighted questionaire systems
 
 1. Git clone this repo
 2. Set **laravel/public/** as your webserver's document root
+3. Run ```composer update --no-scripts``` within the **laravel** folder
 3. Run ```composer install``` within the **laravel** folder
 4. Run ```npm install``` within the **laravel** folder
 5. Run ```php artisan migrate``` within the **laravel** folder
