@@ -25,7 +25,7 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        switch(Request::route()->getUri())
+        switch(Request::route()->uri())
         {
             case "login":
                 $rules =
