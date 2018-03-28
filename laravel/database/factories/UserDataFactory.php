@@ -9,5 +9,6 @@ $factory->define(UserData::class, function (Faker $faker) {
         'real_name' => $faker->name,
         'address' => $faker->address,
         'phone' => $faker->phoneNumber,
+        'user_id' => 1,
     ];
 });

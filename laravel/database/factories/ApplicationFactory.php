@@ -1,12 +1,14 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Model\Application;
+use App\Models\Application;
 
-$factory->define(Application::class, function (Faker $faker, $budget) {
+$factory->define(Application::class, function (Faker $faker) {
     return [
         'name' => $faker->words(2, $asText=true),
-        'desciption' => $faker->paragraph(),
-        'budget' => $budget,
+        'description' => $faker->paragraph(),
+        'budget' => 30000,
+        'user_id' => 1,
+        'round_id' => 1,
     ];
 });
