@@ -5,17 +5,43 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Round;
 use App\Models\Judged;
+use App\Models\Application;
+use App\Models\Criteria;
+use App\Models\Score;
 
 class JudgeSeeder extends Seeder
 {
     private function giveFeedback()
     {
-
+        echo "Feedback - Nothing Happens\n";
     }
 
-    private function giveScore()
+    private function giveScore(User $judge, Application $application)
     {
-        
+        echo "Judgement\n";
+        $criterias = Criteria::where("round_id", "=", $application->round_id)->get();
+
+        foreach ($criterias as $criteria) {
+            if ($criteria->type == 'subjective') {
+                $scoreChances = [-2, -1, 0, 1, 2];
+            } else {
+                $scoreChances = [-1, 1];
+            }
+
+            factory(Score::class)
+                ->create([
+                    'score' => $scoreChances[array_rand($scoreChances)],
+                    'application_id' => $application->id,
+                    'criteria_id' => $criteria->id,
+                    'user_id' => $judge->id,
+                ]);
+        }
+
+        factory(Judged::class)
+            ->create([
+                'application_id' => $application->id,
+                'user_id' => $judge->id,
+            ]);
     }
 
     private function checkIfJudged($judgeId, $appId)
@@ -43,18 +69,14 @@ class JudgeSeeder extends Seeder
         $judgeRounds = Round::where('end_date', '<', Carbon::now())->get();
 
         foreach ($judges as $judge) {
-            echo $judge->name . "\n";
             foreach ($judgeRounds as $round) {
                 foreach ($round->applications as $application) {
                     if ($this->checkIfJudged($judge->id, $application->id)) {
-                        echo "Not Judged\n";
                         if (rand(0, 1)) {
                             $this->giveFeedback();
                         } else {
-                            $this->giveScore();
+                            $this->giveScore($judge, $application);
                         }
-                    } else {
-                        echo "Judged\n";
                     }
                 }
             }

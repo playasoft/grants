@@ -1,8 +1,10 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\Score;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(Score::class, function (Faker $faker) 
+{
     return [
         //
     ];

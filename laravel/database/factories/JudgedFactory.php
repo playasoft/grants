@@ -1,9 +1,10 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\Judged;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(Judged::class, function (Faker $faker) {
     return [
-        //
+        'status' => 'judged',
     ];
 });
