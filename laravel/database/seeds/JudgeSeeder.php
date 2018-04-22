@@ -18,30 +18,44 @@ class JudgeSeeder extends Seeder
 
     private function giveScore(User $judge, Application $application)
     {
-        echo "Judgement\n";
-        $criterias = Criteria::where("round_id", "=", $application->round_id)->get();
-
-        foreach ($criterias as $criteria) {
-            if ($criteria->type == 'subjective') {
-                $scoreChances = [-2, -1, 0, 1, 2];
-            } else {
-                $scoreChances = [-1, 1];
-            }
-
-            factory(Score::class)
+        if (rand(1, 10) == 1) {
+            echo "Abstained\n";
+            factory(Judged::class)
                 ->create([
-                    'score' => $scoreChances[array_rand($scoreChances)],
+                    'status' => 'abstain',
                     'application_id' => $application->id,
-                    'criteria_id' => $criteria->id,
                     'user_id' => $judge->id,
                 ]);
         }
 
-        factory(Judged::class)
-            ->create([
-                'application_id' => $application->id,
-                'user_id' => $judge->id,
-            ]);
+        else {
+            echo "Judgement\n";
+            $criterias = Criteria::where("round_id", "=", $application->round_id)->get();
+
+            foreach ($criterias as $criteria) {
+                if ($criteria->type == 'subjective') {
+                    $scoreChances = [-2, -1, 0, 1, 2];
+                } else {
+                    $scoreChances = [-1, 1];
+                }
+
+                factory(Score::class)
+                    ->create([
+                        'score' => $scoreChances[array_rand($scoreChances)],
+                        'application_id' => $application->id,
+                        'criteria_id' => $criteria->id,
+                        'user_id' => $judge->id,
+                    ]);
+            }
+
+            factory(Judged::class)
+                ->create([
+                    'application_id' => $application->id,
+                    'user_id' => $judge->id,
+                ]);
+
+            Score::calculateTotals($application);
+        }
     }
 
     private function checkIfJudged($judgeId, $appId)
