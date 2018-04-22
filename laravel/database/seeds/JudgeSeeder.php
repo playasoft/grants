@@ -8,16 +8,41 @@ use App\Models\Judged;
 use App\Models\Application;
 use App\Models\Criteria;
 use App\Models\Score;
+use App\Models\Question;
+use App\Models\Feedback;
 
 class JudgeSeeder extends Seeder
 {
-    private function giveFeedback()
+    private function giveFeedback(User $judge, Application $application)
     {
-        echo "Feedback - Nothing Happens\n";
+        echo "Feedback\n";
+
+        $questions = Question::where(['round_id' => $application->round_id])->get();
+
+        //TODO: better name for this variable
+        $chance = rand(0, count($questions));
+
+        if ($chance == count($questions)) {
+            factory(Feedback::class)
+                ->create([
+                    'application_id' => $application->id,
+                    'user_id' => $judge->id,
+                    'regarding_type' => 'general',
+                ]);
+        } else {
+            factory(Feedback::class)
+                ->create([
+                    'application_id' => $application->id,
+                    'user_id' => $judge->id,
+                    'regarding_type' => 'question',
+                    'regarding_id' => $questions[$chance]->id,
+                ]);
+        }
     }
 
     private function giveScore(User $judge, Application $application)
     {
+        // 1/10 chance that the judge abstains from judging
         if (rand(1, 10) == 1) {
             echo "Abstained\n";
             factory(Judged::class)
@@ -87,7 +112,7 @@ class JudgeSeeder extends Seeder
                 foreach ($round->applications as $application) {
                     if ($this->checkIfJudged($judge->id, $application->id)) {
                         if (rand(0, 1)) {
-                            $this->giveFeedback();
+                            $this->giveFeedback($judge, $application);
                         } else {
                             $this->giveScore($judge, $application);
                         }
