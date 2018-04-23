@@ -11,7 +11,7 @@ use App\Models\Score;
 use App\Models\Question;
 use App\Models\Feedback;
 
-class JudgeSeeder extends Seeder
+class JudgmentDay extends Seeder
 {
     private function giveFeedback(User $judge, Application $application)
     {
