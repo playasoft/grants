@@ -65,6 +65,8 @@ class RoundsSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * Usage: php artisan db:seed --class=RoundsSeeder
+     *
      * @return void
      */
     public function run()

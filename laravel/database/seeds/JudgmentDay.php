@@ -97,7 +97,12 @@ class JudgmentDay extends Seeder
 
     /**
      *
-     * Run the database seeds.
+     * Run the database seeds. Each time this is ran,
+     * there is a 50% chance that each application will
+     * get judged. To judge all of them, keep running
+     * seed until all applications are judged.
+     *
+     * Usage: php artisan db:seed --class=JudgmentDay
      *
      * @return void
      */
@@ -107,6 +112,7 @@ class JudgmentDay extends Seeder
 
         $judgeRounds = Round::where('end_date', '<', Carbon::now())->get();
 
+        // Each Judge goes through each round and judges/gives feedback to each application 
         foreach ($judges as $judge) {
             foreach ($judgeRounds as $round) {
                 foreach ($round->applications as $application) {
