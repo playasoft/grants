@@ -47,10 +47,8 @@ $(document).ready(function()
                     return {
                         outputString: "",
                         fields:[],
-                        
+                        total:"" 
                     }
-
-
                 },
 
                 mounted :function()
@@ -87,23 +85,21 @@ $(document).ready(function()
                     },
                     fieldTotal:function()
                     {
-                        let total='0';
+                        vm.total='0';
                         //iterate through all current fields on change and add up the cost
                         for(i=0;i<this.fields.length;i++) 
                         {
-                            total = parseInt(total)+ parseInt(this.fields[i].cost);                                                     
+                            vm.total = parseInt(vm.total)+ parseInt(this.fields[i].cost);                                                     
                         }
 
-                        $("#totalField").text(" $"+total.toString()); 
+                        vm.total = ' $'+vm.total;
                     }
 
                 }
 
             });
             //to make sure there's input on an accidental refresh...
-            vm.fieldTotal();
-          
-
+            vm.fieldTotal();         
         })
     }
 });

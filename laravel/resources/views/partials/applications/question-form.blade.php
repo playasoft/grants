@@ -79,7 +79,7 @@ if(isset($answers[$question->id]))
                     <input name="answer" id="{{ $question->id }}-answer" type="hidden" v-bind:value='outputString'>
                     <br>
                     <!--Put THE BUDGET TOTAL  here-->
-                    <div><h3 >Total:<span id="totalField"></span></h3></div>
+                    <div><h3>Total:<span>@{{total}}</span></h3></div>
 
                 </div>
 
