@@ -32,7 +32,7 @@ $(document).ready(function()
 
     if(vueBudget.length > 0)
     {
-        //make a new vue component for each found vue budget class
+        // Make a new vue component for each found vue budget class
         vueBudget.forEach(function(vueBudgetEl)
         {
             let vm = new Vue(
@@ -43,16 +43,19 @@ $(document).ready(function()
                 {
                     return {
                         outputString: "",
-                        fields:[]
+                        fields:[],
+                        total: 0
                     }
                 },
 
                 mounted :function()
                 {
                     let preFilledAnswer = this.$el.getAttribute('answer');
-                    if( preFilledAnswer ){
-                        //Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
-                        this.$set(this, 'fields', JSON.parse( preFilledAnswer ) );
+
+                    if(preFilledAnswer)
+                    {
+                        // Takes the answer string from the "answer" data attribute and parses/maps it into cost:, description:,
+                        this.$set(this, 'fields', JSON.parse(preFilledAnswer));
                     }
                 },
 
@@ -65,6 +68,7 @@ $(document).ready(function()
 
                         // Trigger AJAX autosave behavior
                         $(this.$el).find('[name="answer"]').trigger('change');
+                        this.fieldTotal();
                     },
 
                     addField:function()
@@ -76,10 +80,25 @@ $(document).ready(function()
                     {
                         this.fields.splice(index, 1);
                         this.inputChanged();
+                    },
+
+                    fieldTotal:function()
+                    {
+                        let total = 0;
+
+                        // Iterate through all current fields on change and add up the cost
+                        this.fields.forEach(function(field)
+                        {
+                            total += parseInt(field.cost);
+                        });
+
+                        this.$set(this, 'total' , total);
                     }
                 }
             });
 
+            // To make sure there's a total on page load
+            vm.fieldTotal();
         })
     }
 });
