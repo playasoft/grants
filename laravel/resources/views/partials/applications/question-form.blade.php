@@ -75,16 +75,11 @@ if(isset($answers[$question->id]))
                         </div>
                     </div>
 
+                    <h3>Total: <span>$@{{total}}</span></h3>
+
                     <button type="button" class="btn btn-primary" v-on:click='addField'> Add Item</button>
                     <input name="answer" id="{{ $question->id }}-answer" type="hidden" v-bind:value='outputString'>
-                    <br>
-                    <!--Put THE BUDGET TOTAL  here-->
-                    <div><h3>Total:<span>@{{total}}</span></h3></div>
-
                 </div>
-
-
-
             @endif
         </div>
     {!! Form::close() !!}
