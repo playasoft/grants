@@ -30,7 +30,8 @@ $showrounds = $ongoing->merge($upcoming);
             <tbody>
                 @foreach($showrounds->sortBy('start_date') as $round)
                     <tr>
-                        <td><p>{{ $round->name }}</p>
+                        <td>
+                            <p>{{ $round->name }}</p>
                             @if($round->status()=='ongoing' && Auth::user()->role == 'applicant')
                                  <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
                             @endif
