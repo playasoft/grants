@@ -142,7 +142,8 @@ $showrounds = $ongoing->merge($upcoming);
     @can('create-application')
         {{-- Only allow applications to be created if there is an ongoing funding round --}}
         @if($ongoing->count())
-            <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+           <!-- <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+            button has been removed temporarily-->
         @endif
     @endcan
 
