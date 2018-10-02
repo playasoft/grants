@@ -30,7 +30,12 @@ $showrounds = $ongoing->merge($upcoming);
             <tbody>
                 @foreach($showrounds->sortBy('start_date') as $round)
                     <tr>
-                        <td>{{ $round->name }}</td>
+                        <td>
+                            <p>{{ $round->name }}</p>
+                            @if($round->status()=='ongoing' && Auth::user()->role == 'applicant')
+                                 <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+                            @endif
+                        </td>
                         <td>{{ $round->description }}</td>
                         <td>{{ $round->status() }}</td>
                         <td>{{ $round->start_date }}</td>
@@ -137,7 +142,8 @@ $showrounds = $ongoing->merge($upcoming);
     @can('create-application')
         {{-- Only allow applications to be created if there is an ongoing funding round --}}
         @if($ongoing->count())
-            <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+           <!-- <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
+            button has been removed temporarily-->
         @endif
     @endcan
 
