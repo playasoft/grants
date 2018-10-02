@@ -59,27 +59,26 @@ class ApplicationController extends Controller
         $this->authorize('create-application');
 
         // Only allow applications to be created if there is an ongoing funding round
+        $round = Round::findOrFail($request->input('round_id'));
+
         $ongoing = Round::ongoing();
 
-        if(!$ongoing->count())
+        if($round->status() != 'ongoing')
         {
-            $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
+            $request->session()->flash('error', 'Sorry, the round you selected is not accepting new applications at this time.');
             return redirect('/');
         }
-
-        // Get the current grant round
-        $current = $ongoing->first();
 
         // Get user input
         $input = $request->all();
         $input['budget'] = Helper::filterFloat($input['budget']);
 
         // Validate requested budget against the current round settings
-        if($current->min_request_amount || $current->max_request_amount)
+        if($round->min_request_amount || $round->max_request_amount)
         {
             $validator = Validator::make($input,
             [
-                'budget' => "numeric|min:{$current->min_request_amount}|max:{$current->max_request_amount}"
+                'budget' => "numeric|min:{$round->min_request_amount}|max:{$round->max_request_amount}"
             ]);
 
             if($validator->fails())
@@ -92,7 +91,7 @@ class ApplicationController extends Controller
         $application = new Application;
         $application->status = "new";
         $application->user_id = Auth::user()->id;
-        $application->round_id = $current->id;
+        $application->round_id = $round->id;
         $application->save();
 
         // Save user input
@@ -102,18 +101,16 @@ class ApplicationController extends Controller
         return redirect('/applications/' . $application->id);
     }
 
-    public function createApplicationForm(Request $request)
+    public function createApplicationForm(Request $request, Round $round)
     {
-        // Only allow applications to be created if there is an ongoing funding round
-        $ongoing = Round::ongoing();
-
-        if(!$ongoing->count())
+        // Only allow applications to be created if the selected round is ongoing
+        if($round->status() != 'ongoing')
         {
-            $request->session()->flash('error', 'Sorry, new applications cannot be created at this time.');
+            $request->session()->flash('error', 'Sorry, the round you selected is not accepting new applications at this time.');
             return redirect('/');
         }
 
-        return view('pages/applications/create');
+        return view('pages/applications/create', compact('round'));
     }
 
     public function viewApplication(Application $application, Request $request)
