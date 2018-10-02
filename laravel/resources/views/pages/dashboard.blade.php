@@ -32,9 +32,12 @@ $showrounds = $ongoing->merge($upcoming);
                     <tr>
                         <td>
                             <p>{{ $round->name }}</p>
-                            @if($round->status()=='ongoing' && Auth::user()->role == 'applicant')
-                                 <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
-                            @endif
+
+                            @can('create-application')
+                                @if($round->status() == 'ongoing')
+                                     <a href="/applications/create/{{ $round->id }}" class="btn btn-primary">Apply for a Grant</a>
+                                @endif
+                            @endcan
                         </td>
                         <td>{{ $round->description }}</td>
                         <td>{{ $round->status() }}</td>
@@ -137,14 +140,6 @@ $showrounds = $ongoing->merge($upcoming);
 
     @can('create-question')
         <a href="/questions/create" class="btn btn-primary">Create a Question</a>
-    @endcan
-
-    @can('create-application')
-        {{-- Only allow applications to be created if there is an ongoing funding round --}}
-        @if($ongoing->count())
-           <!-- <a href="/applications/create" class="btn btn-primary">Apply for a Grant</a>
-            button has been removed temporarily-->
-        @endif
     @endcan
 
     @can('view-submitted-application')

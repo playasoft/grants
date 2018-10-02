@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function()
     // Creating and viewing grant applications
     Route::get('/applications', 'ApplicationController@listApplications');
     Route::post('/applications', 'ApplicationController@createApplication');
-    Route::get('/applications/create', 'ApplicationController@createApplicationForm');
+    Route::get('/applications/create/{round}', 'ApplicationController@createApplicationForm');
     Route::get('/applications/{application}', 'ApplicationController@viewApplication');
     Route::post('/applications/{application}', 'ApplicationController@updateApplication');
     Route::get('/applications/{application}/review', 'ApplicationController@reviewApplication');

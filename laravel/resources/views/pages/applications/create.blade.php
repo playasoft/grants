@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>Apply for a Grant</h1>
+    <h1>Apply for a Grant: {{ $round->name }}</h1>
     <hr>
 
     <h2>Before You Start</h2>
@@ -48,6 +48,7 @@
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Basic Description', 'placeholder' => "We are creating an interactive life size anamatronic pony you can climb inside of and really learn what it's like to be equine. Also the whole thing is covered in blinky lights. You've probably never seen this many LEDs in your life!"])
         @include('partials/form/text', ['name' => 'budget', 'label' => 'Requested funds', 'placeholder' => "$1337", 'help' => "Enter the maximum amount of funding your project needs. Don't worry if it's only a rough estimate, you can update this amount later. You'll be asked to provide an itemized list in the next step"])
 
+        <input type="hidden" name="round_id" value="{{ $round->id }}">
         <button type="submit" class="btn btn-primary">Continue</button>
     {!! Form::close() !!}
 @endsection
