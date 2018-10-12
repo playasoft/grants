@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -43,7 +44,11 @@ class PageController extends Controller
         }
         else
         {
-            return view('pages/home', compact('ongoing', 'upcoming'));
+            $featured = new Collection;
+            $featured = $featured->concat($ongoing);
+            $featured = $featured->concat($upcoming);
+
+            return view('pages/home', compact('featured'));
         }
     }
 
