@@ -19,16 +19,16 @@ foreach($rounds as $round)
         <hr>
         @include('partials/form/select',
         [
-            'name' => 'round',
+        	'name' => 'round',
             'label' => 'Round',
             'class' => 'report-event',
             'options' => $roundList
         ])
             
 
-        
+        <button class="btn btn-primary" type="submit" value="Generate Report">Create Report</button>
     {!! Form::close() !!}
  </div>           
  
- <a href="#" ><button class="btn btn-primary">Create Report</button></a>
+ 
 @endsection

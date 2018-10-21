@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
     
     //Create Report
     Route::get('/reports/view', 'ReportsController@view');
+    Route::post('/report/generate', 'ReportsController@generateReport'); 
 });
 
 // Routes only available to judges
