@@ -17,6 +17,7 @@
                     <th>Question</th>
                     <th>Type</th>
                     <th>Required</th>
+                    <th>Export</th>
                 </tr>
             </thead>
 
@@ -31,6 +32,7 @@
                             @endcan
                         <td>{{ $question->type }}</td>
                         <td>{{ $question->required }}</td>
+                        <td>{{ $question->export }}</td>
                     </tr>
                 @endforeach
             </tbody>
