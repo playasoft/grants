@@ -12,23 +12,23 @@ foreach($rounds as $round)
 
 @section('content')
 <div class="report-generator">
-	<input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
+    <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
 
     {!! Form::open(['url' => 'report/generate']) !!}
         <h1>Report Generator</h1>
         <hr>
         @include('partials/form/select',
         [
-        	'name' => 'round',
+            'name' => 'round',
             'label' => 'Round',
             'class' => 'report-event',
             'options' => $roundList
         ])
-            
+
 
         <button class="btn btn-primary" type="submit" value="Generate Report">Create Report</button>
     {!! Form::close() !!}
- </div>           
- 
- 
+ </div>
+
+
 @endsection

@@ -13,15 +13,16 @@ use App\Models\Score;
 
 class ReportsController extends Controller
 {
-    //create a new report
+    // Display report page
     public function view()
-    {   
+    {
         $rounds = Round::orderBy('updated_at', 'asc')->get();
-    	return view('pages/reports/view', compact('rounds'));
+        return view('pages/reports/view', compact('rounds'));
     }
-    
+
+    // Generate a new report
     public function generateReport(Request $request)
-    {   
+    {
         $round = Round::find($request->get('round'));
 
         if(empty($round))
@@ -30,45 +31,39 @@ class ReportsController extends Controller
             return redirect()->back();
         }
 
-        //generate columns for csv file
+        // Generate columns for csv file
         $columns=
         [
-            'project_name'=>'Project Name',
-            'Total_Score'=>'Total Score',
-            'objective_score'=>'Objective Score',
-            'subjective_Score'=>'Subjective Score',
-            'applicant'=>'Applicant',
-            'budget'=>'Budget',
-            'notes'=>'Notes',
-            'vote_to_fund'=>'Votes to Fund',
-            'amount_funded'=>'Amount Funded'
+            'project_name' => 'Project Name',
+            'total_Score' => 'Total Score',
+            'objective_score' => 'Objective Score',
+            'subjective_Score' => 'Subjective Score',
+            'applicant' => 'Applicant',
+            'budget' => 'Budget',
+            'notes' => 'Notes',
+            'vote_to_fund' => 'Votes to Fund',
+            'amount_funded' => 'Amount Funded'
         ];
-        
-        $data=[];
 
+        $data = [];
 
-        //select all applications where round_id is equal to the selected round
-        
-        $applications = $round->applications;
-
-        foreach ($applications as $application) 
+        foreach($round->applications as $application)
         {
-
-            $data[]=
+            $data[] =
             [
-                'project_name'=>$application->name,
-                'total_score'=>$application->total_score,
-                'objective_score'=>$application->objective_score,
-                'subjective_Score'=>$application->subjective_score,
-                'applicant'=>$application->user->data->real_name,
-                'budget'=>$application->budget,
-                'notes'=>'',
-                'vote_to_fund'=>'',
-                'amount_funded'=>''
+                'project_name' => $application->name,
+                'total_score' => $application->total_score,
+                'objective_score' => $application->objective_score,
+                'subjective_Score' => $application->subjective_score,
+                'applicant' => $application->user->data->real_name,
+                'budget' => $application->budget,
+                'notes' => '',
+                'vote_to_fund' => '',
+                'amount_funded' => ''
             ];
-            
+
         }
-       
+
         $this->generateCSV('Applications Report- ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
@@ -106,4 +101,3 @@ class ReportsController extends Controller
         fclose($file);
     }
 }
-
