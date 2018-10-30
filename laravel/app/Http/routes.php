@@ -129,6 +129,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
 
     // Update Scores
     Route::get('/recalcscores', 'ScoreController@recalcScores');
+    
+    //Create Report
+    Route::get('/reports/view', 'ReportsController@view');
+    Route::post('/report/generate', 'ReportsController@generateReport'); 
 });
 
 // Routes only available to judges

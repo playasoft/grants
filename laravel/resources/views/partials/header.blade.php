@@ -18,6 +18,9 @@
                     <li><a href="/questions">Questions</a></li>
                     <li><a href="/criteria">Criteria</a></li>
                     <li><a href="/scores">Scores</a></li>
+                    @if(Auth::check()&& in_array(Auth::user()->role, ['admin']))
+                        <li><a href="/reports/view">Reports</a></li>
+                    @endif
                 @else
                     <li><a href="/about">About</a></li>
                 @endif
