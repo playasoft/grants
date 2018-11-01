@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddExportColumnToQuestionsTable extends Migration
+class AddExportableColumnToQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddExportColumnToQuestionsTable extends Migration
     public function up()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->boolean('export');
+            $table->boolean('exportable');
         });
     }
 
@@ -26,7 +26,7 @@ class AddExportColumnToQuestionsTable extends Migration
     public function down()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->dropColumn('export');
+            $table->dropColumn('exportable');
         });
     }
 }

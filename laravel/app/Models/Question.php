@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['round_id', 'question', 'type', 'options', 'required', 'help', 'export'];
+    protected $fillable = ['round_id', 'question', 'type', 'options', 'required', 'help', 'exportable'];
 
     // Questions belong to a round
     public function round()
