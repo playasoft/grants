@@ -31,8 +31,13 @@ class ReportsController extends Controller
             return redirect()->back();
         }
 
+        //get all exportable questions
+        $exportableQuestions = $round->questions()->where('exportable', true)->get();
+
+        $data = [];
+
         // Generate columns for csv file
-        $columns=
+        $columns =
         [
             'project_name' => 'Project Name',
             'total_Score' => 'Total Score',
@@ -40,28 +45,50 @@ class ReportsController extends Controller
             'subjective_Score' => 'Subjective Score',
             'applicant' => 'Applicant',
             'budget' => 'Budget',
+        ];
+
+        //create columns for exportable questions
+        foreach ($exportableQuestions as $question)
+        {
+            $columns['question_' . $question->id] = $question->question;
+        }
+
+        //append judge columns
+        $columns +=
+        [
             'notes' => 'Notes',
             'vote_to_fund' => 'Votes to Fund',
             'amount_funded' => 'Amount Funded'
         ];
 
-        $data = [];
-
+        //loop through applications and fill static values
         foreach($round->applications as $application)
         {
-            $data[] =
+            
+            $row =
             [
                 'project_name' => $application->name,
                 'total_score' => $application->total_score,
                 'objective_score' => $application->objective_score,
                 'subjective_Score' => $application->subjective_score,
                 'applicant' => $application->user->data->real_name,
-                'budget' => $application->budget,
-                'notes' => '',
-                'vote_to_fund' => '',
-                'amount_funded' => ''
+                'budget' => $application->budget
             ];
 
+            //loop through questions and get the answer for that question
+            foreach ($exportableQuestions as $question) {
+                $row['question_' . $question->id] = $application->answers()->where('question_id', $question->id)->value('answer');
+            }
+
+            //append judge rows
+            $row += 
+            [
+                "notes" => '',
+                "three" => '',
+                "amount_funded" => ''
+            ];
+
+            $data[]=$row;
         }
 
         $this->generateCSV('Applications Report- ' . date('Y-m-d H:i:s'), $columns, $data);

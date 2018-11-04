@@ -43,6 +43,7 @@
         @include('partials/form/textarea', ['name' => 'help', 'label' => 'Help Text', 'placeholder' => "Additional information for the applicant"])
 
         @include('partials/form/checkbox', ['name' => 'required', 'label' => 'Is this question required?', 'options' => ['Yes']])
+        @include('partials/form/checkbox',['name'=> 'exportable', 'label'=> 'Is this question exportable?', 'options' => ['Yes']])
 
         <button type="submit" class="btn btn-primary">Submit New Question</button>
     {!! Form::close() !!}
