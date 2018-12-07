@@ -63,9 +63,8 @@ class ReportsController extends Controller
         ];
 
         //loop through applications and fill static values
-        foreach($round->applications as $application)
+        foreach($round->applications()->where('status', 'submitted')->get() as $application)
         {
-            
             $row =
             [
                 'project_name' => $application->name,
@@ -83,7 +82,7 @@ class ReportsController extends Controller
             }
 
             //append judge rows
-            $row += 
+            $row +=
             [
                 "notes" => '',
                 "three" => '',
