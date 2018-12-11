@@ -73,7 +73,7 @@ class ReportsController extends Controller
                 'objective_score' => $application->objective_score,
                 'subjective_Score' => $application->subjective_score,
                 'applicant' => $application->user->data()->exists() ? $application->user->data->real_name : null,
-                'application_link' => url('/'.'applications/'.$application->id.'/review'),
+                'application_link' => url("/applications/{$application->id}/review"),
                 'applicant_email'=> $application->user->email,
                 'budget' => $application->budget
             ];
