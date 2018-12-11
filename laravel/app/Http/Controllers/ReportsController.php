@@ -40,10 +40,11 @@ class ReportsController extends Controller
         $columns =
         [
             'project_name' => 'Project Name',
-            'total_Score' => 'Total Score',
+            'total_score' => 'Total Score',
             'objective_score' => 'Objective Score',
             'subjective_Score' => 'Subjective Score',
             'applicant' => 'Applicant',
+            'application_link' => 'Application Link',
             'applicant_email'=>'Applicant Email',
             'budget' => 'Budget',
         ];
@@ -62,7 +63,7 @@ class ReportsController extends Controller
             'amount_funded' => 'Amount Funded'
         ];
 
-        //loop through applications and fill static values
+        //loop through submitted applications and fill static values
         foreach($round->applications()->where('status', 'submitted')->get() as $application)
         {
             $row =
@@ -72,6 +73,7 @@ class ReportsController extends Controller
                 'objective_score' => $application->objective_score,
                 'subjective_Score' => $application->subjective_score,
                 'applicant' => $application->user->data()->exists() ? $application->user->data->real_name : null,
+                'application_link' => url('/'.'applications/'.$application->id.'/review'),
                 'applicant_email'=> $application->user->email,
                 'budget' => $application->budget
             ];
