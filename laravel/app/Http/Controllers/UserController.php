@@ -81,7 +81,7 @@ class UserController extends Controller
         {
             if(in_array($this->auth->user()->role, ['admin', 'judge', 'observer']))
             {
-                $users = User::get();
+                $users = User::paginate(100);
                 return view('pages/users/list', compact('users'));
             }
         }
