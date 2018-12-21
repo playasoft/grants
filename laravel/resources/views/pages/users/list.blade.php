@@ -2,6 +2,16 @@
 
 @section('content')
     <h1>All Users</h1>
+        <form class="input-group user-search" method="GET" action="/users">
+            <input type="text" name="search" class=" form-control" placeholder="search by username">
+            <div class="input-group-btn">
+                <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+            
+          
+        </form>
+    
+        
     <hr>
     <table class="table table-hover">
         <thead>
@@ -17,7 +27,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody >
             @foreach($users as $user)
                 <tr>
                     <td><a href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
@@ -32,5 +42,7 @@
             @endforeach
         </tbody>
     </table>
-    {{ $users->links() }}
+    @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator )
+        {{$users->links()}}
+    @endif
 @endsection

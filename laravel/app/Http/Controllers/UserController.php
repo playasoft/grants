@@ -75,18 +75,35 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function listUsers()
+    public function listUsers(Request $request)
     {
         if($this->auth->check())
         {
             if(in_array($this->auth->user()->role, ['admin', 'judge', 'observer']))
             {
-                $users = User::paginate(100);
-                return view('pages/users/list', compact('users'));
+                if($request->query('search'))
+                {
+                    $search = $request->query('search');
+
+                    if(is_numeric($search))
+                    {
+                        $users = [User::find($search)];
+                    }
+                    else
+                    {
+                        $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->take(5)->get();
+                    }
+                }
+                else
+                {
+                    $users = User::paginate(100);
+                }
+                return view('pages/users/list',compact('users'));
             }
         }
     return redirect('');
     }
+    
 
     public function viewUser(User $user, Request $request)
     {
