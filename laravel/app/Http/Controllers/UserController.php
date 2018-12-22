@@ -91,7 +91,7 @@ class UserController extends Controller
                     }
                     else
                     {
-                        $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->take(5)->get();
+                        $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
                     }
                 }
                 else
