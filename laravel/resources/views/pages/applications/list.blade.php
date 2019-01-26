@@ -8,8 +8,8 @@
     </h1>
     @foreach($rounds as $round)
         <hr>
-        <h2> {{ $round->name }} </h2>
-        <div class="scrollable">
+        <h2 class="appTitle"> {{ $round->name }} </h2>
+        <div class="scrollable hidden">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
