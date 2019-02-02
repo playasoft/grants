@@ -12,7 +12,10 @@
     @foreach($rounds as $round)
         <hr>
         <h2 class="appTitle"> {{ $round->name }} </h2>
-        @if(Carbon::parse($round->end_date)->isLastYear())
+
+        <!--check to see if the round end_date is a year old from today-->
+
+        @if(Carbon::parse($round->end_date)->diffInDays(Carbon::now())==365)
             <div class="scrollable hidden">
         @else
             <div class="scrollable">
