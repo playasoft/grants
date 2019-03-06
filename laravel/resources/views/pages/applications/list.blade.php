@@ -15,7 +15,7 @@
 
         <!--check to see if the round end_date is a year old from today-->
 
-        @if(Carbon::parse($round->end_date)->diffInDays(Carbon::now())==365)
+        @if(Carbon::parse($round->end_date)->diffInYears(Carbon::now())>=1)
             <div class="scrollable hidden">
         @else
             <div class="scrollable">
