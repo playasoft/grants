@@ -1,15 +1,25 @@
+<?php
+    use Carbon\Carbon;
+?>
 @extends('app')
 
 @section('content')
     <h1>All Applications
-         @if(in_array(Auth::user()->role, ['admin']))
+        @if(in_array(Auth::user()->role, ['admin']))
             <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;"><a href="/recalcscores">Recalculate Scores</a></div>
         @endif
     </h1>
     @foreach($rounds as $round)
         <hr>
-        <h2> {{ $round->name }} </h2>
-        <div class="scrollable">
+        <h2 class="appTitle"> {{ $round->name }} </h2>
+
+        <!--check to see if the round end_date is a year old from today-->
+
+        @if(Carbon::parse($round->end_date)->diffInYears(Carbon::now())>=1)
+            <div class="scrollable hidden">
+        @else
+            <div class="scrollable">
+        @endif   
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
