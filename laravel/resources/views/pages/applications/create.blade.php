@@ -7,7 +7,7 @@
     <h2>Before You Start</h2>
 
     <div class="btn btn-danger before-you-start">
-        <a href="http://apogaea.com/art-installations/creativegrants/#apply">
+        <a href="https://apogaea.com/creative-grants/#apply">
             REQUIRED READING FOR WRITING A WINNING GRANT (click here before creating your application)
         </a>
     </div>

@@ -19,7 +19,7 @@
         <h2>More information here!</h2>
         <p>
             Visit the Apogaea website for More information, including what is covered by grants, grant FAQ, and other important details:<br>
-            <a href="http://apogaea.com/art-installations/creativegrants/">http://apogaea.com/art-installations/creativegrants/</a>
+            <a href="https://apogaea.com/creative-grants/">https://apogaea.com/creative-grants/</a>
         </p>
 
         <p>
