@@ -104,12 +104,15 @@ if(isset($answers[$question->id]))
                     </ul>
                 </div>
             @endif
+
             <div>
                 <span class="btn btn-primary btn-file">
                     <input type="file" name="document">
-                    <button type="submit" class="btn btn-success">Upload</button>
                 </span>
+
+                <button type="submit" class="btn btn-success">Upload</button>
             </div>
+
             <p>
                 {!! nl2br(e($question->help)) !!}
             </p>

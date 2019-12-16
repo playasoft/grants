@@ -67,7 +67,7 @@
         @if($application->documents->count())
             <div>
                 <ul class="documents">
-                    @foreach($application->documents as $document)
+                    @foreach($application->documents()->whereNull('answer_id')->get() as $document)
                         <li>
                             <a class="document" href="/files/user/{{ $document->file }}">{{ $document->name }}</a>
                             <a href="/documents/{{ $document->id }}/delete" class="btn btn-danger">Delete</a>
