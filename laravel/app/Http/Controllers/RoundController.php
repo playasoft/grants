@@ -23,7 +23,6 @@ class RoundController extends Controller
     {
         // Double check to make sure the current user is authorized to do this...
         $this->authorize('create-round');
-
         $input = $request->all();
 
         // TODO: Is there a better way to do this automatically?
@@ -32,13 +31,28 @@ class RoundController extends Controller
         $input['max_request_amount'] = Helper::filterFloat($input['max_request_amount']);
         $round = Round::create($input);
 
+        if(is_numeric($input['copy_questions'])) {
+            $oldRound = Round::find($input['copy_questions']);
+
+            if(!empty($oldRound)) {
+                foreach($oldRound->questions as $oldQuestion) {
+                    $newQuestion = $oldQuestion->replicate()->fill([
+                        'round_id' => $round->id
+                    ]);
+
+                    $newQuestion->save();
+                }
+            }
+        }
+
         $request->session()->flash('success', 'Your round has been created.');
         return redirect('/rounds');
     }
 
     function createRoundForm()
     {
-        return view('pages/round/create');
+        $rounds = Round::latest()->get();
+        return view('pages/round/create', compact('rounds'));
     }
 
     function editRound(RoundRequest $request, Round $round)
