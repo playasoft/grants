@@ -3,7 +3,7 @@
 @section('content')
     <h1>Create Application Grant Round</h1>
     <hr>
-    
+
     {!! Form::open(['url' => 'rounds']) !!}
         @include('partials/form/text', ['name' => 'name', 'label' => 'Short name for this Round', 'placeholder' => "Big Money Round"])
         @include('partials/form/textarea',
@@ -20,6 +20,23 @@
         @include('partials/form/text', ['name' => 'max_request_amount', 'label' => 'Maximum application amount', 'placeholder' => "$20,000"])
         @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'placeholder' => "2020-12-15"])
         @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'placeholder' => "2021-1-15"])
+
+        <?php
+
+        $previousRounds = ['' => "Don't copy any questions"];
+
+        foreach($rounds as $round) {
+            $previousRounds[$round->id] = $round->name;
+        }
+
+        ?>
+
+        @include('partials/form/select',
+        [
+            'name' => 'copy_questions',
+            'label' => 'Copy Questions from an Existing Grant Round?',
+            'options' => $previousRounds,
+        ])
 
         <button type="submit" class="btn btn-primary">Create New Grant Round</button>
     {!! Form::close() !!}
