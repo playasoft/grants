@@ -55,7 +55,7 @@ class Send extends Command
         foreach($users as $user_id)
         {
             $user = User::find($user_id);
-            
+
             // Get all notifications for this user
             $notifications = Notification::where('user_to', $user_id)->where('type', 'email')->where('status', 'new')->get();
             $this->dispatchToHandler($user, $notifications);
@@ -72,7 +72,7 @@ class Send extends Command
         {
             $metadata = json_decode($notification->metadata);
 
-            if(isset($this->eventHandler[$metadata->event]))
+            if(isset($metadata->event) && isset($this->eventHandler[$metadata->event]))
             {
                 $handler = $this->eventHandler[$metadata->event];
 
@@ -80,7 +80,7 @@ class Send extends Command
                 {
                     $queue[$handler] = [];
                 }
-                
+
                 $queue[$handler][] = $notification;
             }
         }
