@@ -52,9 +52,13 @@ class ReportsController extends Controller
         //create columns for exportable questions
         foreach ($exportableQuestions as $question)
         {
-            $columns['question_' . $question->id] = $question->question;
+            //Suppress budget fields as they interfere with report formatting
+            if ($question->type != "budget") 
+		    {   
+                $columns['question_' . $question->id] = $question->question;
+            }   
         }
-
+    }
         //append judge columns
         $columns +=
         [
