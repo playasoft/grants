@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
-    protected $fillable = ['name', 'description', 'budget'];
+    protected $fillable = ['name', 'description', 'budget', 'amount_funded'];
 
     // Applications belong to a user
     public function user()
