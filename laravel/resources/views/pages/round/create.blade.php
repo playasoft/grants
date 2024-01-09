@@ -23,7 +23,7 @@
 
         <?php
 
-        $previousRounds = ['' => "Don't copy any questions"];
+        $previousRounds = ['' => "Don't copy any data"];
 
         foreach($rounds as $round) {
             $previousRounds[$round->id] = $round->name;
@@ -33,8 +33,9 @@
 
         @include('partials/form/select',
         [
-            'name' => 'copy_questions',
-            'label' => 'Copy Questions from an Existing Grant Round?',
+            'name' => 'copy_data',
+            'label' => 'Copy Data from an Existing Grant Round?',
+            'help' => 'This will copy all Questions and Critera from the previous round into the new round.',
             'options' => $previousRounds,
         ])
 
