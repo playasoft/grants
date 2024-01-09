@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use DB;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -22,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Tell DBAL to treat enums as strings
+        DB::connection()
+            ->getDoctrineSchemaManager()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('enum', 'string');
+
         Validator::extend('account', function($attribute, $value, $parameters)
         {
             $user = User::where('name', Input::get('name'))->orWhere('email', Input::get('name'))->first();
@@ -57,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
             {
                 return true;
             }
-            
+
             return false;
         });
 

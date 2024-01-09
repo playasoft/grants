@@ -46,7 +46,8 @@ class ReportsController extends Controller
             'applicant' => 'Applicant',
             'application_link' => 'Application Link',
             'applicant_email'=>'Applicant Email',
-            'budget' => 'Budget',
+            'requested_budget' => 'Requested Budget',
+            'approved_budget' => 'Approved Budget',
         ];
 
         //create columns for exportable questions
@@ -75,7 +76,8 @@ class ReportsController extends Controller
                 'applicant' => $application->user->data()->exists() ? $application->user->data->real_name : null,
                 'application_link' => url("/applications/{$application->id}/review"),
                 'applicant_email'=> $application->user->email,
-                'budget' => $application->budget
+                'requested_budget' => $application->requested_budget,
+                'approved_budget' => $application->approved_budget,
             ];
 
             //loop through questions and get the answer for that question

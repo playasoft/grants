@@ -36,11 +36,11 @@
 
         @include('partials/form/text',
         [
-            'name' => 'budget',
+            'name' => 'requested_budget',
             'label' => 'Requested funds',
             'placeholder' => "$1337",
             'help' => "The maximum amount your project needs",
-            'value' => '$' . $application->budget
+            'value' => '$' . $application->requested_budget
         ])
     {!! Form::close() !!}
 

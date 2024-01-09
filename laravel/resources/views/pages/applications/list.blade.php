@@ -19,13 +19,13 @@
             <div class="scrollable hidden">
         @else
             <div class="scrollable">
-        @endif   
+        @endif
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Applicant</th>
-                        <th>Budget</th>
+                        <th>Requested Budget</th>
                         <th>Status</th>
                         <th>Judge Status</th>
                         <th>Objective Score</th>
@@ -50,7 +50,7 @@
                                 <td>
                                     <a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a>
                                 </td>
-                                <td>${{ $application->budget }}</td>
+                                <td>${{ $application->requested_budget }}</td>
                                 <td>{{ $application->status }}</td>
                                 <td>{{ $application->judge_status }}</td>
                                 <td>{{ $application->objective_score }}</td>

@@ -109,7 +109,7 @@
             </div>
 
             <div class="title">Requested funds</div>
-            <div class="title ans">${{ $application->budget }}</div>
+            <div class="title ans">${{ $application->requested_budget }}</div>
 
             @can('create-feedback')
                 <a href="/applications/{{ $application->id }}/feedback" class="btn btn-primary">Ask General Question</a>
