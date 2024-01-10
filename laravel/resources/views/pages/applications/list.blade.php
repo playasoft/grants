@@ -26,6 +26,7 @@
                         <th>Name</th>
                         <th>Applicant</th>
                         <th>Requested Budget</th>
+                        <th>Approved Budget</th>
                         <th>Status</th>
                         <th>Judge Status</th>
                         <th>Objective Score</th>
@@ -51,6 +52,7 @@
                                     <a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a>
                                 </td>
                                 <td>${{ $application->requested_budget }}</td>
+                                <td>${{ $application->approved_budget }}</td>
                                 <td>{{ $application->status }}</td>
                                 <td>{{ $application->judge_status }}</td>
                                 <td>{{ $application->objective_score }}</td>

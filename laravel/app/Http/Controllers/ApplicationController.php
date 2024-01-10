@@ -394,8 +394,12 @@ class ApplicationController extends Controller
         // Check if current user has permission
         $this->authorize('approve-application');
 
+        $input = $request->all();
+        $approved_budget = Helper::filterFloat($input['approved_budget']);
+
         $application->status = 'accepted';
         $application->judge_status = 'finalized';
+        $application->approved_budget = $approved_budget;
         $application->save();
 
         // Send notification to judges and applicant

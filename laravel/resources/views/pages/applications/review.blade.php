@@ -440,13 +440,31 @@
                         </b>
                     </p>
 
-                    {!! Form::open(['url' => "applications/{$application->id}/approve", 'style' => "display: inline-block"]) !!}
-                        <button type="submit" class="btn btn-success">Approve Application</button>
-                    {!! Form::close() !!}
+                    <div class="application-status">
+                        @include('partials/form/radio', [
+                            'name' => 'status',
+                            'label' => 'Application Status',
+                            'options' => [
+                                '' => 'Pending',
+                                'approve' => 'Approved',
+                                'deny' => 'Denied'
+                            ],
+                        ])
+                    </div>
 
-                    {!! Form::open(['url' => "applications/{$application->id}/deny", 'style' => "display: inline-block"]) !!}
-                        <button type="submit" class="btn btn-danger">Deny Application</button>
-                    {!! Form::close() !!}
+                    <div class="approved hidden">
+                        {!! Form::open(['url' => "applications/{$application->id}/approve", 'style' => "display: inline-block"]) !!}
+                            @include('partials/form/text', ['name' => 'approved_budget', 'label' => 'Approved Budget', 'placeholder' => "$1337"])
+
+                            <button type="submit" class="btn btn-success">Approve Application</button>
+                        {!! Form::close() !!}
+                    </div>
+
+                    <div class="denied hidden">
+                        {!! Form::open(['url' => "applications/{$application->id}/deny", 'style' => "display: inline-block"]) !!}
+                            <button type="submit" class="btn btn-danger">Deny Application</button>
+                        {!! Form::close() !!}
+                    </div>
                 @endif
             @endcan
         </div>
