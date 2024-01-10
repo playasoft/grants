@@ -71,14 +71,14 @@ class ApplicationController extends Controller
 
         // Get user input
         $input = $request->all();
-        $input['budget'] = Helper::filterFloat($input['budget']);
+        $input['requested_budget'] = Helper::filterFloat($input['requested_budget']);
 
         // Validate requested budget against the current round settings
         if($round->min_request_amount || $round->max_request_amount)
         {
             $validator = Validator::make($input,
             [
-                'budget' => "numeric|min:{$round->min_request_amount}|max:{$round->max_request_amount}"
+                'requested_budget' => "numeric|min:{$round->min_request_amount}|max:{$round->max_request_amount}"
             ]);
 
             if($validator->fails())
@@ -170,14 +170,14 @@ class ApplicationController extends Controller
 
         // Get user input
         $input = $request->all();
-        $input['budget'] = Helper::filterFloat($input['budget']);
+        $input['requested_budget'] = Helper::filterFloat($input['requested_budget']);
 
         // Validate requested budget against the current round settings
         if($current->min_request_amount || $current->max_request_amount)
         {
             $validator = Validator::make($input,
             [
-                'budget' => "numeric|min:{$current->min_request_amount}|max:{$current->max_request_amount}"
+                'requested_budget' => "numeric|min:{$current->min_request_amount}|max:{$current->max_request_amount}"
             ]);
 
             if($validator->fails())
@@ -394,8 +394,12 @@ class ApplicationController extends Controller
         // Check if current user has permission
         $this->authorize('approve-application');
 
+        $input = $request->all();
+        $approved_budget = Helper::filterFloat($input['approved_budget']);
+
         $application->status = 'accepted';
         $application->judge_status = 'finalized';
+        $application->approved_budget = $approved_budget;
         $application->save();
 
         // Send notification to judges and applicant

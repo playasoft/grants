@@ -80,7 +80,7 @@ $showrounds = $ongoing->merge($upcoming);
                         @can('view-submitted-application')
                             <th>Applicant</th>
                         @endcan
-                        <th>Budget</th>
+                        <th>Requested Budget</th>
                         <th>Status</th>
                         <th>Created</th>
                         <th>Last Modified</th>
@@ -104,7 +104,7 @@ $showrounds = $ongoing->merge($upcoming);
                                 @can('view-submitted-application')
                                     <td><a href="/users/{{ $application->user->id }}">{{ $application->user->name }}</a></td>
                                 @endcan
-                                <td>${{ $application->budget }}</td>
+                                <td>${{ $application->requested_budget }}</td>
                                 <td>{{ $application->status }}</td>
                                 <td>{{ $application->created_at->format('Y-m-d H:i:s e') }}</td>
                                 <td>{{ $application->updated_at->format('Y-m-d H:i:s e') }}</td>

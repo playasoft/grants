@@ -4,3 +4,4 @@ require('./alerts');
 require('./menu');
 require('./scores');
 require('./applications');
+require('./review');

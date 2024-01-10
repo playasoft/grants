@@ -28,7 +28,7 @@ class ApplicationRequest extends Request
         [
             'name' => "required|min:3",
             'description' => "required|min:100",
-            'budget' => "required|" . Helper::$moneyFormat,
+            'requested_budget' => "required|" . Helper::$moneyFormat,
         ];
     }
 }
