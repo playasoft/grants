@@ -31,16 +31,28 @@ class RoundController extends Controller
         $input['max_request_amount'] = Helper::filterFloat($input['max_request_amount']);
         $round = Round::create($input);
 
-        if(is_numeric($input['copy_questions'])) {
-            $oldRound = Round::find($input['copy_questions']);
+        // Should we copy data from an old grant round?
+        if(is_numeric($input['copy_data'])) {
+            // Check if the requested round actually exists
+            $oldRound = Round::find($input['copy_data']);
 
             if(!empty($oldRound)) {
+                // Loop through old questions and copy into the new round
                 foreach($oldRound->questions as $oldQuestion) {
                     $newQuestion = $oldQuestion->replicate()->fill([
                         'round_id' => $round->id
                     ]);
 
                     $newQuestion->save();
+                }
+
+                // Loop through old criteria and copy into the new round
+                foreach($oldRound->criteria as $oldCriteria) {
+                    $newCriteria = $oldCriteria->replicate()->fill([
+                        'round_id' => $round->id
+                    ]);
+
+                    $newCriteria->save();
                 }
             }
         }
