@@ -15,6 +15,7 @@ use App\Models\Question;
 use App\Models\Criteria;
 use App\Models\Judged;
 use App\Models\User;
+use App\Models\UserData;
 use App\Models\Score;
 use App\Models\Round;
 
@@ -39,15 +40,25 @@ class SignatureController extends Controller
       $this->Doc_Seal_API = env('DOCSEAL_API_URL');
   }
   
+private function SetCurl ($action)
+{
 
+  $curl=curl_init();
+
+
+  return $curl;
+
+
+}
 
     public function createSigning(Application $application, User $user)
     {
 
 
+      //Find User ID Data
+      $user_data = UserData::where ('user_id', $user->id)->first();
 
         $curl = curl_init();
-
         curl_setopt_array($curl, [
           //Read env file to set URL
           CURLOPT_URL => $this->Doc_Seal_API,
@@ -70,8 +81,8 @@ class SignatureController extends Controller
                             "values" => [],
                             "application_key" => "string",
                             "fields" => [
-                                ["name" => "Artist", "default_value" => $user->real_name],
-                                ["name" => "Amount", "default_value" => $application->amount_funded],
+                                ["name" => "Artist", "default_value" => $user_data->real_name],
+                                ["name" => "Amount", "default_value" => $application->approved_budget],
                                 ["name" => "art_name", "default_value" => $application->name],
                                 ["name" => "Description", "default_value" => $application->description]
                             ]
@@ -91,33 +102,41 @@ class SignatureController extends Controller
         
         $response = curl_exec($curl);
         $err = curl_error($curl);
+        $responseData = json_decode($response, true);
         
-              
-       if (curl_errno($curl) ==0) {
+        if (curl_errno($curl)){
           curl_close($curl);
-          $responseData = json_decode($response, true);
-          //Create a new signature and set values; slug is appeneded to the Contract URL to create the signature link. 
+          return array("error" => $err);
+                  }
+        elseif (array_key_exists('error',$responseData)){
+          curl_close($curl);
+          return $responseData;
+        }
+        else {
+         #Create a new signature and set values; slug is appeneded to the Contract URL to create the signature link. 
           $newContract = new Signature();
           $newContract->contractID = $responseData[0]["submission_id"];
           $newContract->slug = $responseData[0]["slug"];
           $newContract->status = "sent";
-          $newContract->sent = $responseData[0]["sent_at"];
+          $newContract->created_at = strtotime($responseData[0]["sent_at"]);
+          $newContract->save();
           return $newContract;
-      }
+        }
 
-      else {
-          //return the error
-          $err = curl_error($curl);
-          curl_close($curl);
+          
+          
+       }
 
-          return [$err];
+      
 
-
+                      
+    
 
         
-    }
+    
 
-  }
+
+  
 
     public function SigningStatus(Signature $signature) {
 
@@ -139,26 +158,30 @@ class SignatureController extends Controller
   
       $response = curl_exec($curl);
       $err = curl_error($curl);
-  
-       
-      curl_close($curl);
-  
+      
+      
+      if ($err != null) {
+        return "Error";
+      }
+
+ 
       $responseData = json_decode($response, true);
   
-  
       if ($responseData["submitters"][0]["opened_at"] == null ) {
-          return "Sent";
+        $signature->created_at = strtotime($responseData["submitters"][0]["sent_at"]);
+        $signature->save();
+        return "Sent";
       }
       elseif ($responseData["submitters"][0]["completed_at"] == null ) {
           $signature->status="opened";
-          $signature->opened = $responseData["submitters"][0]["opened_at"];
+          $signature->updated_at = strtotime($responseData["submitters"][0]["opened_at"]);
           $signature->save();
           return "Opened";
         
         }
       else {
         $signature->status="signed";
-        $signature->signed = $responseData["submitters"][0]["completed_at"];
+        $signature->updated_at = strtotime($responseData["submitters"][0]["completed_at"]);
         $signature->save();
         return "Signed";
       }
