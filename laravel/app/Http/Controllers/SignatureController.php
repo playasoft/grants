@@ -40,14 +40,51 @@ class SignatureController extends Controller
       $this->Doc_Seal_API = env('DOCSEAL_API_URL');
   }
   
-private function SetCurl ($action)
+public function setStream($action, $data)
 {
 
-  $curl=curl_init();
+  //Set URL
+  $url = $this->Doc_Seal_API;
 
+  //Set Method for action
+  if ($action === "Status") 
+  {
+    //Set method to GET, and then append data passed (which should be the contract ID) to url
+      $method ="GET";
+      $url = $url."/$data";
+  }
+  elseif ($action === "Create")
+    {
+      $method="POST";
+    /*  $contextOptions = [
+        'http' => [
+          'content' => json_encode($data),
+        ],
+      ];
+    */
+    
+    }
+        
+    $contextOptions = [
+      'http' => [
+          'method' => $method,
+          'header' =>  "Content-type: application/json\r\n". $this->Auth_token,
+          'content' => json_encode($data),
+      ],
+      'ssl' => [
+          'verify_peer' => true,
+          'verify_peer_name' => true,
+          'allow_self_signed' => false,
+      ],
+  ];
+  
+  $stream_array = [
+    'url' => $url,
+    'contextOptions' => stream_context_create($contextOptions),
+  ];
 
-  return $curl;
-
+  return $stream_array;
+  
 
 }
 
@@ -58,74 +95,62 @@ private function SetCurl ($action)
       //Find User ID Data
       $user_data = UserData::where ('user_id', $user->id)->first();
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-          //Read env file to set URL
-          CURLOPT_URL => $this->Doc_Seal_API,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",        
-          CURLOPT_POSTFIELDS => json_encode([
-            //read env for docseal template to use
-            "template_id" => $this->template_ID,
-            "submission" => [
-                [
-                    "submitters" => [
-                        [
-                            "name" => $user->real_name,
-                            "email" => $user->email,
-                            "phone" => $user->phone,
-                            "values" => [],
-                            "application_key" => "string",
-                            "fields" => [
-                                ["name" => "Artist", "default_value" => $user_data->real_name],
-                                ["name" => "Amount", "default_value" => $application->approved_budget],
-                                ["name" => "art_name", "default_value" => $application->name],
-                                ["name" => "Description", "default_value" => $application->description]
-                            ]
+      // Set payload to create the signature
+      $signature_payload = [
+        "template_id" => $this->template_ID,
+        "submission" => [
+            [
+                "submitters" => [
+                    [
+                        "name" => $user_data->real_name,
+                        "email" => $user_data->email,
+                        "phone" => $user_data->phone,
+                        "values" => [],
+                        "application_key" => "string",
+                        "fields" => [
+                            ["name" => "Artist", "default_value" => $user_data->real_name],
+                            ["name" => "Amount", "default_value" => $application->approved_budget],
+                            ["name" => "art_name", "default_value" => $application->name],
+                            ["name" => "Description", "default_value" => $application->description]
                         ]
                     ]
                 ]
             ]
-                            ]),
+        ]
+      ];
+
+      // Get stream array
+      $stream_array = $this->setStream("Create", $signature_payload);
+      
+      //Open file and get response
+      $response = file_get_contents($stream_array['url'], false, $stream_array['contextOptions']);
 
 
-
-          CURLOPT_HTTPHEADER => [
-            $this->Auth_token,
-            "content-type: application/json"
-          ],
-        ]);
-        
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+       if ($response === false) {
+          return array("error" => error_get_last());
+      }
+      else {
         $responseData = json_decode($response, true);
         
-        if (curl_errno($curl)){
-          curl_close($curl);
-          return array("error" => $err);
-                  }
-        elseif (array_key_exists('error',$responseData)){
-          curl_close($curl);
+        if (array_key_exists('error',$responseData)){
           return $responseData;
         }
         else {
-         #Create a new signature and set values; slug is appeneded to the Contract URL to create the signature link. 
-          $newContract = new Signature();
-          $newContract->contractID = $responseData[0]["submission_id"];
-          $newContract->slug = $responseData[0]["slug"];
-          $newContract->status = "sent";
-          $newContract->created_at = strtotime($responseData[0]["sent_at"]);
-          $newContract->save();
-          return $newContract;
-        }
+        #Create a new signature and set values; slug is appeneded to the Contract URL to create the signature link. 
+         $newContract = new Signature();
+         $newContract->contractID = $responseData[0]["submission_id"];
+         $newContract->slug = $responseData[0]["slug"];
+         $newContract->status = "sent";
+         $newContract->created_at = strtotime($responseData[0]["sent_at"]);
+         $newContract->save();
+         return $newContract;
+       }
+
+      }
+
 
           
-          
-       }
+    }
 
       
 
@@ -140,56 +165,38 @@ private function SetCurl ($action)
 
     public function SigningStatus(Signature $signature) {
 
-      $curl = curl_init();
-  
-      //Call API to check status, updates status and returns summary
-      curl_setopt_array($curl, [
-      CURLOPT_URL => $this->Doc_Seal_API . "/" . $signature->contractID,
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => [
-        $this->Auth_token
-      ],
-      ]);
-  
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-      
-      
-      if ($err != null) {
+      // Set stream options, passing Status and the Contract ID
+      $stream_array = $this->SetStream("Status", $signature->contractID);
+
+      $response = file_get_contents($stream_array['url'], false, $stream_array['contextOptions']);
+
+      if ($response === false) {
         return "Error";
       }
+      else {
 
- 
-      $responseData = json_decode($response, true);
-  
-      if ($responseData["submitters"][0]["opened_at"] == null ) {
-        $signature->created_at = strtotime($responseData["submitters"][0]["sent_at"]);
-        $signature->save();
-        return "Sent";
-      }
-      elseif ($responseData["submitters"][0]["completed_at"] == null ) {
-          $signature->status="opened";
+        $responseData = json_decode($response, true);
+
+        if ($responseData["submitters"][0]["opened_at"] == null) {
+          $signature->created_at = strtotime($responseData["submitters"][0]["sent_at"]);
+          $signature->save();
+          return "Sent";
+        } elseif ($responseData["submitters"][0]["completed_at"] == null) {
+          $signature->status = "opened";
           $signature->updated_at = strtotime($responseData["submitters"][0]["opened_at"]);
           $signature->save();
           return "Opened";
-        
+        } else {
+          $signature->status = "signed";
+          $signature->updated_at = strtotime($responseData["submitters"][0]["completed_at"]);
+          $signature->save();
+          return "Signed";
         }
-      else {
-        $signature->status="signed";
-        $signature->updated_at = strtotime($responseData["submitters"][0]["completed_at"]);
-        $signature->save();
-        return "Signed";
-      }
-  
-      }
-  
-  
-  
-      }
+      } 
+    } 
+
+}
+
+
   
 

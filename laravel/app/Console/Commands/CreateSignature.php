@@ -49,7 +49,7 @@ class CreateSignature extends Command
         $application = Application::where ('id', $applicationIDParm)->first();
         $testSign = new SignatureController();
         $signature = $testSign -> createSigning($application, $application->user);
-        if (array_key_exists('error',$signature)){
+       if (array_key_exists('error',$signature)){
             print_r ("Error: ");
             Print_r ($signature['error']);
             return $signature;
@@ -60,7 +60,7 @@ class CreateSignature extends Command
             return $signature->contractID;
 
         }
-
+       
 
         
         
