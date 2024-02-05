@@ -18,7 +18,7 @@ class CreateSignature extends Command
      *
      * @var string
      */
-    protected $signature = 'create:signature {number}';
+    protected $signature = 'signature:create {applicationID}';
 
     /**
      * The console command description.
@@ -44,26 +44,20 @@ class CreateSignature extends Command
      */
     public function handle()
     {
-        
-        $applicationIDParm = $this->argument('number');
-        $application = Application::where ('id', $applicationIDParm)->first();
+        $applicationID = $this->argument('applicationID');
+        $application = Application::where ('id', $applicationID)->first();
         $testSign = new SignatureController();
-        $signature = $testSign -> createSigning($application, $application->user);
-       if (array_key_exists('error',$signature)){
-            print_r ("Error: ");
-            Print_r ($signature['error']);
+        $signature = $testSign->createSigning($application, $application->user);
+
+        if(isset($signature['error']))
+        {
+            dump("Error: {$signature['error']}");
             return $signature;
-          }
-        else {
-            print_r ("Contract ID: ");
-            print_r ($signature->contractID);
-            return $signature->contractID;
-
         }
-       
-
-        
-        
-        //
+        else
+        {
+            dump("Contract ID: {$signature->contractID}");
+            return $signature->contractID;
+        }
     }
 }

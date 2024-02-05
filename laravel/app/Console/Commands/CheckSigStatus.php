@@ -15,7 +15,7 @@ class CheckSigStatus extends Command
      *
      * @var string
      */
-    protected $signature = 'check:signature {number}';
+    protected $signature = 'signature:check {contractID}';
 
     /**
      * The console command description.
@@ -42,13 +42,12 @@ class CheckSigStatus extends Command
     public function handle()
     {
         //pass the Contract ID to look up the contract, check status and then update object and returns the status.
-
-        $contractIDParm = $this->argument('number');
-        $signature = Signature::where ('contractID', $contractIDParm)->first();
+        $contractID = $this->argument('contractID');
+        $signature = Signature::where ('contractID', $contractID)->first();
         $testSign = new SignatureController();
-        $status = $testSign -> signingStatus($signature);
+        $status = $testSign->signingStatus($signature);
+
         print_r ($status);
         return $status;
-        //
     }
 }
