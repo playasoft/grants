@@ -17,6 +17,10 @@ class CreateSignatureTable extends Migration
             $table->string('contractID');
             $table->text('slug');
             $table->enum('status', ['sent', 'opened', 'signed']);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('application_id')->unsigned();
+            $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
             $table->timestamps(); // Use timestamps instead of individual date columns
         });
     }

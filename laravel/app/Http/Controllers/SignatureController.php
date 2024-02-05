@@ -129,7 +129,10 @@ class SignatureController extends Controller
                 $newContract->slug = $responseData[0]["slug"];
                 $newContract->status = "sent";
                 $newContract->created_at = strtotime($responseData[0]["sent_at"]);
+                $newContract->user_id = $user->id;
+                $newContract->application_id = $application->id;
                 $newContract->save();
+
                 return $newContract;
             }
         }
