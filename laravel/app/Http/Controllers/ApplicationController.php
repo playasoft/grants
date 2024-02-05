@@ -21,6 +21,7 @@ use App\Events\ApplicationSubmitted;
 use App\Events\ApplicationChanged;
 use App\Misc\Helper;
 use Illuminate\Support\Facades\Validator;
+use Artisan;
 
 class ApplicationController extends Controller
 {
@@ -403,7 +404,10 @@ class ApplicationController extends Controller
         $application->save();
 
         // Send notification to judges and applicant
-//        event(new ApplicationChanged($application));
+        // event(new ApplicationChanged($application));
+
+        // Create a contract document to be signed via DocuSeal
+        Artisan::call("signature:create", ['applicationID' => $application->id]);
 
         $request->session()->flash('success', 'This application has been approved.');
         return redirect('/applications');
@@ -420,7 +424,7 @@ class ApplicationController extends Controller
         $application->save();
 
         // Send notification to judges and applicant
-//        event(new ApplicationChanged($application));
+        // event(new ApplicationChanged($application));
 
         $request->session()->flash('success', 'This application has been denied.');
         return redirect('/applications');
