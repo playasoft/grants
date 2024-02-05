@@ -87,7 +87,7 @@ class SignatureController extends Controller
                     [
                         [
                             "name" => $user_data->real_name,
-                            "email" => $user_data->email,
+                            "email" => $user->email,
                             "phone" => $user_data->phone,
                             "values" => [],
                             "application_key" => "string",
