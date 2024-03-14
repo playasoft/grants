@@ -20,6 +20,7 @@ use App\Models\Round;
 use App\Http\Requests\ApplicationRequest;
 use App\Misc\Helper;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class SignatureController extends Controller
 {
@@ -27,12 +28,22 @@ class SignatureController extends Controller
     public $Auth_token;
     public $template_ID;
     public $Doc_Seal_API;
+    public $email_body;
+    public $email_subject;
+    public $bcc_signer;
 
     public function __construct()
     {
         $this->Auth_token = "X-Auth-Token:" . env('DOCSEAL_TOKEN');
         $this->template_ID = env('DOCSEAL_TEMPLATE');
         $this->Doc_Seal_API = env('DOCSEAL_API_URL');
+        $this->email_subject= env('EMAIL_SUBJECT');
+        $this->email_body= env('EMAIL_BODY');
+        // replace new line characters with PHP New line break for Doc Seal to format email correctly
+        $this->email_body=  str_replace('\n', PHP_EOL, $this->email_body);
+        $this->bcc_signer= env('EMAIL_FOR_SIGNED_CONTRACTS');
+
+
     }
 
     public function setStream($action, $data)
@@ -78,9 +89,22 @@ class SignatureController extends Controller
         //Find User ID Data
         $user_data = UserData::where ('user_id', $user->id)->first();
 
+        //If the user name is null, add a message to the user to change their name for the email and contract
+        if (is_null($user_data->real_name)) 
+        {
+            $user_data->real_name = "We have no record of your name, please add it:";
+        }
+
+
         // Set payload to create the signature
         $signature_payload = [
             "template_id" => $this->template_ID,
+            "bcc_completed" => $this->bcc_signer,
+            "message" => [
+                  "subject" => $this->email_subject,
+                  "body" => $this->email_body
+
+            ],
             "submission" => [
                 [
                     "submitters" =>
@@ -108,6 +132,7 @@ class SignatureController extends Controller
 
         //Open file and get response
         $response = file_get_contents($stream_array['url'], false, $stream_array['contextOptions']);
+
 
         if($response === false)
         {
@@ -146,6 +171,8 @@ class SignatureController extends Controller
 
         // Default to error, if there is a response then the output will be overwritten
         $status = "error";
+        logger('sigstatus');
+        logger($signature->contractID);
 
         if($response)
         {
@@ -166,7 +193,7 @@ class SignatureController extends Controller
                 $status = "signed";
             }
         }
-
+        
         $signature->status = $status;
         $signature->save();
 
