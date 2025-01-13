@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth']], function()
 });
 
 // Routes available to both admins and judges
-Route::group(['middleware' => ['auth', 'role:admin|judge|observer']], function()
+Route::group(['middleware' => ['auth', 'role:admin|judge|kitten|observer']], function()
 {
     // Viewing questions
     Route::get('/questions', 'QuestionController@listQuestions');
@@ -129,14 +129,14 @@ Route::group(['middleware' => ['auth', 'role:admin']], function()
 
     // Update Scores
     Route::get('/recalcscores', 'ScoreController@recalcScores');
-    
+
     //Create Report
     Route::get('/reports/view', 'ReportsController@view');
-    Route::post('/report/generate', 'ReportsController@generateReport'); 
+    Route::post('/report/generate', 'ReportsController@generateReport');
 });
 
 // Routes only available to judges
-Route::group(['middleware' => ['auth', 'role:judge']], function()
+Route::group(['middleware' => ['auth', 'role:judge|kitten']], function()
 {
     // Scoring criteria
     Route::post('/score', 'ScoreController@scoreCriteria');

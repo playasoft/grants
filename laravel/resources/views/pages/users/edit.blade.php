@@ -17,6 +17,7 @@
             [
                 'applicant' => "Applicant",
                 'judge' => "Judge",
+                'kitten' => "Kitten",
                 'observer' => "Observer",
                 'admin' => "Admin",
             ],

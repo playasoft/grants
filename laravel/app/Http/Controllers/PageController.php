@@ -25,7 +25,7 @@ class PageController extends Controller
 
         if($this->auth->check())
         {
-            if(in_array($this->auth->user()->role, ['judge', 'observer']))
+            if(in_array($this->auth->user()->role, ['judge', 'kitten', 'observer']))
             {
                 // Get all applications where the application is submitted and the judge has not submitted a score(judged).
                 // TODO: There should be a way to make this work with a single eloquent db access via a left join

@@ -122,7 +122,7 @@ class Send extends Command
         }
 
         // Send daily digest email with different templates based on the user it's being sent to
-        if(in_array($user->role, ['judge', 'observer']))
+        if(in_array($user->role, ['judge', 'kitten', 'observer']))
         {
             echo "Sending daily digest email to judge: {$user->email}\n";
             Mail::send("emails/judge-daily-digest", compact('applications'), function ($message) use ($user)
