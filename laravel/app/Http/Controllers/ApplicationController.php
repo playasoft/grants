@@ -34,7 +34,7 @@ class ApplicationController extends Controller
             {
                 $applications = Application::orderBy('updated_at', 'asc')->get();
             }
-            elseif(in_array($this->auth->user()->role, ['judge', 'observer']))
+            elseif(in_array($this->auth->user()->role, ['judge', 'kitten', 'observer']))
             {
                 $applications = Application::whereIn('status', ['submitted', 'review', 'accepted', 'rejected'])->orderBy('updated_at', 'asc')->get();
             }
@@ -359,13 +359,20 @@ class ApplicationController extends Controller
             $judged->application_id = $application->id;
             $judged->user_id = Auth::user()->id;
 
-            if($request->exists('abstain'))
+            if(Auth::user()->role == 'kitten')
             {
                 $judged->status = 'abstain';
             }
             else
             {
-                $judged->status = 'judged';
+                if($request->exists('abstain'))
+                {
+                    $judged->status = 'abstain';
+                }
+                else
+                {
+                    $judged->status = 'judged';
+                }
             }
 
             $judged->save();

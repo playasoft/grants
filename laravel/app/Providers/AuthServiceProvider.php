@@ -70,6 +70,17 @@ class AuthServiceProvider extends ServiceProvider
             'create-feedback',
         ],
 
+        'kitten' =>
+        [
+            'view-users',
+            'view-questions',
+            'view-criteria',
+            'view-round',
+            'view-submitted-application',
+            'score-application',
+            'create-feedback',
+        ],
+
         'observer' =>
         [
             'view-submitted-application',

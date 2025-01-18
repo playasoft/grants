@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         if($this->auth->check())
         {
-            if(in_array($this->auth->user()->role, ['admin', 'judge', 'observer']))
+            if(in_array($this->auth->user()->role, ['admin', 'judge', 'kitten', 'observer']))
             {
                 if($request->query('search'))
                 {
@@ -103,7 +103,7 @@ class UserController extends Controller
         }
     return redirect('');
     }
-    
+
 
     public function viewUser(User $user, Request $request)
     {
@@ -121,6 +121,7 @@ class UserController extends Controller
 
         // Remove empty inputs
         $input = array_filter($input);
+
 
         if($input['type'] == 'user')
         {

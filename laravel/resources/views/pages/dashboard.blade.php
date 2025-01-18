@@ -57,7 +57,7 @@ $showrounds = $ongoing->merge($upcoming);
     @endif
 
     @if($applications->count())
-        @if(in_array(Auth::user()->role, ['judge', 'observer']))
+        @if(in_array(Auth::user()->role, ['judge', 'kitten', 'observer']))
             <h2>Applications Requiring Review</h2>
         @else
             <h2>Your Applications</h2>
@@ -127,7 +127,7 @@ $showrounds = $ongoing->merge($upcoming);
             <br>
         @endforeach
     @else
-        @if(in_array(Auth::user()->role, ['judge', 'observer']))
+        @if(in_array(Auth::user()->role, ['judge', 'kitten', 'observer']))
             <div class="general-alert alert alert-info" role="alert">
                 <b>Nothing Found</b> There are no applications which require review. Either none have been finalized yet, or all applications have already been judged.
             </div>

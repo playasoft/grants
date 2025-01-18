@@ -53,7 +53,7 @@ class QueueJudgeMessage
         ];
 
         // Loop through all judges and queue a notification for them
-        $judges = User::whereIn('role', ['judge', 'observer'])->get();
+        $judges = User::whereIn('role', ['judge', 'kitten', 'observer'])->get();
 
         foreach($judges as $judge)
         {
@@ -84,7 +84,7 @@ class QueueJudgeMessage
         }
 
         // Loop through all judges and queue a notification for them
-        $judges = User::whereIn('role', ['judge', 'observer'])->get();
+        $judges = User::whereIn('role', ['judge', 'kitten', 'observer'])->get();
 
         foreach($judges as $judge)
         {
